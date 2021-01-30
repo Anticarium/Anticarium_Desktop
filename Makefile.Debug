@@ -196,6 +196,11 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_resources.cpp
 debug\qrc_resources.cpp: resources.qrc \
 		D:\qt\5.15.0\msvc2019\bin\rcc.exe \
+		assets\icons\Grain_Icon_3.png \
+		assets\icons\Toys_Icon_3.png \
+		assets\icons\Invert_Colors_Icon_1.png \
+		assets\icons\Brightness_5_Icon_1.png \
+		assets\icons\Waves_Icon_1.png \
 		assets\icons\Exit_To_App_Icon_2.png
 	D:\qt\5.15.0\msvc2019\bin\rcc.exe -name resources resources.qrc -o debug\qrc_resources.cpp
 
@@ -1187,10 +1192,29 @@ debug\hometab.obj: hometab.cpp hometab.h \
 		D:\qt\5.15.0\msvc2019\include\QtWidgets\qdesktopwidget.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qguiapplication.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qinputmethod.h \
-		D:\qt\5.15.0\msvc2019\include\QtWidgets\QPushButton \
-		D:\qt\5.15.0\msvc2019\include\QtWidgets\qpushbutton.h \
-		D:\qt\5.15.0\msvc2019\include\QtWidgets\qabstractbutton.h \
-		D:\qt\5.15.0\msvc2019\include\QtGui\qicon.h
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QLCDNumber \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qlcdnumber.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qframe.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QLabel \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qlabel.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QOpenGLWidget \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qopenglwidget.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\QSurfaceFormat \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qsurfaceformat.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qopengl.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\qt_windows.h \
+		D:\qt\5.15.0\msvc2019\include\QtANGLE\GLES3\gl3.h \
+		D:\qt\5.15.0\msvc2019\include\QtANGLE\GLES3\gl3platform.h \
+		D:\qt\5.15.0\msvc2019\include\QtANGLE\KHR\khrplatform.h \
+		D:\qt\5.15.0\msvc2019\include\QtANGLE\GLES2\gl2.h \
+		D:\qt\5.15.0\msvc2019\include\QtANGLE\GLES2\gl2platform.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qopengles2ext.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qopenglext.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QVBoxLayout \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qboxlayout.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qlayout.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qlayoutitem.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qgridlayout.h
 
 debug\main.obj: main.cpp mainwindow.h \
 		D:\qt\5.15.0\msvc2019\include\QtWidgets\QMainWindow \
@@ -1580,7 +1604,19 @@ debug\modestab.obj: modestab.cpp modestab.h \
 		D:\qt\5.15.0\msvc2019\include\QtCore\qfiledevice.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qvector2d.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qtouchdevice.h \
-		ui_modestab.h
+		ui_modestab.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\QVariant \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QApplication \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\qcoreapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\qeventloop.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qdesktopwidget.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qguiapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qinputmethod.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QPushButton \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qpushbutton.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qabstractbutton.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qicon.h
 
 debug\usertab.obj: usertab.cpp usertab.h \
 		D:\qt\5.15.0\msvc2019\include\QtWidgets\QWidget \
@@ -1686,7 +1722,19 @@ debug\usertab.obj: usertab.cpp usertab.h \
 		D:\qt\5.15.0\msvc2019\include\QtCore\qfiledevice.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qvector2d.h \
 		D:\qt\5.15.0\msvc2019\include\QtGui\qtouchdevice.h \
-		ui_usertab.h
+		ui_usertab.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\QVariant \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QApplication \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\qcoreapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtCore\qeventloop.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qdesktopwidget.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qguiapplication.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qinputmethod.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\QPushButton \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qpushbutton.h \
+		D:\qt\5.15.0\msvc2019\include\QtWidgets\qabstractbutton.h \
+		D:\qt\5.15.0\msvc2019\include\QtGui\qicon.h
 
 debug\qrc_resources.obj: debug\qrc_resources.cpp 
 
