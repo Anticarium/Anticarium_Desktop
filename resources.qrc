@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>assets/icons/Exit_To_App_Icon_2.png</file>
+    </qresource>
+</RCC>
