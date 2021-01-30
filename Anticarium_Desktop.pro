@@ -10,16 +10,24 @@ CONFIG += c++14
 
 SOURCES += \
     custom_elements/clickablewidget.cpp \
+    hometab.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    modestab.cpp \
+    usertab.cpp
 
 HEADERS += \
     custom_elements/clickablewidget.h \
-    mainwindow.h
+    hometab.h \
+    mainwindow.h \
+    modestab.h \
+    usertab.h
 
 FORMS += \
-    Home.ui \
-    mainwindow.ui
+    hometab.ui \
+    mainwindow.ui \
+    modestab.ui \
+    usertab.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

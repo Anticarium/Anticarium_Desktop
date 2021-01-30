@@ -16,35 +16,35 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_Form
+class Ui_HomeWidget
 {
 public:
     QPushButton *pushButton;
 
-    void setupUi(QWidget *Form)
+    void setupUi(QWidget *HomeWidget)
     {
-        if (Form->objectName().isEmpty())
-            Form->setObjectName(QString::fromUtf8("Form"));
-        Form->resize(654, 351);
-        pushButton = new QPushButton(Form);
+        if (HomeWidget->objectName().isEmpty())
+            HomeWidget->setObjectName(QString::fromUtf8("HomeWidget"));
+        HomeWidget->resize(654, 351);
+        pushButton = new QPushButton(HomeWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(200, 190, 80, 21));
 
-        retranslateUi(Form);
+        retranslateUi(HomeWidget);
 
-        QMetaObject::connectSlotsByName(Form);
+        QMetaObject::connectSlotsByName(HomeWidget);
     } // setupUi
 
-    void retranslateUi(QWidget *Form)
+    void retranslateUi(QWidget *HomeWidget)
     {
-        Form->setWindowTitle(QCoreApplication::translate("Form", "Form", nullptr));
-        pushButton->setText(QCoreApplication::translate("Form", "PushButton", nullptr));
+        HomeWidget->setWindowTitle(QCoreApplication::translate("HomeWidget", "Form", nullptr));
+        pushButton->setText(QCoreApplication::translate("HomeWidget", "PushButton", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class Form: public Ui_Form {};
+    class HomeWidget: public Ui_HomeWidget {};
 } // namespace Ui
 
 QT_END_NAMESPACE

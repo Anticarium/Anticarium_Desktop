@@ -14,8 +14,6 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 #include "custom_elements/clickablewidget.h"
 
@@ -35,8 +33,6 @@ public:
     ClickableWidget *ModesButton;
     QLabel *label_4;
     QLabel *label;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -59,7 +55,7 @@ public:
         HomeButton = new ClickableWidget(horizontalLayoutWidget);
         HomeButton->setObjectName(QString::fromUtf8("HomeButton"));
         HomeButton->setCursor(QCursor(Qt::PointingHandCursor));
-        HomeButton->setStyleSheet(QString::fromUtf8("border-right: 1px solid black;"));
+        HomeButton->setStyleSheet(QString::fromUtf8("border-right: 1px solid black; "));
         label_2 = new QLabel(HomeButton);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(10, 0, 46, 21));
@@ -95,13 +91,6 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8(":/icons/assets/icons/Exit_To_App_Icon_2.png")));
         label->setScaledContents(true);
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 20));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
 
