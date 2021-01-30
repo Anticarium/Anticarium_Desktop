@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "custom_elements/clickablewidget.h"
+#include "hometab.h"
+#include "modestab.h"
+#include "usertab.h"
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,6 +19,19 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    //gets called from tabWidget and switches tabs
+    void changeTab(ClickableWidget * tabWidget);
+
+    HomeTab * homeTab;
+    UserTab * userTab;
+    ModesTab * modesTab;
+
+    //tabs array
+    std::vector<QWidget*> topButtonsArr;
+
+    //hides all widgets in given vector
+    void hideTabs(std::vector<QWidget*> wVector);
 
 private:
     Ui::MainWindow *ui;

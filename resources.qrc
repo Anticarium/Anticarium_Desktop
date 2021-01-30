@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>assets/icons/Exit_To_App_Icon_2.png</file>
+		<file>assets/icons/Brightness_5_Icon_1.png</file>
+		<file>assets/icons/Grain_Icon_3.png</file>
+		<file>assets/icons/Invert_Colors_Icon_1.png</file>
+		<file>assets/icons/Toys_Icon_3.png</file>
+		<file>assets/icons/Waves_Icon_1.png</file>
+    </qresource>
+</RCC>
