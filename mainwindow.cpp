@@ -1,11 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QDebug"
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    //for Anticarium.ini
+    QCoreApplication::setOrganizationName("Team_7");
+    QCoreApplication::setApplicationName("Anticarium");
+    initSettings();
+
     ui->setupUi(this);
 
     homeTab = new HomeTab(this);
@@ -29,6 +34,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->HomeButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->ModesButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->UserButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
+}
+
+void MainWindow::initSettings(){
+    //every time you want to use settings file you must create settings object like this, so same .ini file gets used each time
+    QSettings settings(QSettings::Format::IniFormat, QSettings::Scope::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
 }
 
 void MainWindow::changeTab(ClickableWidget * tabWidget){

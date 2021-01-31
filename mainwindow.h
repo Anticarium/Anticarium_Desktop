@@ -7,6 +7,7 @@
 #include "modestab.h"
 #include "usertab.h"
 #include <vector>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +33,9 @@ public:
 
     //hides all widgets in given vector
     void hideTabs(std::vector<QWidget*> wVector);
+
+    //initializes stored settings
+    void initSettings();
 
 private:
     Ui::MainWindow *ui;
