@@ -9,6 +9,7 @@ CONFIG += c++14
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    anticarium.cpp \
     custom_elements/clickablewidget.cpp \
     hometab.cpp \
     main.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
     usertab.cpp
 
 HEADERS += \
+    anticarium.h \
     custom_elements/clickablewidget.h \
     hometab.h \
     mainwindow.h \
