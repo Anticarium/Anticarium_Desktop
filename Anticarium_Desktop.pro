@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +12,7 @@ SOURCES += \
     anticarium.cpp \
     custom_elements/clickablewidget.cpp \
     hometab.cpp \
+    jttp.cpp \
     main.cpp \
     mainwindow.cpp \
     modestab.cpp \
@@ -19,8 +20,11 @@ SOURCES += \
 
 HEADERS += \
     anticarium.h \
+    commonHeader.h \
     custom_elements/clickablewidget.h \
     hometab.h \
+    jttp.h \
+    lib/nlohmann/json.hpp \
     mainwindow.h \
     modestab.h \
     usertab.h

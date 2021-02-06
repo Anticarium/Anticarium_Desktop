@@ -294,12 +294,14 @@ Makefile: Anticarium_Desktop.pro D:\qt\5.15.0\msvc2019\mkspecs\win32-msvc\qmake.
 		Anticarium_Desktop.pro \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Widgets.prl \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Gui.prl \
+		D:\qt\5.15.0\msvc2019\lib\Qt5Network.prl \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Core.prl \
 		D:\qt\5.15.0\msvc2019\lib\qtmain.prl \
 		D:\qt\5.15.0\msvc2019\mkspecs\features\build_pass.prf \
 		resources.qrc \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Widgetsd.prl \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Guid.prl \
+		D:\qt\5.15.0\msvc2019\lib\Qt5Networkd.prl \
 		D:\qt\5.15.0\msvc2019\lib\Qt5Cored.prl \
 		D:\qt\5.15.0\msvc2019\lib\qtmaind.prl
 	$(QMAKE) -o Makefile Anticarium_Desktop.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -513,12 +515,14 @@ D:\qt\5.15.0\msvc2019\mkspecs\features\lex.prf:
 Anticarium_Desktop.pro:
 D:\qt\5.15.0\msvc2019\lib\Qt5Widgets.prl:
 D:\qt\5.15.0\msvc2019\lib\Qt5Gui.prl:
+D:\qt\5.15.0\msvc2019\lib\Qt5Network.prl:
 D:\qt\5.15.0\msvc2019\lib\Qt5Core.prl:
 D:\qt\5.15.0\msvc2019\lib\qtmain.prl:
 D:\qt\5.15.0\msvc2019\mkspecs\features\build_pass.prf:
 resources.qrc:
 D:\qt\5.15.0\msvc2019\lib\Qt5Widgetsd.prl:
 D:\qt\5.15.0\msvc2019\lib\Qt5Guid.prl:
+D:\qt\5.15.0\msvc2019\lib\Qt5Networkd.prl:
 D:\qt\5.15.0\msvc2019\lib\Qt5Cored.prl:
 D:\qt\5.15.0\msvc2019\lib\qtmaind.prl:
 qmake: FORCE
