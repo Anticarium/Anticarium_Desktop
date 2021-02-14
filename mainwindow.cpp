@@ -2,14 +2,13 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow), _settings(new QSettings(QSettings::Format::IniFormat, QSettings::Scope::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName()))
 {
-    //for Anticarium.ini
-    QCoreApplication::setOrganizationName("Team_7");
-    QCoreApplication::setApplicationName("Anticarium");
-    initSettings();
+    //instanciate the singleton
+    jttp = JTTP::GetInstance(parent, _settings);
 
     ui->setupUi(this);
 
@@ -34,12 +33,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->HomeButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->ModesButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->UserButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
+
+    //updates displayed values
+    connect(jttp, &JTTP::updateSensorDisplay, homeTab, &HomeTab::updateSensorDisplay);
 }
 
-void MainWindow::initSettings(){
-    //every time you want to use settings file you must create settings object like this, so same .ini file gets used each time
-    QSettings settings(QSettings::Format::IniFormat, QSettings::Scope::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName());
-}
+
 
 void MainWindow::changeTab(ClickableWidget * tabWidget){
     hideTabs(topButtonsArr);
@@ -59,6 +58,8 @@ void MainWindow::hideTabs(std::vector<QWidget *> wVector){
         i->hide();
     }
 }
+
+
 
 MainWindow::~MainWindow()
 {

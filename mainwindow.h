@@ -6,8 +6,8 @@
 #include "hometab.h"
 #include "modestab.h"
 #include "usertab.h"
-#include <vector>
-#include <QSettings>
+#include "jttp.h"
+#include "commonHeader.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,8 +36,15 @@ public:
 
     //initializes stored settings
     void initSettings();
+    //makes HTTP calls to the server and processes received data
+    JTTP * jttp;
+
 
 private:
     Ui::MainWindow *ui;
+    QSettings *_settings;
+
+private slots:
+
 };
 #endif // MAINWINDOW_H

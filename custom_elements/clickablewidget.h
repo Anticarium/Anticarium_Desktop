@@ -14,7 +14,7 @@ public:
     ~ClickableWidget();
 
     //for applying stylesheet in custom element
-    void ClickableWidget::paintEvent(QPaintEvent * pE);
+    void paintEvent(QPaintEvent * pE);
 
 signals:
     void clicked(ClickableWidget* currentWidget);

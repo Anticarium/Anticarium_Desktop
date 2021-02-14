@@ -1,5 +1,5 @@
 QT       += core gui
-
+QT += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++14
@@ -12,6 +12,7 @@ SOURCES += \
     anticarium.cpp \
     custom_elements/clickablewidget.cpp \
     hometab.cpp \
+    jttp.cpp \
     main.cpp \
     mainwindow.cpp \
     modestab.cpp \
@@ -19,8 +20,11 @@ SOURCES += \
 
 HEADERS += \
     anticarium.h \
+    commonHeader.h \
     custom_elements/clickablewidget.h \
     hometab.h \
+    jttp.h \
+    lib/nlohmann/json.hpp \
     mainwindow.h \
     modestab.h \
     usertab.h
@@ -38,3 +42,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resources.qrc
+
+
+
