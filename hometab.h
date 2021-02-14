@@ -2,6 +2,8 @@
 #define HOMETAB_H
 
 #include <QWidget>
+#include "jttp.h"
+#include <iostream>
 
 namespace Ui {
 class HomeTab;
@@ -17,6 +19,10 @@ public:
 
 private:
     Ui::HomeTab *ui;
+
+public slots:
+    //updates displayed values
+    void updateSensorDisplay(const json& jData);
 };
 
 #endif // HOMETAB_H

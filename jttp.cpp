@@ -46,21 +46,26 @@ void JTTP::requestSensorData(){
 }
 
 void JTTP::getSensorData(QNetworkReply * reply){
-
+    //checks if reply contains legitimate data
     if (reply->error()) {
-            qDebug() << "QNetworkError: " << reply->errorString();
-            return;
-        }
+        qDebug() << "QNetworkError: " << reply->errorString();
+        return;
+    }
 
-        QString answer = reply->readAll();
-        std::string a = answer.toStdString();
-        json j = json::parse(a);
-        int t = j["data"];
-        qDebug() << "Json Data: "<< t;
+    //reads reply into QString
+    QString answer = reply->readAll();
+    //parses to json object
+    std::string jString = answer.toStdString();
+    json j = json::parse(jString);
 
-        reply->deleteLater();
+    //updates main window
+    emit updateSensorDisplay(j);
 
-        qDebug() << answer;
+//    qDebug() << QString::fromStdString(j.dump());
+//    qDebug() << answer;
+    reply->deleteLater();
+
+
 }
 
 JTTP::~JTTP(){

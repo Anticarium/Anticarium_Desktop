@@ -32,9 +32,12 @@ public:
     JTTP() = delete;
     void operator=(const JTTP &) = delete;
 
+    //main singleton constructor
     static JTTP * GetInstance(QObject *parent, QSettings * settings);
 
-//signals:
+signals:
+    //updates home tab displayed values
+    void updateSensorDisplay(const json & jData);
 private slots:
     //timer requests data
     void requestSensorData();

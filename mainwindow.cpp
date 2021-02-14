@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->HomeButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->ModesButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
     connect(ui->UserButton, &ClickableWidget::clicked, this, &MainWindow::changeTab);
+
+    //updates displayed values
+    connect(jttp, &JTTP::updateSensorDisplay, homeTab, &HomeTab::updateSensorDisplay);
 }
 
 
@@ -55,6 +58,8 @@ void MainWindow::hideTabs(std::vector<QWidget *> wVector){
         i->hide();
     }
 }
+
+
 
 MainWindow::~MainWindow()
 {

@@ -76,7 +76,7 @@ font-size: 16px;</string>
          <string>Temperature:</string>
         </property>
        </widget>
-       <widget class="QLCDNumber" name="lcdNumber_3">
+       <widget class="QLCDNumber" name="tempValue">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -84,6 +84,12 @@ font-size: 16px;</string>
           <width>64</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>true</bool>
+        </property>
+        <property name="digitCount">
+         <number>4</number>
         </property>
         <property name="segmentStyle">
          <enum>QLCDNumber::Flat</enum>
@@ -125,7 +131,7 @@ font-size: 16px;</string>
          <string>Humidity:</string>
         </property>
        </widget>
-       <widget class="QLCDNumber" name="lcdNumber_2">
+       <widget class="QLCDNumber" name="humiValue">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -133,6 +139,12 @@ font-size: 16px;</string>
           <width>64</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>true</bool>
+        </property>
+        <property name="digitCount">
+         <number>4</number>
         </property>
         <property name="segmentStyle">
          <enum>QLCDNumber::Flat</enum>
@@ -174,7 +186,7 @@ font-size: 16px;</string>
          <string>Moisture:</string>
         </property>
        </widget>
-       <widget class="QLCDNumber" name="lcdNumber">
+       <widget class="QLCDNumber" name="moistValue">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -182,6 +194,12 @@ font-size: 16px;</string>
           <width>64</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>true</bool>
+        </property>
+        <property name="digitCount">
+         <number>4</number>
         </property>
         <property name="segmentStyle">
          <enum>QLCDNumber::Flat</enum>
@@ -226,7 +244,7 @@ font-size: 16px;</string>
          <string>Mode:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="modeLabel">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -263,7 +281,7 @@ font-size: 16px;</string>
     <string>Weather: </string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_10">
+  <widget class="QLabel" name="weatherLabel">
    <property name="geometry">
     <rect>
      <x>280</x>
@@ -427,7 +445,7 @@ font-size: 16px;</string>
        <string notr="true">QWidget#LightButtonWidget{border: 1px solid black;}
 </string>
       </property>
-      <widget class="QSpinBox" name="spinBox">
+      <widget class="QSpinBox" name="lightValue">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -479,7 +497,7 @@ font-size: 16px;</string>
        <string notr="true">QWidget#HeatButtonWidget{border: 1px solid black;}
 </string>
       </property>
-      <widget class="QSpinBox" name="spinBox_2">
+      <widget class="QSpinBox" name="heatValue">
        <property name="geometry">
         <rect>
          <x>70</x>
