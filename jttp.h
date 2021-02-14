@@ -14,21 +14,20 @@ class JTTP : public QObject
 {
     Q_OBJECT
 private:
+    //private constructor for singleton
     JTTP(QObject *parent = nullptr, QSettings * settings = nullptr);
     static JTTP * _jttp;
     ~JTTP();
     //timer object that pings server for new data every now and then
     QTimer * _dataRequestTimer;
 
-    //requests sensor data from server
-
+    //HTTP communication objects
     QNetworkAccessManager * _manager;
     QNetworkRequest _sensorRequest;
     QNetworkReply * _sensorReply;
 
-    const QString GET_SONSOR_URL;
-    const QString JSON_FROM;
 public:
+    //singleton design pattern
     JTTP() = delete;
     void operator=(const JTTP &) = delete;
 
@@ -41,6 +40,7 @@ signals:
 private slots:
     //timer requests data
     void requestSensorData();
+    //reads sensor data and emits display update signal
     void getSensorData(QNetworkReply * reply);
 
 

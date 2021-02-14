@@ -4,9 +4,7 @@ JTTP::JTTP(QObject *parent, QSettings * settings) :
     QObject(parent),
     _dataRequestTimer(new QTimer(this)),
     _manager(new QNetworkAccessManager(this)),
-    _sensorRequest(),
-    GET_SONSOR_URL("/getSensor"),
-    JSON_FROM(settings->value("Get_JSON_From").toString())
+    _sensorRequest()
 {
     //connects timeout to request function and executes this function every requestTimeout millis
     int dTM = settings->value("Data_Request_Timeout").toInt();
@@ -18,17 +16,18 @@ JTTP::JTTP(QObject *parent, QSettings * settings) :
     }
 
     //creates request for sensor data
-    if(JSON_FROM == "Emulator"){
-        _sensorRequest.setUrl(QUrl(settings->value("Server_URL").toString()));
-    } else {
-        _sensorRequest.setUrl(QUrl(settings->value("Server_URL").toString() + GET_SONSOR_URL));
-    }
+    QString sensorString = settings->value("Server_URL").toString() + settings->value("Sensor_Data_Link").toString();
+    _sensorRequest.setUrl(QUrl(sensorString));
+
     _sensorRequest.setRawHeader("Data request", "Anticarium User");
     _sensorRequest.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 
     //connects qnetworkAccessManager
     connect(_manager, &QNetworkAccessManager::finished,
             this, &JTTP::getSensorData);
+
+    //requests data without timer for the first time
+    requestSensorData();
 }
 
 JTTP * JTTP::_jttp = nullptr;
@@ -42,7 +41,6 @@ JTTP * JTTP::GetInstance(QObject *parent, QSettings * settings){
 
 void JTTP::requestSensorData(){
     _manager->get(_sensorRequest);
-
 }
 
 void JTTP::getSensorData(QNetworkReply * reply){
@@ -61,11 +59,7 @@ void JTTP::getSensorData(QNetworkReply * reply){
     //updates main window
     emit updateSensorDisplay(j);
 
-//    qDebug() << QString::fromStdString(j.dump());
-//    qDebug() << answer;
     reply->deleteLater();
-
-
 }
 
 JTTP::~JTTP(){

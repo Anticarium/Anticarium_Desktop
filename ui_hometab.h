@@ -138,7 +138,8 @@ public:
         moistValue->setSmallDecimalPoint(true);
         moistValue->setDigitCount(4);
         moistValue->setSegmentStyle(QLCDNumber::Flat);
-        moistValue->setProperty("value", QVariant(3.000000000000000));
+        moistValue->setProperty("value", QVariant(0.000000000000000));
+        moistValue->setProperty("intValue", QVariant(0));
         label_6 = new QLabel(widget_3);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         label_6->setGeometry(QRect(80, 30, 21, 20));
