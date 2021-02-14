@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     //for Anticarium.ini
     QCoreApplication::setOrganizationName("Team_7");
     QCoreApplication::setApplicationName("Anticarium");
+
     MainWindow w;
     w.show();
     return a.exec();
