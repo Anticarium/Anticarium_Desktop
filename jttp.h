@@ -37,7 +37,7 @@ public:
 signals:
     //updates home tab displayed values
     void updateSensorDisplay(const json & jData);
-private slots:
+public slots:
     //timer requests data
     void requestSensorData();
     //reads sensor data and emits display update signal

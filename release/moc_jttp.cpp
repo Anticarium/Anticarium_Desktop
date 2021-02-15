@@ -66,8 +66,8 @@ static const uint qt_meta_data_JTTP[] = {
        1,    1,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   32,    2, 0x08 /* Private */,
-       6,    1,   33,    2, 0x08 /* Private */,
+       5,    0,   32,    2, 0x0a /* Public */,
+       6,    1,   33,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,

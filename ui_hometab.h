@@ -50,17 +50,18 @@ public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QWidget *RainButtonWidget;
-    QPushButton *pushButton;
+    QPushButton *rainButton;
     QLabel *label_12;
     QWidget *WindButtonWidget;
     QLabel *label_13;
-    QPushButton *pushButton_3;
+    QPushButton *windButton;
     QWidget *LightButtonWidget;
     QSpinBox *lightValue;
-    QPushButton *pushButton_5;
+    QPushButton *lightButton;
     QWidget *HeatButtonWidget;
     QSpinBox *heatValue;
-    QPushButton *pushButton_6;
+    QPushButton *heatButton;
+    QPushButton *autoFlag;
 
     void setupUi(QWidget *HomeTab)
     {
@@ -116,7 +117,7 @@ public:
         humiValue = new QLCDNumber(widget);
         humiValue->setObjectName(QString::fromUtf8("humiValue"));
         humiValue->setGeometry(QRect(10, 30, 64, 23));
-        humiValue->setSmallDecimalPoint(true);
+        humiValue->setSmallDecimalPoint(false);
         humiValue->setDigitCount(4);
         humiValue->setSegmentStyle(QLCDNumber::Flat);
         label_7 = new QLabel(widget);
@@ -135,7 +136,7 @@ public:
         moistValue = new QLCDNumber(widget_3);
         moistValue->setObjectName(QString::fromUtf8("moistValue"));
         moistValue->setGeometry(QRect(10, 30, 64, 23));
-        moistValue->setSmallDecimalPoint(true);
+        moistValue->setSmallDecimalPoint(false);
         moistValue->setDigitCount(4);
         moistValue->setSegmentStyle(QLCDNumber::Flat);
         moistValue->setProperty("value", QVariant(0.000000000000000));
@@ -185,10 +186,11 @@ public:
         RainButtonWidget = new QWidget(horizontalLayoutWidget);
         RainButtonWidget->setObjectName(QString::fromUtf8("RainButtonWidget"));
         RainButtonWidget->setStyleSheet(QString::fromUtf8("QWidget#RainButtonWidget{border: 1px solid black;}"));
-        pushButton = new QPushButton(RainButtonWidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 10, 51, 41));
-        pushButton->setStyleSheet(QString::fromUtf8("color: black;"));
+        rainButton = new QPushButton(RainButtonWidget);
+        rainButton->setObjectName(QString::fromUtf8("rainButton"));
+        rainButton->setGeometry(QRect(10, 10, 51, 41));
+        rainButton->setStyleSheet(QString::fromUtf8("color: black;"));
+        rainButton->setCheckable(true);
         label_12 = new QLabel(RainButtonWidget);
         label_12->setObjectName(QString::fromUtf8("label_12"));
         label_12->setGeometry(QRect(70, 10, 41, 41));
@@ -208,13 +210,13 @@ public:
         label_13->setStyleSheet(QString::fromUtf8("border: none;"));
         label_13->setPixmap(QPixmap(QString::fromUtf8(":/icons/assets/icons/Waves_Icon_1.png")));
         label_13->setScaledContents(true);
-        pushButton_3 = new QPushButton(WindButtonWidget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(10, 10, 51, 41));
-        pushButton_3->setStyleSheet(QString::fromUtf8("color: black;"));
-        pushButton_3->setCheckable(false);
-        pushButton_3->setAutoDefault(false);
-        pushButton_3->setFlat(false);
+        windButton = new QPushButton(WindButtonWidget);
+        windButton->setObjectName(QString::fromUtf8("windButton"));
+        windButton->setGeometry(QRect(10, 10, 51, 41));
+        windButton->setStyleSheet(QString::fromUtf8("color: black;"));
+        windButton->setCheckable(true);
+        windButton->setAutoDefault(false);
+        windButton->setFlat(false);
 
         horizontalLayout->addWidget(WindButtonWidget);
 
@@ -226,14 +228,15 @@ public:
         lightValue->setObjectName(QString::fromUtf8("lightValue"));
         lightValue->setGeometry(QRect(70, 10, 51, 41));
         lightValue->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+        lightValue->setReadOnly(false);
         lightValue->setMaximum(100);
-        pushButton_5 = new QPushButton(LightButtonWidget);
-        pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
-        pushButton_5->setGeometry(QRect(10, 10, 51, 41));
-        pushButton_5->setStyleSheet(QString::fromUtf8("color: black;"));
-        pushButton_5->setCheckable(false);
-        pushButton_5->setAutoDefault(false);
-        pushButton_5->setFlat(false);
+        lightButton = new QPushButton(LightButtonWidget);
+        lightButton->setObjectName(QString::fromUtf8("lightButton"));
+        lightButton->setGeometry(QRect(10, 10, 51, 41));
+        lightButton->setStyleSheet(QString::fromUtf8("color: black;"));
+        lightButton->setCheckable(false);
+        lightButton->setAutoDefault(false);
+        lightButton->setFlat(false);
 
         horizontalLayout->addWidget(LightButtonWidget);
 
@@ -246,22 +249,26 @@ public:
         heatValue->setGeometry(QRect(70, 10, 51, 41));
         heatValue->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
         heatValue->setMaximum(100);
-        pushButton_6 = new QPushButton(HeatButtonWidget);
-        pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
-        pushButton_6->setGeometry(QRect(10, 10, 51, 41));
-        pushButton_6->setStyleSheet(QString::fromUtf8("color: black;"));
-        pushButton_6->setCheckable(false);
-        pushButton_6->setAutoDefault(false);
-        pushButton_6->setFlat(false);
+        heatButton = new QPushButton(HeatButtonWidget);
+        heatButton->setObjectName(QString::fromUtf8("heatButton"));
+        heatButton->setGeometry(QRect(10, 10, 51, 41));
+        heatButton->setStyleSheet(QString::fromUtf8("color: black;"));
+        heatButton->setCheckable(false);
+        heatButton->setAutoDefault(false);
+        heatButton->setFlat(false);
 
         horizontalLayout->addWidget(HeatButtonWidget);
 
+        autoFlag = new QPushButton(HomeTab);
+        autoFlag->setObjectName(QString::fromUtf8("autoFlag"));
+        autoFlag->setGeometry(QRect(190, 450, 581, 31));
+        autoFlag->setCheckable(true);
 
         retranslateUi(HomeTab);
 
-        pushButton_3->setDefault(false);
-        pushButton_5->setDefault(false);
-        pushButton_6->setDefault(false);
+        windButton->setDefault(false);
+        lightButton->setDefault(false);
+        heatButton->setDefault(false);
 
 
         QMetaObject::connectSlotsByName(HomeTab);
@@ -281,12 +288,13 @@ public:
         label_9->setText(QCoreApplication::translate("HomeTab", "Weather: ", nullptr));
         weatherLabel->setText(QCoreApplication::translate("HomeTab", "NULL", nullptr));
         label_11->setText(QCoreApplication::translate("HomeTab", "ICON", nullptr));
-        pushButton->setText(QCoreApplication::translate("HomeTab", "Rain", nullptr));
+        rainButton->setText(QCoreApplication::translate("HomeTab", "Rain", nullptr));
         label_12->setText(QString());
         label_13->setText(QString());
-        pushButton_3->setText(QCoreApplication::translate("HomeTab", "Wind", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("HomeTab", "Light", nullptr));
-        pushButton_6->setText(QCoreApplication::translate("HomeTab", "Heat", nullptr));
+        windButton->setText(QCoreApplication::translate("HomeTab", "Wind", nullptr));
+        lightButton->setText(QCoreApplication::translate("HomeTab", "Light", nullptr));
+        heatButton->setText(QCoreApplication::translate("HomeTab", "Heat", nullptr));
+        autoFlag->setText(QCoreApplication::translate("HomeTab", "Auto", nullptr));
     } // retranslateUi
 
 };

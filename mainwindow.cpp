@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    homeTab = new HomeTab(this);
+    homeTab = new HomeTab(this, jttp);
     userTab = new UserTab(this);
     modesTab = new ModesTab(this);
 

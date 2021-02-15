@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, json
-from random import uniform, randint
+from random import uniform, randint, getrandbits
 app = Flask(__name__)
 
 @app.route("/")
@@ -15,12 +15,12 @@ def returnSensorData():
         Weather="Sunny",
         MCU_Device_ID="random_secret_id",
         DEVICE_ID="device_random_secret_id",
-        Mode="Auto",
+        Mode="Manual",
         Auto_Mode_Type="Summer",
         Heat=randint(0, 100),
         Light=randint(0, 100),
-        wind=True,
-        rain=False
+        Wind=bool(getrandbits(1)),
+        Rain=bool(getrandbits(1))
     )
     
     return data    
