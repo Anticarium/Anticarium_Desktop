@@ -34,6 +34,9 @@ public:
     //main singleton constructor
     static JTTP * GetInstance(QObject *parent, QSettings * settings);
 
+    //sends given json data to the server
+    bool sendJData(const json & jData);
+
 signals:
     //updates home tab displayed values
     void updateSensorDisplay(const json & jData);

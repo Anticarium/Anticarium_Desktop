@@ -43,6 +43,11 @@ void JTTP::requestSensorData(){
     _manager->get(_sensorRequest);
 }
 
+bool JTTP::sendJData(const json & jData){
+
+    return 0;
+}
+
 void JTTP::getSensorData(QNetworkReply * reply){
     //checks if reply contains legitimate data
     if (reply->error()) {
