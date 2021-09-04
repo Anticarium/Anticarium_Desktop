@@ -54,7 +54,7 @@ void JTTP::getSensorData(QNetworkReply * reply){
     QString answer = reply->readAll();
     //parses to json object
     std::string jString = answer.toStdString();
-    json j = json::parse(jString);
+    nlohmann::json j = nlohmann::json::parse(jString);
 
     //updates main window
     emit updateSensorDisplay(j);
