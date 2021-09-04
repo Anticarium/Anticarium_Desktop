@@ -8,6 +8,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+include(ExternLibs)
+include(FetchContent)
+
 FILE(READ VERSION CURRENT_VERSION)
 project(${TARGET_NAME} VERSION ${CURRENT_VERSION})
 message(STATUS "Adding ${TARGET_NAME} v${CURRENT_VERSION}")
@@ -19,3 +22,5 @@ add_subdirectory(apps)
 if(ADD_TESTS)
     add_subdirectory(tests)
 endif()
+
+FETCHSHAREDTYPES()

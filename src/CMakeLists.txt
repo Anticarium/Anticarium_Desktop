@@ -1,4 +1,3 @@
-include(ExternLibs)
 set(TARGET_NAME anticarium_desktop_lib)
 
 set(HEADER_FILES
@@ -26,6 +25,9 @@ set(FORMS
     anticarium_desktop/widgets/mainwindow.ui
 )
 
+include(ExternLibs)
+include(FetchContent)
+
 add_library(${TARGET_NAME}
     ${HEADER_FILES}
     ${SOURCE_FILES}
@@ -39,4 +41,5 @@ ADDQT6CORE(${TARGET_NAME})
 ADDQT6WIDGETS(${TARGET_NAME})
 ADDQT6NETWORK(${TARGET_NAME})
 ADDJSON(${TARGET_NAME})
+ADDSHAREDTYPES(${TARGET_NAME})
 
