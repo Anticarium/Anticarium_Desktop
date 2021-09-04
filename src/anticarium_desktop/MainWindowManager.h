@@ -1,0 +1,19 @@
+#ifndef MAINWINDOWMANAGER_H
+#define MAINWINDOWMANAGER_H
+
+#include <QObject>
+#include <shared_types/Control.h>
+
+class MainWindowManager : public QObject {
+    Q_OBJECT
+  public:
+    MainWindowManager(QObject* parent = nullptr);
+    // updates displayed values
+    void sendData(const shared_types::Control& control);
+    const shared_types::Control& getData() const;
+
+  signals:
+    void updateEvent(const shared_types::Control& control);
+};
+
+#endif // MAINWINDOWMANAGER_H
