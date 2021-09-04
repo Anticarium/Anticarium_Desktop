@@ -24,10 +24,6 @@ class MainWindow : public QMainWindow {
     // gets called from tabWidget and switches tabs
     void changeTab(ClickableWidget* tabWidget);
 
-    HomeTab* homeTab;
-    UserTab* userTab;
-    ModesTab* modesTab;
-
     // tabs array
     std::vector<QWidget*> topButtonsArr;
 
