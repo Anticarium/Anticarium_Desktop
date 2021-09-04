@@ -33,8 +33,10 @@ add_library(${TARGET_NAME}
     anticarium_desktop/resources.qrc
 )
 
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/anticarium_desktop)
+
 ADDQT6CORE(${TARGET_NAME})
 ADDQT6WIDGETS(${TARGET_NAME})
 ADDQT6NETWORK(${TARGET_NAME})
 ADDJSON(${TARGET_NAME})
+

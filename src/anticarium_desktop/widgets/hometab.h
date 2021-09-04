@@ -1,28 +1,24 @@
-#ifndef HOMETAB_H
-#define HOMETAB_H
+#pragma once
 
+#include "jttp.h"
 #include <QWidget>
-#include "anticarium_desktop/jttp.h"
 #include <iostream>
 
 namespace Ui {
 class HomeTab;
 }
 
-class HomeTab : public QWidget
-{
+class HomeTab : public QWidget {
     Q_OBJECT
 
-public:
-    explicit HomeTab(QWidget *parent = nullptr);
+  public:
+    explicit HomeTab(QWidget* parent = nullptr);
     ~HomeTab();
 
-private:
-    Ui::HomeTab *ui;
+  private:
+    Ui::HomeTab* ui;
 
-public slots:
-    //updates displayed values
+  public slots:
+    // updates displayed values
     void updateSensorDisplay(const nlohmann::json& jData);
 };
-
-#endif // HOMETAB_H

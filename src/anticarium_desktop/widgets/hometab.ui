@@ -319,16 +319,6 @@ font-size: 16px;</string>
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QOpenGLWidget" name="openGLWidget">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>40</y>
-     <width>581</width>
-     <height>331</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -376,7 +366,7 @@ font-size: 16px;</string>
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="resources.qrc">:/icons/assets/icons/Invert_Colors_Icon_1.png</pixmap>
+        <pixmap resource="../resources.qrc">:/icons/assets/icons/Invert_Colors_Icon_1.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -406,7 +396,7 @@ font-size: 16px;</string>
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="resources.qrc">:/icons/assets/icons/Waves_Icon_1.png</pixmap>
+        <pixmap resource="../resources.qrc">:/icons/assets/icons/Waves_Icon_1.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -550,7 +540,7 @@ font-size: 16px;</string>
   </widget>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
