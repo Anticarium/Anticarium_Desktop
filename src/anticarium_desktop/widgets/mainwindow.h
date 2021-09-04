@@ -19,7 +19,9 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
 
   public slots:
-    void onUpdate(const shared_types::Control& control);
+    void onSetupData(const shared_types::TerrariumData& terrariumData);
+    void onControlUpdate(const shared_types::Control& control);
+    void onSensorDataUpdate(const shared_types::SensorData& sensorData);
 
   private:
     Ui::MainWindow* ui;

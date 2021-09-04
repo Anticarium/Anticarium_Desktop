@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <shared_types/Control.h>
+#include <shared_types/SensorData.h>
+#include <shared_types/TerrariumData.h>
 
 class MainWindowManager : public QObject {
     Q_OBJECT

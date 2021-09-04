@@ -18,3 +18,17 @@ MainWindow::MainWindow(QWidget* parent)
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+void MainWindow::onSetupData(const shared_types::TerrariumData& terrariumData) {
+    ui->modeLabel->setText(terrariumData.getCurrentRegime());
+    onControlUpdate(terrariumData.getControl());
+}
+
+void MainWindow::onControlUpdate(const shared_types::Control& control) {
+}
+
+void MainWindow::onSensorDataUpdate(const shared_types::SensorData& sensorData) {
+    ui->temperatureValue->display(sensorData.getTemperature());
+    ui->humidityValue->display(sensorData.getHumidity());
+    ui->moistureValue->display(sensorData.getMoisture());
+}
