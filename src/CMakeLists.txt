@@ -26,7 +26,12 @@ set(FORMS
     anticarium_desktop/widgets/mainwindow.ui
 )
 
-add_library(${TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${FORMS})
+add_library(${TARGET_NAME}
+    ${HEADER_FILES}
+    ${SOURCE_FILES}
+    ${FORMS}
+    anticarium_desktop/resources.qrc
+)
 
 target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 ADDQT6CORE(${TARGET_NAME})
