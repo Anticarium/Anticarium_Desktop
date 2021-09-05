@@ -1,12 +1,12 @@
-#include "jttp.h"
+#include "Jttp.h"
 
-JTTP::JTTP(QObject* parent, QSettings* settings) : QObject(parent), _dataRequestTimer(new QTimer(this)), _manager(new QNetworkAccessManager(this)), _sensorRequest() {
+JTTP::JTTP(QObject* parent, QSettings* settings) : QObject(parent), dataRequestTimer(new QTimer(this)), manager(new QNetworkAccessManager(this)), sensorRequest() {
     // connects timeout to request function and executes this function every requestTimeout millis
     int dTM = settings->value("Data_Request_Timeout").toInt();
     if (!dTM) {
         qWarning() << "NO TIMEOUT WAS SET";
     } else {
-        connect(_dataRequestTimer, &QTimer::timeout, this, &JTTP::requestSensorData);
+        connect(dataRequestTimer, &QTimer::timeout, this, &JTTP::requestSensorData);
         //        _dataRequestTimer->start(dTM);
     }
 
@@ -24,17 +24,17 @@ JTTP::JTTP(QObject* parent, QSettings* settings) : QObject(parent), _dataRequest
     //    requestSensorData();
 }
 
-JTTP* JTTP::_jttp = nullptr;
+JTTP* JTTP::jttp = nullptr;
 
 JTTP* JTTP::GetInstance(QObject* parent, QSettings* settings) {
-    if (_jttp == nullptr) {
-        _jttp = new JTTP(parent, settings);
+    if (jttp == nullptr) {
+        jttp = new JTTP(parent, settings);
     }
-    return _jttp;
+    return jttp;
 }
 
 void JTTP::requestSensorData() {
-    _manager->get(_sensorRequest);
+    manager->get(sensorRequest);
 }
 
 void JTTP::getSensorData(QNetworkReply* reply) {
@@ -57,8 +57,8 @@ void JTTP::getSensorData(QNetworkReply* reply) {
 }
 
 JTTP::~JTTP() {
-    delete _sensorReply;
-    delete _manager;
-    delete _jttp;
-    delete _dataRequestTimer;
+    delete sensorReply;
+    delete manager;
+    delete jttp;
+    delete dataRequestTimer;
 }

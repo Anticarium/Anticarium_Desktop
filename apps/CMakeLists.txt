@@ -5,7 +5,7 @@ include(FetchContent)
 
 add_executable(${TARGET_NAME}
     main.cpp
-    ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/resources.qrc
+    ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/Resources.qrc
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src/anticarium_desktop)

@@ -1,21 +1,19 @@
 set(TARGET_NAME anticarium_desktop_lib)
 
 set(HEADER_FILES
-    anticarium_desktop/jttp.h
+    anticarium_desktop/Jttp.h
     anticarium_desktop/MainWindowManager.h
-    anticarium_desktop/widgets/mainwindow.h
-    anticarium_desktop/custom_elements/clickablewidget.h
+    anticarium_desktop/widgets/MainWindow.h
 )
 
 set(SOURCE_FILES
-    anticarium_desktop/jttp.cpp
+    anticarium_desktop/Jttp.cpp
     anticarium_desktop/MainWindowManager.cpp
-    anticarium_desktop/widgets/mainwindow.cpp
-    anticarium_desktop/custom_elements/clickablewidget.cpp
+    anticarium_desktop/widgets/MainWindow.cpp
 )
 
 set(FORMS
-    anticarium_desktop/widgets/mainwindow.ui
+    anticarium_desktop/widgets/MainWindow.ui
 )
 
 include(ExternLibs)
