@@ -1,11 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "custom_elements/clickablewidget.h"
-#include "hometab.h"
 #include "jttp.h"
-#include "modestab.h"
-#include "widgets/usertab.h"
+#include <MainWindowManager.h>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -21,29 +18,16 @@ class MainWindow : public QMainWindow {
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-    // gets called from tabWidget and switches tabs
-    void changeTab(ClickableWidget* tabWidget);
-
-    HomeTab* homeTab;
-    UserTab* userTab;
-    ModesTab* modesTab;
-
-    // tabs array
-    std::vector<QWidget*> topButtonsArr;
-
-    // hides all widgets in given vector
-    void hideTabs(std::vector<QWidget*> wVector);
-
-    // initializes stored settings
-    void initSettings();
-    // makes HTTP calls to the server and processes received data
-    JTTP* jttp;
-
+  public slots:
+    void onSetupData(const shared_types::TerrariumData& terrariumData);
+    void onControlUpdate(const shared_types::Control& control);
+    void onSensorDataUpdate(const shared_types::SensorData& sensorData);
 
   private:
     Ui::MainWindow* ui;
-    QSettings* _settings;
-
-  private slots:
+    QSettings* _settings = nullptr;
+    // makes HTTP calls to the server and processes received data
+    JTTP* jttp                 = nullptr;
+    MainWindowManager* manager = nullptr;
 };
 #endif // MAINWINDOW_H
