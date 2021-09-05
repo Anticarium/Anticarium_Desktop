@@ -26,7 +26,6 @@ class MainWindow : public QMainWindow {
 
   private:
     Ui::MainWindow* ui;
-    QSettings* settings = nullptr;
     // makes HTTP calls to the server and processes received data
     JTTP* jttp                 = nullptr;
     MainWindowManager* manager = nullptr;

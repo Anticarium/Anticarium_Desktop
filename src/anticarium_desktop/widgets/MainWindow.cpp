@@ -3,16 +3,10 @@
 #include <QDebug>
 
 
-MainWindow::MainWindow(QWidget* parent)
-: QMainWindow(parent), ui(new Ui::MainWindow),
-  settings(new QSettings(QSettings::Format::IniFormat, QSettings::Scope::SystemScope, QCoreApplication::organizationName(), QCoreApplication::applicationName())) {
-    // instanciate the singleton
-    jttp = JTTP::getInstance();
-
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
-    // updates displayed values
-    //    connect(jttp, &JTTP::updateSensorDisplay, homeTab, &HomeTab::updateSensorDisplay);
+    manager = new MainWindowManager(this);
+    connect(manager, &MainWindowManager::displayDataEvent, this, &MainWindow::onSensorDataUpdate);
 }
 
 MainWindow::~MainWindow() {

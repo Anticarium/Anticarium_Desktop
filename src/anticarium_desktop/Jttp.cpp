@@ -14,11 +14,11 @@ JTTP::JTTP(QObject* parent) : QObject(parent) {
 
 JTTP* JTTP::jttp = nullptr;
 
-JTTP* JTTP::getInstance() {
+JTTP* JTTP::instance() {
     return jttp;
 }
 
-JTTP* JTTP::getInstance(QObject* parent) {
+JTTP* JTTP::instance(QObject* parent) {
     if (jttp == nullptr) {
         jttp = new JTTP(parent);
     }
@@ -26,24 +26,28 @@ JTTP* JTTP::getInstance(QObject* parent) {
 }
 
 void JTTP::onDataArrived(QNetworkReply* reply) {
+    QString content = "";
     // checks if reply contains legitimate data
     if (reply->error()) {
         qDebug() << "QNetworkError: " << reply->errorString();
         return;
     } else {
-        qDebug() << reply->rawHeader("Content description");
+        content = reply->rawHeader("Anticarium content description");
     }
+
 
     // reads reply into QString
     QString answer = reply->readAll();
     // parses to json object
-    std::string jString = answer.toStdString();
-    nlohmann::json j    = nlohmann::json::parse(jString);
+    nlohmann::json j = nlohmann::json::parse(answer.toStdString());
 
-    // updates main window
-    emit getSensorDataEvent(j);
+    if (content == "Sensor data") {
+        shared_types::SensorData sensorData = j;
+        emit dataReceivedEvent(sensorData);
+    }
 }
 
+// TODO send passed model as json
 void JTTP::onSendData(const shared_types::Control& control) {
     executeGet(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA);
 }

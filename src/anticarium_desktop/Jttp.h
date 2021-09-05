@@ -8,9 +8,8 @@
 #include <QNetworkRequest>
 #include <QTimer>
 #include <nlohmann/json.hpp>
+#include <shared_types/SensorDataSerializer.hpp>.h>
 #include <shared_types/TerrariumDataSerializer.hpp>
-
-;
 
 class JTTP : public QObject {
     Q_OBJECT
@@ -22,9 +21,9 @@ class JTTP : public QObject {
     void operator=(const JTTP&) = delete;
 
     // Constructs and returns pointer to objet
-    static JTTP* getInstance(QObject* parent);
+    static JTTP* instance(QObject* parent);
     // Returns pointer to object
-    static JTTP* getInstance();
+    static JTTP* instance();
 
   private:
     // private constructor for singleton
@@ -36,9 +35,7 @@ class JTTP : public QObject {
 
     // HTTP communication objects
     QNetworkAccessManager* networkAccessManager;
-
     QNetworkRequest networkRequest;
-
     QNetworkReply* sensorReply;
 
     QMap<REQUEST_DATA, QString> requestDataMap = { { REQUEST_DATA::CONTROL_DATA, "control_data" }, { REQUEST_DATA::SENSOR_DATA, "sensor_data" }, { REQUEST_DATA::TERRARIUM_DATA, "terrarium_data" },
@@ -50,7 +47,7 @@ class JTTP : public QObject {
     void executeGet(REQUEST_TYPE requestType, REQUEST_DATA requestData);
 
   signals:
-    void getSensorDataEvent(const nlohmann::json& jData);
+    void dataReceivedEvent(const shared_types::SensorData& newSensorData);
   private slots:
     void onDataArrived(QNetworkReply* reply);
   public slots:
