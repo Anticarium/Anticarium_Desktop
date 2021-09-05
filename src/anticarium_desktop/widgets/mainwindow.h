@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "jttp.h"
+#include "Jttp.h"
 #include <MainWindowManager.h>
 #include <QMainWindow>
 
@@ -25,7 +25,7 @@ class MainWindow : public QMainWindow {
 
   private:
     Ui::MainWindow* ui;
-    QSettings* _settings = nullptr;
+    QSettings* settings = nullptr;
     // makes HTTP calls to the server and processes received data
     JTTP* jttp                 = nullptr;
     MainWindowManager* manager = nullptr;

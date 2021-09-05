@@ -1,4 +1,5 @@
 # Anticarium_Desktop
+- MODIFY: Naming refactor, file names to PascalCase and variables to camelCase
 
 ## 1.0.1
 - MODIFY: Use layouts and standard qt components for gui
