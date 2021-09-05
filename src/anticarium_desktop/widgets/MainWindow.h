@@ -4,6 +4,7 @@
 #include "Jttp.h"
 #include <MainWindowManager.h>
 #include <QMainWindow>
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

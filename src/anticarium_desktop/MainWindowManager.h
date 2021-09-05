@@ -1,6 +1,7 @@
 #ifndef MAINWINDOWMANAGER_H
 #define MAINWINDOWMANAGER_H
 
+#include <Jttp.h>
 #include <QObject>
 #include <shared_types/Control.h>
 #include <shared_types/SensorData.h>
@@ -15,7 +16,7 @@ class MainWindowManager : public QObject {
     const shared_types::Control& getData() const;
 
   signals:
-    void updateEvent(const shared_types::Control& control);
+    void sendData(const shared_types::Control& control);
 };
 
 #endif // MAINWINDOWMANAGER_H

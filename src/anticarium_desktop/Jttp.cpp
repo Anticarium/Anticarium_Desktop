@@ -1,47 +1,37 @@
 #include "Jttp.h"
 
-JTTP::JTTP(QObject* parent, QSettings* settings) : QObject(parent), dataRequestTimer(new QTimer(this)), manager(new QNetworkAccessManager(this)), sensorRequest() {
-    // connects timeout to request function and executes this function every requestTimeout millis
-    int dTM = settings->value("Data_Request_Timeout").toInt();
-    if (!dTM) {
-        qWarning() << "NO TIMEOUT WAS SET";
-    } else {
-        connect(dataRequestTimer, &QTimer::timeout, this, &JTTP::requestSensorData);
-        //        _dataRequestTimer->start(dTM);
-    }
+JTTP::JTTP(QObject* parent) : QObject(parent) {
+    networkAccessManager = new QNetworkAccessManager(this);
+    dataRequestTimer     = new QTimer(this);
 
-    // creates request for sensor data
-    QString sensorString = settings->value("Server_URL").toString() + settings->value("Sensor_Data_Link").toString();
-    //    _sensorRequest.setUrl(QUrl(sensorString));
+    networkRequest.setUrl(QUrl("http://127.0.0.1:5000/"));
 
-    //    _sensorRequest.setRawHeader("Data request", "Anticarium User");
-    //    _sensorRequest.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    connect(networkAccessManager, &QNetworkAccessManager::finished, this, &JTTP::onDataArrived);
+    //    connect(dataRequestTimer, &QTimer::timeout, this, &JTTP::requestSensorData);
 
-    // connects qnetworkAccessManager
-    //    connect(_manager, &QNetworkAccessManager::finished, this, &JTTP::getSensorData);
-
-    // requests data without timer for the first time
-    //    requestSensorData();
+    dataRequestTimer->start(5000);
 }
 
 JTTP* JTTP::jttp = nullptr;
 
-JTTP* JTTP::GetInstance(QObject* parent, QSettings* settings) {
+JTTP* JTTP::getInstance() {
+    return jttp;
+}
+
+JTTP* JTTP::getInstance(QObject* parent) {
     if (jttp == nullptr) {
-        jttp = new JTTP(parent, settings);
+        jttp = new JTTP(parent);
     }
     return jttp;
 }
 
-void JTTP::requestSensorData() {
-    manager->get(sensorRequest);
-}
-
-void JTTP::getSensorData(QNetworkReply* reply) {
+void JTTP::onDataArrived(QNetworkReply* reply) {
     // checks if reply contains legitimate data
     if (reply->error()) {
         qDebug() << "QNetworkError: " << reply->errorString();
         return;
+    } else {
+        qDebug() << reply->rawHeader("Content description");
     }
 
     // reads reply into QString
@@ -51,14 +41,25 @@ void JTTP::getSensorData(QNetworkReply* reply) {
     nlohmann::json j    = nlohmann::json::parse(jString);
 
     // updates main window
-    emit updateSensorDisplay(j);
-
-    reply->deleteLater();
+    emit getSensorDataEvent(j);
 }
 
+void JTTP::onSendData(const shared_types::Control& control) {
+    executeGet(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA);
+}
+
+void JTTP::onRequestData(REQUEST_DATA requestType) {
+    executeGet(REQUEST_TYPE::REQUEST, requestType);
+}
+
+void JTTP::executeGet(REQUEST_TYPE requestType, REQUEST_DATA requestData) {
+    QString requestTypeString = requestTypeMap[requestType];
+    QString requestDataString = requestDataMap[requestData];
+    QString url               = QString("http://127.0.0.1:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
+    networkRequest.setUrl(url);
+    networkAccessManager->get(networkRequest);
+}
+
+
 JTTP::~JTTP() {
-    delete sensorReply;
-    delete manager;
-    delete jttp;
-    delete dataRequestTimer;
 }
