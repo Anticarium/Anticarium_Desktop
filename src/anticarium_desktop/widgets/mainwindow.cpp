@@ -25,6 +25,11 @@ void MainWindow::onSetupData(const shared_types::TerrariumData& terrariumData) {
 }
 
 void MainWindow::onControlUpdate(const shared_types::Control& control) {
+    ui->windSlider->setValue(control.getWindPercentage());
+    ui->lightSlider->setValue(control.getLightPercentage());
+    ui->heatToggle->setChecked(control.isHeating());
+    ui->rainToggle->setChecked(control.isRaining());
+    ui->autoToggle->setChecked(control.isAuto());
 }
 
 void MainWindow::onSensorDataUpdate(const shared_types::SensorData& sensorData) {

@@ -25,7 +25,6 @@ add_library(${TARGET_NAME}
     ${HEADER_FILES}
     ${SOURCE_FILES}
     ${FORMS}
-    anticarium_desktop/resources.qrc
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/anticarium_desktop)

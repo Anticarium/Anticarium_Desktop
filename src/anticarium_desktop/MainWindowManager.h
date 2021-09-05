@@ -11,7 +11,7 @@ class MainWindowManager : public QObject {
   public:
     MainWindowManager(QObject* parent = nullptr);
     // updates displayed values
-    void sendData(const shared_types::Control& control);
+    void sendControlData(const shared_types::Control& control);
     const shared_types::Control& getData() const;
 
   signals:
