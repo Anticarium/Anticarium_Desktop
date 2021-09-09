@@ -1,11 +1,11 @@
-#include "widgets/mainwindow.h"
+#include <Jttp.h>
 #include <QApplication>
+#include <widgets/MainWindow.h>
 
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
-    // for Anticarium.ini
-    QCoreApplication::setOrganizationName("Team_7");
-    QCoreApplication::setApplicationName("Anticarium");
+
+    JTTP::instance(QCoreApplication::instance());
 
     MainWindow w;
     w.show();

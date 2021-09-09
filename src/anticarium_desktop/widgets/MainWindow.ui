@@ -202,6 +202,17 @@
        </spacer>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QCheckBox" name="autoToggle">
+          <property name="text">
+           <string>Auto</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QWidget" name="RainButtonWidget" native="true">
@@ -218,7 +229,7 @@
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="../resources.qrc">:/icons/assets/icons/Invert_Colors_Icon_1.png</pixmap>
+              <pixmap resource="../Resources.qrc">:/icons/assets/icons/Invert_Colors_Icon_1.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>false</bool>
@@ -262,7 +273,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../resources.qrc">:/icons/assets/icons/Local_Fire_Department_Icon_1.png</pixmap>
+                <pixmap resource="../Resources.qrc">:/icons/assets/icons/Local_Fire_Department_Icon_1.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -297,7 +308,7 @@
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap resource="../resources.qrc">:/icons/assets/icons/Waves_Icon_1.png</pixmap>
+              <pixmap resource="../Resources.qrc">:/icons/assets/icons/Waves_Icon_1.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>false</bool>
@@ -347,7 +358,7 @@
                 <string/>
                </property>
                <property name="pixmap">
-                <pixmap resource="../resources.qrc">:/icons/assets/icons/Lightbulb_Outline_Icon_1.png</pixmap>
+                <pixmap resource="../Resources.qrc">:/icons/assets/icons/Lightbulb_Outline_Icon_1.png</pixmap>
                </property>
                <property name="scaledContents">
                 <bool>true</bool>
@@ -378,17 +389,6 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_9">
-        <item>
-         <widget class="QCheckBox" name="autoToggle">
-          <property name="text">
-           <string>Auto</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -414,7 +414,7 @@
      <x>0</x>
      <y>0</y>
      <width>926</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHome">
@@ -443,7 +443,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../resources.qrc"/>
+  <include location="../Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

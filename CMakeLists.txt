@@ -11,7 +11,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(ExternLibs)
 include(FetchContent)
 
-FILE(READ VERSION CURRENT_VERSION)
+file(READ VERSION CURRENT_VERSION)
 project(${TARGET_NAME} VERSION ${CURRENT_VERSION})
 message(STATUS "Adding ${TARGET_NAME} v${CURRENT_VERSION}")
 configure_file(VersionConfig.h.in ${TARGET_NAME}_VersionConfig.h)
