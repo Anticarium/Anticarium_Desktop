@@ -20,14 +20,16 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
 
   public slots:
-    void onSetupData(const shared_types::TerrariumData& terrariumData);
-    void onControlUpdate(const shared_types::Control& control);
-    void onSensorDataUpdate(const shared_types::SensorData& sensorData);
+    void displayData(const shared_types::TerrariumData& terrariumData);
+    void displayData(const shared_types::Control& control);
+    void displayData(const shared_types::SensorData& sensorData);
 
   private:
     Ui::MainWindow* ui;
     // makes HTTP calls to the server and processes received data
     JTTP* jttp                 = nullptr;
     MainWindowManager* manager = nullptr;
+    void connectUiInputs();
+    void disconnectUiInputs();
 };
 #endif // MAINWINDOW_H

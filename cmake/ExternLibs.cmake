@@ -17,26 +17,26 @@ function(ADDGTEST TARGET_NAME)
 	gtest_discover_tests(${TARGET_NAME})
 endfunction()
 
-function(ADDQT6CORE TARGET_NAME)
-	find_package(Qt6 COMPONENTS Core REQUIRED)
-	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::Core)
+function(ADDQT5CORE TARGET_NAME)
+	find_package(Qt5 COMPONENTS Core REQUIRED)
+	target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Core)
 endfunction()
 
-function(ADDQT6WIDGETS TARGET_NAME)
-	find_package(Qt6 COMPONENTS Widgets REQUIRED)
-	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::Widgets)
+function(ADDQT5WIDGETS TARGET_NAME)
+	find_package(Qt5 COMPONENTS Widgets REQUIRED)
+	target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets)
 endfunction()
 
-function(ADDQT6NETWORK TARGET_NAME)
-	find_package(Qt6 COMPONENTS Network REQUIRED)
-	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::Network)
+function(ADDQT5NETWORK TARGET_NAME)
+	find_package(Qt5 COMPONENTS Network REQUIRED)
+	target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Network)
 endfunction()
 
 function(FETCHSHAREDTYPES)
 	FetchContent_Declare(
 	  shared_types
 	  GIT_REPOSITORY https://github.com/Anticarium/Shared_Types.git
-	  GIT_TAG        v1.1.2
+	  GIT_TAG        v1.1.3
 	)
 
 	FetchContent_GetProperties(shared_types)

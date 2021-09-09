@@ -8,7 +8,7 @@
 #include <QNetworkRequest>
 #include <QTimer>
 #include <nlohmann/json.hpp>
-#include <shared_types/SensorDataSerializer.hpp>.h>
+#include <shared_types/SensorDataSerializer.hpp>
 #include <shared_types/TerrariumDataSerializer.hpp>
 
 class JTTP : public QObject {
@@ -43,11 +43,14 @@ class JTTP : public QObject {
 
     QMap<REQUEST_TYPE, QString> requestTypeMap = { { REQUEST_TYPE::REQUEST, "request" }, { REQUEST_TYPE::SEND, "send" } };
 
-    // Builds url and does HTTP GET
-    void executeGet(REQUEST_TYPE requestType, REQUEST_DATA requestData);
+    // Builds url and does HTTP GET or POST
+    void httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson = nlohmann::json());
 
+    // POST data
+    void post(QNetworkAccessManager* accessManager, const QNetworkRequest& networkRequest, const nlohmann::json& passedJson);
   signals:
     void dataReceivedEvent(const shared_types::SensorData& newSensorData);
+    void dataReceivedEvent(const shared_types::TerrariumData& newSensorData);
   private slots:
     void onDataArrived(QNetworkReply* reply);
   public slots:

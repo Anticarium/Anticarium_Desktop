@@ -1,15 +1,9 @@
 #include "Jttp.h"
+#include <QHttpMultiPart>
 
 JTTP::JTTP(QObject* parent) : QObject(parent) {
     networkAccessManager = new QNetworkAccessManager(this);
-    dataRequestTimer     = new QTimer(this);
-
-    networkRequest.setUrl(QUrl("http://127.0.0.1:5000/"));
-
     connect(networkAccessManager, &QNetworkAccessManager::finished, this, &JTTP::onDataArrived);
-    //    connect(dataRequestTimer, &QTimer::timeout, this, &JTTP::requestSensorData);
-
-    dataRequestTimer->start(5000);
 }
 
 JTTP* JTTP::jttp = nullptr;
@@ -35,33 +29,52 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
         content = reply->rawHeader("Anticarium content description");
     }
 
-
     // reads reply into QString
     QString answer = reply->readAll();
-    // parses to json object
-    nlohmann::json j = nlohmann::json::parse(answer.toStdString());
-
+    nlohmann::json jsonReply;
     if (content == "Sensor data") {
-        shared_types::SensorData sensorData = j;
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::SensorData sensorData = jsonReply;
         emit dataReceivedEvent(sensorData);
+        return;
+    } else if (content == "Terrarium data") {
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::TerrariumData terrariumData = jsonReply;
+        emit dataReceivedEvent(terrariumData);
+        return;
     }
 }
 
-// TODO send passed model as json
 void JTTP::onSendData(const shared_types::Control& control) {
-    executeGet(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA);
+    httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA, control);
 }
 
 void JTTP::onRequestData(REQUEST_DATA requestType) {
-    executeGet(REQUEST_TYPE::REQUEST, requestType);
+    httpSend(REQUEST_TYPE::REQUEST, requestType);
 }
 
-void JTTP::executeGet(REQUEST_TYPE requestType, REQUEST_DATA requestData) {
+void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
     QString requestTypeString = requestTypeMap[requestType];
     QString requestDataString = requestDataMap[requestData];
     QString url               = QString("http://127.0.0.1:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
+    QNetworkRequest networkRequest;
     networkRequest.setUrl(url);
-    networkAccessManager->get(networkRequest);
+
+    if (requestType == REQUEST_TYPE::SEND) {
+        post(networkAccessManager, networkRequest, passedJson);
+    } else if (requestType == REQUEST_TYPE::REQUEST) {
+        networkAccessManager->get(networkRequest);
+    }
+}
+
+void JTTP::post(QNetworkAccessManager* accessManager, const QNetworkRequest& networkRequest, const nlohmann::json& passedJson) {
+    QHttpMultiPart* httpMultiPart = new QHttpMultiPart(this);
+    QHttpPart http;
+    http.setBody(QString::fromStdString(passedJson.dump()).toUtf8());
+    httpMultiPart->append(http);
+    accessManager->post(networkRequest, httpMultiPart);
 }
 
 
