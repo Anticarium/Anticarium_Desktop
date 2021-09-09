@@ -1,6 +1,7 @@
 # Anticarium_Desktop
 
 # 1.1.0
+- MODIFY: shared_types v1.1.3
 - ADD: Use shared_types serializers in JTTP http requests
 - MODIFY: Downgrade to Qt5
 - ADD: Send input data to server
