@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include "Jttp.h"
 #include <MainWindowManager.h>
@@ -32,4 +31,3 @@ class MainWindow : public QMainWindow {
     void connectUiInputs();
     void disconnectUiInputs();
 };
-#endif // MAINWINDOW_H

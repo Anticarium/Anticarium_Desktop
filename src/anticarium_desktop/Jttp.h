@@ -1,13 +1,9 @@
-#ifndef JTTP_H
-#define JTTP_H
+#pragma once
 
-#include <QErrorMessage>
 #include <QMap>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QTimer>
-#include <nlohmann/json.hpp>
 #include <shared_types/SensorDataSerializer.hpp>
 #include <shared_types/TerrariumDataSerializer.hpp>
 
@@ -30,13 +26,10 @@ class JTTP : public QObject {
     JTTP(QObject* parent = nullptr);
     static JTTP* jttp;
     ~JTTP();
-    // timer object that pings server for new data every now and then
-    QTimer* dataRequestTimer;
 
     // HTTP communication objects
-    QNetworkAccessManager* networkAccessManager;
+    QNetworkAccessManager* networkAccessManager = nullptr;
     QNetworkRequest networkRequest;
-    QNetworkReply* sensorReply;
 
     QMap<REQUEST_DATA, QString> requestDataMap = { { REQUEST_DATA::CONTROL_DATA, "control_data" }, { REQUEST_DATA::SENSOR_DATA, "sensor_data" }, { REQUEST_DATA::TERRARIUM_DATA, "terrarium_data" },
         { REQUEST_DATA::CURRENT_REGIME_DATA, "current_regime_data" } };
@@ -57,5 +50,3 @@ class JTTP : public QObject {
     void onSendData(const shared_types::Control& control);
     void onRequestData(REQUEST_DATA requestType);
 };
-
-#endif // JTTP_H
