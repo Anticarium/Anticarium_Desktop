@@ -1,7 +1,7 @@
 #ifndef MAINWINDOWMANAGER_H
 #define MAINWINDOWMANAGER_H
 
-#include <Jttp.h>
+#include <anticarium_desktop/Jttp.h>
 #include <shared_types/Control.h>
 #include <shared_types/SensorData.h>
 #include <shared_types/TerrariumData.h>
@@ -20,8 +20,8 @@ class MainWindowManager : public QObject {
   public slots:
     // slots for interface input
     void onAutoCheckBoxChanged(int state);
-    void onRainToggleCheckBoxChanged(int state);
-    void onHeatToggleCheckBoxChanged(int state);
+    void onMoistureSliderMoved(int value);
+    void onHeatSliderMoved(int value);
     void onWindSliderMoved(int value);
     void onLightSliderMoved(int value);
 

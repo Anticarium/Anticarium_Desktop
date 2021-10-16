@@ -1,5 +1,5 @@
-#include "Jttp.h"
 #include <QHttpMultiPart>
+#include <anticarium_desktop/Jttp.h>
 
 JTTP::JTTP(QObject* parent) : QObject(parent) {
     networkAccessManager = new QNetworkAccessManager(this);

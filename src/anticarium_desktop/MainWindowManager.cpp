@@ -1,5 +1,6 @@
-#include "MainWindowManager.h"
 #include <QTimer>
+#include <anticarium_desktop/MainWindowManager.h>
+#include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
     JTTP* jttp         = JTTP::instance();
@@ -27,13 +28,13 @@ void MainWindowManager::onAutoCheckBoxChanged(int state) {
     sendData(control);
 }
 
-void MainWindowManager::onRainToggleCheckBoxChanged(int state) {
-    control.setIsRaining(state);
+void MainWindowManager::onMoistureSliderMoved(int value) {
+    control.setMoisturePercentage(value);
     sendData(control);
 }
 
-void MainWindowManager::onHeatToggleCheckBoxChanged(int state) {
-    control.setIsHeating(state);
+void MainWindowManager::onHeatSliderMoved(int value) {
+    control.setTemperature(value / MainWindow::SLIDER_MULTIPLIER);
     sendData(control);
 }
 

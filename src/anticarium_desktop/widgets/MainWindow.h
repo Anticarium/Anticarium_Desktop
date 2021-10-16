@@ -1,7 +1,7 @@
 #pragma once
 
-#include <MainWindowManager.h>
 #include <QMainWindow>
+#include <anticarium_desktop/MainWindowManager.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow {
   public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
-
+    static const int SLIDER_MULTIPLIER = 10;
   public slots:
     void displayData(const shared_types::TerrariumData& terrariumData);
     void displayData(const shared_types::Control& control);
