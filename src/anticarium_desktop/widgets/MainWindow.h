@@ -21,6 +21,8 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::Control& control);
     void displayData(const shared_types::SensorData& sensorData);
     void displayData(const shared_types::RegimeName& regimeName);
+    void displayData(const shared_types::Regime& regime);
+    void displayData(const shared_types::RegimeValue& regimeValue);
 
   private:
     Ui::MainWindow* ui;

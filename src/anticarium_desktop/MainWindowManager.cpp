@@ -6,12 +6,14 @@ MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
     JTTP* jttp         = JTTP::instance();
     QTimer* fetchTimer = new QTimer(this);
 
-    connect(this, &MainWindowManager::sendDataEvent, jttp, &JTTP::onSendData);
+    connect(this, qOverload<const shared_types::Control&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::Control&>(&JTTP::onSendData));
+    connect(this, qOverload<const shared_types::RegimeName&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::RegimeName&>(&JTTP::onSendData));
     connect(fetchTimer, &QTimer::timeout, jttp, [&]() { emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA); });
     connect(this, &MainWindowManager::requestDataEvent, jttp, &JTTP::onRequestData);
     connect(jttp, qOverload<const shared_types::Regimes&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::RegimeName&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::SensorData&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::Control&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::Control&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Control&>(&MainWindowManager::onDataReceived));
     fetchTimer->start(5000);
@@ -46,6 +48,13 @@ void MainWindowManager::onWindSliderMoved(int value) {
 void MainWindowManager::onLightSliderMoved(int value) {
     control.setLightPercentage(value);
     sendData(control);
+}
+
+void MainWindowManager::onRegimeListChoice(const QString& currentText) {
+    shared_types::RegimeName regimeName;
+    regimeName.setName(currentText);
+    emit sendDataEvent(regimeName);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
 }
 
 void MainWindowManager::onDataReceived(const shared_types::Control& control) {

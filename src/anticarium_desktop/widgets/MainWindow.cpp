@@ -8,6 +8,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Control&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regime&>(&MainWindow::displayData));
+    connect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
     connectUiInputs();
 }
 
@@ -19,13 +21,21 @@ void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
     ui->modeLabel->setText(regimeName.getName());
 }
 
+void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
+    ui->heatSlider->setValue(regimeValue.getTemperature() * SLIDER_MULTIPLIER);
+    ui->moistureSlider->setValue(regimeValue.getMoisture());
+}
+
+void MainWindow::displayData(const shared_types::Regime& regime) {
+    displayData(regime.getRegimeName());
+    displayData(regime.getRegimeValue());
+}
+
 void MainWindow::displayData(const shared_types::Control& control) {
     disconnectUiInputs();
     ui->windSlider->setValue(control.getWindPercentage());
     ui->lightSlider->setValue(control.getLightPercentage());
-    ui->heatSlider->setValue(control.getRegimeValue().getTemperature() * SLIDER_MULTIPLIER);
-    ui->moistureSlider->setValue(control.getRegimeValue().getMoisture());
-
+    displayData(control.getRegimeValue());
     connectUiInputs();
 }
 

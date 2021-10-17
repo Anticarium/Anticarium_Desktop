@@ -2,6 +2,7 @@
 #include <anticarium_desktop/Jttp.h>
 #include <shared_types/ControlSerializer.hpp>
 #include <shared_types/RegimeNameSerializer.hpp>
+#include <shared_types/RegimeSerializer.hpp>
 #include <shared_types/RegimesSerializer.hpp>
 #include <shared_types/SensorDataSerializer.hpp>
 
@@ -56,11 +57,20 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::RegimeName regimeName = jsonReply;
         emit dataReceivedEvent(regimeName);
+    } else if (content == "Regime") {
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::Regime regime = jsonReply;
+        emit dataReceivedEvent(regime);
     }
 }
 
 void JTTP::onSendData(const shared_types::Control& control) {
     httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA, control);
+}
+
+void JTTP::onSendData(const shared_types::RegimeName& regimeName) {
+    httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::REGIME_NAME, regimeName);
 }
 
 void JTTP::onRequestData(REQUEST_DATA requestType) {
