@@ -35,7 +35,11 @@ void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
 }
 
 void MainWindow::onEnableSaveButton(int value) {
+    disconnectUiInputs();
     ui->saveButton->setEnabled(true);
+    ui->modeLabel->setText("Custom");
+    ui->regimeList->setCurrentIndex(-1);
+    connectUiInputs();
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {
@@ -86,7 +90,9 @@ void MainWindow::connectUiInputs() {
 
 void MainWindow::disconnectUiInputs() {
     disconnect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
+    disconnect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     disconnect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
+    disconnect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     disconnect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     disconnect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
     disconnect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
