@@ -1,5 +1,13 @@
 # Anticarium_Desktop
 
+- MODIFY: shared_types v1.2.0
+- ADD: Save button with ui functionality
+- MODIFY: Sliders for all MainWindow main inputs
+- ADD: QComboBox for regimes display and choosing
+- ADD: Text to display slider values
+- ADD: Send regime data to server
+- REMOVE: Auto checkbox
+
 # 1.1.0
 - MODIFY: shared_types v1.1.3
 - ADD: Use shared_types serializers in JTTP http requests
