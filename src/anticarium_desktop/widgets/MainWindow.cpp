@@ -42,6 +42,25 @@ void MainWindow::onEnableSaveButton(int value) {
     connectUiInputs();
 }
 
+void MainWindow::onMoistureSliderMoved(int value) {
+    ui->moistureLabel->setText(QString("%1%").arg(QString::number(value)));
+}
+
+void MainWindow::onHeatSliderMoved(int value) {
+    QString stringValue;
+    float displayFloat = value / static_cast<float>(SLIDER_MULTIPLIER);
+    stringValue.sprintf("%.1f°C", displayFloat);
+    ui->heatLabel->setText(stringValue);
+}
+
+void MainWindow::onWindSliderMoved(int value) {
+    ui->windLabel->setText(QString("%1%").arg(QString::number(value)));
+}
+
+void MainWindow::onLightSliderMoved(int value) {
+    ui->lightLabel->setText(QString("%1%").arg(QString::number(value)));
+}
+
 void MainWindow::displayData(const shared_types::Regime& regime) {
     displayData(regime.getRegimeName());
     displayData(regime.getRegimeValue());
@@ -80,11 +99,15 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
 
 void MainWindow::connectUiInputs() {
     connect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
+    connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onMoistureSliderMoved);
     connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
+    connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onHeatSliderMoved);
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
+    connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
     connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
+    connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
     connect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
 }
 

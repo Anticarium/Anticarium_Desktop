@@ -25,6 +25,10 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::RegimeValue& regimeValue);
   private slots:
     void onEnableSaveButton(int value);
+    void onMoistureSliderMoved(int value);
+    void onHeatSliderMoved(int value);
+    void onWindSliderMoved(int value);
+    void onLightSliderMoved(int value);
 
   private:
     Ui::MainWindow* ui;
