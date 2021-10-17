@@ -17,9 +17,10 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
     static const int SLIDER_MULTIPLIER = 10;
   public slots:
-    void displayData(const shared_types::TerrariumData& terrariumData);
+    void displayData(const shared_types::Regimes& regimes);
     void displayData(const shared_types::Control& control);
     void displayData(const shared_types::SensorData& sensorData);
+    void displayData(const shared_types::RegimeName& regimeName);
 
   private:
     Ui::MainWindow* ui;

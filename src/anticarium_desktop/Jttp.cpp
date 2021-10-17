@@ -1,5 +1,9 @@
 #include <QHttpMultiPart>
 #include <anticarium_desktop/Jttp.h>
+#include <shared_types/ControlSerializer.hpp>
+#include <shared_types/RegimeNameSerializer.hpp>
+#include <shared_types/RegimesSerializer.hpp>
+#include <shared_types/SensorDataSerializer.hpp>
 
 JTTP::JTTP(QObject* parent) : QObject(parent) {
     networkAccessManager = new QNetworkAccessManager(this);
@@ -37,13 +41,21 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::SensorData sensorData = jsonReply;
         emit dataReceivedEvent(sensorData);
-        return;
-    } else if (content == "Terrarium data") {
+    } else if (content == "Control") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
-        shared_types::TerrariumData terrariumData = jsonReply;
-        emit dataReceivedEvent(terrariumData);
-        return;
+        shared_types::Control control = jsonReply;
+        emit dataReceivedEvent(control);
+    } else if (content == "Regimes") {
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::Regimes regimes = jsonReply;
+        emit dataReceivedEvent(regimes);
+    } else if (content == "Regime name") {
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::RegimeName regimeName = jsonReply;
+        emit dataReceivedEvent(regimeName);
     }
 }
 
