@@ -1,6 +1,6 @@
-#include <Jttp.h>
 #include <QApplication>
-#include <widgets/MainWindow.h>
+#include <anticarium_desktop/Jttp.h>
+#include <anticarium_desktop/widgets/MainWindow.h>
 
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);

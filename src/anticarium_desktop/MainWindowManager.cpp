@@ -1,20 +1,9 @@
-#include "MainWindowManager.h"
+#include <QCoreApplication>
 #include <QTimer>
+#include <anticarium_desktop/MainWindowManager.h>
+#include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
-    JTTP* jttp         = JTTP::instance();
-    QTimer* fetchTimer = new QTimer(this);
-
-    connect(this, &MainWindowManager::sendDataEvent, jttp, &JTTP::onSendData);
-    connect(fetchTimer, &QTimer::timeout, jttp, [&]() { emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA); });
-    connect(this, &MainWindowManager::requestDataEvent, jttp, &JTTP::onRequestData);
-    connect(jttp, qOverload<const shared_types::SensorData&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent));
-    connect(jttp, qOverload<const shared_types::TerrariumData&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::TerrariumData&>(&MainWindowManager::displayDataEvent));
-    connect(jttp, qOverload<const shared_types::TerrariumData&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::TerrariumData&>(&MainWindowManager::onDataReceived));
-    fetchTimer->start(5000);
-
-    // Request data for the first time on first time loading
-    emit requestDataEvent(JTTP::REQUEST_DATA::TERRARIUM_DATA);
 }
 
 void MainWindowManager::sendData(const shared_types::Control& control) {
@@ -22,18 +11,35 @@ void MainWindowManager::sendData(const shared_types::Control& control) {
     emit sendDataEvent(control);
 }
 
-void MainWindowManager::onAutoCheckBoxChanged(int state) {
-    control.setIsAuto(state);
+void MainWindowManager::initialize() {
+    JTTP* jttp         = JTTP::instance();
+    QTimer* fetchTimer = new QTimer(this);
+    connect(this, qOverload<const shared_types::Control&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::Control&>(&JTTP::onSendData));
+    connect(this, qOverload<const shared_types::RegimeName&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::RegimeName&>(&JTTP::onSendData));
+    connect(fetchTimer, &QTimer::timeout, jttp, [&]() { emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA); });
+    connect(this, &MainWindowManager::requestDataEvent, jttp, &JTTP::onRequestData);
+    connect(jttp, qOverload<const shared_types::Regimes&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::RegimeName&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::SensorData&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::Control&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent));
+    connect(jttp, qOverload<const shared_types::Control&>(&JTTP::dataReceivedEvent), this, qOverload<const shared_types::Control&>(&MainWindowManager::onDataReceived));
+    fetchTimer->start(5000);
+
+    // Request data for the first time on first time loading
+    emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_NAME);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+    emit requestDataEvent(JTTP::REQUEST_DATA::CONTROL_DATA);
+}
+
+void MainWindowManager::onMoistureSliderMoved(int value) {
+    control.getRegimeValue().setMoisture(value);
     sendData(control);
 }
 
-void MainWindowManager::onRainToggleCheckBoxChanged(int state) {
-    control.setIsRaining(state);
-    sendData(control);
-}
-
-void MainWindowManager::onHeatToggleCheckBoxChanged(int state) {
-    control.setIsHeating(state);
+void MainWindowManager::onHeatSliderMoved(int value) {
+    control.getRegimeValue().setTemperature(value / MainWindow::SLIDER_MULTIPLIER);
     sendData(control);
 }
 
@@ -47,6 +53,13 @@ void MainWindowManager::onLightSliderMoved(int value) {
     sendData(control);
 }
 
-void MainWindowManager::onDataReceived(const shared_types::TerrariumData& terrariumData) {
-    control = terrariumData.getControl();
+void MainWindowManager::onRegimeListChoice(const QString& currentText) {
+    shared_types::RegimeName regimeName;
+    regimeName.setName(currentText);
+    emit sendDataEvent(regimeName);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+}
+
+void MainWindowManager::onDataReceived(const shared_types::Control& control) {
+    this->control = control;
 }

@@ -25,7 +25,7 @@ add_library(${TARGET_NAME}
     ${FORMS}
 )
 
-target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/anticarium_desktop)
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 ADDQT5CORE(${TARGET_NAME})
 ADDQT5WIDGETS(${TARGET_NAME})

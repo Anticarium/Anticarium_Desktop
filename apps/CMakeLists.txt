@@ -8,7 +8,7 @@ add_executable(${TARGET_NAME}
     ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/Resources.qrc
 )
 
-target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src/anticarium_desktop)
+target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(${TARGET_NAME} PRIVATE anticarium_desktop_lib)
 ADDQT5CORE(${TARGET_NAME})
 ADDQT5WIDGETS(${TARGET_NAME})
