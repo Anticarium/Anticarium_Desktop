@@ -4,9 +4,7 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-}
 
-void MainWindow::initialize() {
     manager = new MainWindowManager(this);
     connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Control&>(&MainWindow::displayData));
@@ -25,7 +23,6 @@ MainWindow::~MainWindow() {
 void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
     disconnectUiInputs();
     ui->modeLabel->setText(regimeName.getName());
-
     connectUiInputs();
 }
 
@@ -65,11 +62,10 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
         ui->regimeList->addItem(i);
     }
 
-    int regimeListId = ui->regimeList->findData(ui->modeLabel->text());
+    int regimeListId = ui->regimeList->findText(ui->modeLabel->text());
     if (regimeListId != -1) {
         ui->regimeList->setCurrentIndex(regimeListId);
     }
-
     connectUiInputs();
 }
 

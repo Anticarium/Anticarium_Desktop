@@ -14,7 +14,6 @@ class MainWindow : public QMainWindow {
 
   public:
     MainWindow(QWidget* parent = nullptr);
-    void initialize();
     ~MainWindow();
     static const int SLIDER_MULTIPLIER = 10;
   public slots:
