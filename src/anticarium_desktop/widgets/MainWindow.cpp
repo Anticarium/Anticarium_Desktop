@@ -31,6 +31,11 @@ void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
     ui->heatSlider->setValue(regimeValue.getTemperature() * SLIDER_MULTIPLIER);
     ui->moistureSlider->setValue(regimeValue.getMoisture());
     connectUiInputs();
+    ui->saveButton->setEnabled(false);
+}
+
+void MainWindow::onEnableSaveButton(int value) {
+    ui->saveButton->setEnabled(true);
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {
@@ -71,7 +76,9 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
 
 void MainWindow::connectUiInputs() {
     connect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
+    connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
+    connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
     connect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);

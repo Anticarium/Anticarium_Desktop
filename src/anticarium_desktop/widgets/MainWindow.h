@@ -23,6 +23,8 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::RegimeName& regimeName);
     void displayData(const shared_types::Regime& regime);
     void displayData(const shared_types::RegimeValue& regimeValue);
+  private slots:
+    void onEnableSaveButton(int value);
 
   private:
     Ui::MainWindow* ui;
