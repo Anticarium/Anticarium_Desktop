@@ -1,6 +1,5 @@
-#include "ui_mainwindow.h"
-#include <QDebug>
 #include <anticarium_desktop/widgets/MainWindow.h>
+#include <ui_MainWindow.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
