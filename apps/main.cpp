@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
     JTTP::instance(QCoreApplication::instance());
 
     MainWindow w;
+    w.initialize();
     w.show();
     return a.exec();
 }

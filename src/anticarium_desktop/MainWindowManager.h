@@ -12,7 +12,7 @@ class MainWindowManager : public QObject {
   public:
     MainWindowManager(QObject* parent = nullptr);
     void sendData(const shared_types::Control& control);
-
+    void initialize();
   signals:
     void sendDataEvent(const shared_types::Control& control);
     void sendDataEvent(const shared_types::RegimeName& regimeName);

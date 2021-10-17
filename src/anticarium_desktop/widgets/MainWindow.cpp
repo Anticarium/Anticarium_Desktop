@@ -1,16 +1,21 @@
 #include "ui_mainwindow.h"
+#include <QDebug>
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+}
+
+void MainWindow::initialize() {
     manager = new MainWindowManager(this);
     connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Control&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regime&>(&MainWindow::displayData));
-    connect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
     connectUiInputs();
+
+    manager->initialize();
 }
 
 MainWindow::~MainWindow() {
@@ -18,12 +23,17 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
+    disconnectUiInputs();
     ui->modeLabel->setText(regimeName.getName());
+
+    connectUiInputs();
 }
 
 void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
+    disconnectUiInputs();
     ui->heatSlider->setValue(regimeValue.getTemperature() * SLIDER_MULTIPLIER);
     ui->moistureSlider->setValue(regimeValue.getMoisture());
+    connectUiInputs();
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {
@@ -40,19 +50,27 @@ void MainWindow::displayData(const shared_types::Control& control) {
 }
 
 void MainWindow::displayData(const shared_types::SensorData& sensorData) {
+    disconnectUiInputs();
     ui->temperatureValue->display(sensorData.getTemperature());
     ui->humidityValue->display(sensorData.getHumidity());
     ui->moistureValue->display(sensorData.getMoisture());
+    connectUiInputs();
 }
 
 void MainWindow::displayData(const shared_types::Regimes& regimes) {
-    disconnect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
+    disconnectUiInputs();
     ui->regimeList->clear();
     std::vector<QString> regimesVector = regimes.getRegimes();
     for (const QString& i : regimesVector) {
         ui->regimeList->addItem(i);
     }
-    connect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
+
+    int regimeListId = ui->regimeList->findData(ui->modeLabel->text());
+    if (regimeListId != -1) {
+        ui->regimeList->setCurrentIndex(regimeListId);
+    }
+
+    connectUiInputs();
 }
 
 void MainWindow::connectUiInputs() {
@@ -60,6 +78,7 @@ void MainWindow::connectUiInputs() {
     connect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
     connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
+    connect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
 }
 
 void MainWindow::disconnectUiInputs() {
@@ -67,4 +86,5 @@ void MainWindow::disconnectUiInputs() {
     disconnect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
     disconnect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     disconnect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
+    disconnect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
 }

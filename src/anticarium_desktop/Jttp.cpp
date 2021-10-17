@@ -1,3 +1,4 @@
+#include <QCoreApplication>
 #include <QHttpMultiPart>
 #include <anticarium_desktop/Jttp.h>
 #include <shared_types/ControlSerializer.hpp>
@@ -85,20 +86,15 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
     networkRequest.setUrl(url);
 
     if (requestType == REQUEST_TYPE::SEND) {
-        post(networkAccessManager, networkRequest, passedJson);
+        networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+        networkAccessManager->post(networkRequest, QByteArray::fromStdString(passedJson.dump()));
     } else if (requestType == REQUEST_TYPE::REQUEST) {
         networkAccessManager->get(networkRequest);
     }
-}
 
-void JTTP::post(QNetworkAccessManager* accessManager, const QNetworkRequest& networkRequest, const nlohmann::json& passedJson) {
-    QHttpMultiPart* httpMultiPart = new QHttpMultiPart(this);
-    QHttpPart http;
-    http.setBody(QString::fromStdString(passedJson.dump()).toUtf8());
-    httpMultiPart->append(http);
-    accessManager->post(networkRequest, httpMultiPart);
+    // Instantly process requests so they synchronously
+    QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 }
-
 
 JTTP::~JTTP() {
 }

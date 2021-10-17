@@ -1,11 +1,19 @@
+#include <QCoreApplication>
 #include <QTimer>
 #include <anticarium_desktop/MainWindowManager.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
+}
+
+void MainWindowManager::sendData(const shared_types::Control& control) {
+    this->control = control;
+    emit sendDataEvent(control);
+}
+
+void MainWindowManager::initialize() {
     JTTP* jttp         = JTTP::instance();
     QTimer* fetchTimer = new QTimer(this);
-
     connect(this, qOverload<const shared_types::Control&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::Control&>(&JTTP::onSendData));
     connect(this, qOverload<const shared_types::RegimeName&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::RegimeName&>(&JTTP::onSendData));
     connect(fetchTimer, &QTimer::timeout, jttp, [&]() { emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA); });
@@ -19,15 +27,10 @@ MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
     fetchTimer->start(5000);
 
     // Request data for the first time on first time loading
-    emit requestDataEvent(JTTP::REQUEST_DATA::CONTROL_DATA);
-    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
-    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_NAME);
     emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA);
-}
-
-void MainWindowManager::sendData(const shared_types::Control& control) {
-    this->control = control;
-    emit sendDataEvent(control);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_NAME);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+    emit requestDataEvent(JTTP::REQUEST_DATA::CONTROL_DATA);
 }
 
 void MainWindowManager::onMoistureSliderMoved(int value) {
