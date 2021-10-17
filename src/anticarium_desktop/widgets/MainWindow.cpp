@@ -46,10 +46,13 @@ void MainWindow::displayData(const shared_types::SensorData& sensorData) {
 }
 
 void MainWindow::displayData(const shared_types::Regimes& regimes) {
+    disconnect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
+    ui->regimeList->clear();
     std::vector<QString> regimesVector = regimes.getRegimes();
     for (const QString& i : regimesVector) {
         ui->regimeList->addItem(i);
     }
+    connect(ui->regimeList, &QComboBox::currentTextChanged, manager, &MainWindowManager::onRegimeListChoice);
 }
 
 void MainWindow::connectUiInputs() {
