@@ -32,6 +32,16 @@ function(ADDQT5NETWORK TARGET_NAME)
 	target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Network)
 endfunction()
 
+function(ADDSPDLOG TARGET_NAME)
+	find_package(spdlog CONFIG REQUIRED)
+    target_link_libraries(${TARGET_NAME} PRIVATE spdlog::spdlog)
+endfunction()
+
+function(ADDFMT TARGET_NAME)
+	find_package(fmt CONFIG REQUIRED)
+	target_link_libraries(${TARGET_NAME} PRIVATE fmt::fmt)
+endfunction()
+
 function(FETCHSHAREDTYPES)
 	FetchContent_Declare(
 	  shared_types
