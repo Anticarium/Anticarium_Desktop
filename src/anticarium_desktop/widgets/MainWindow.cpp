@@ -24,6 +24,7 @@ MainWindow::~MainWindow() {
 void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
     disconnectUiInputs();
     ui->modeLabel->setText(regimeName.getName());
+    updateRegimeList();
     connectUiInputs();
 }
 
@@ -108,11 +109,16 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
         ui->regimeList->addItem(i);
     }
 
+    updateRegimeList();
+
+    connectUiInputs();
+}
+
+void MainWindow::updateRegimeList() {
     int regimeListId = ui->regimeList->findText(ui->modeLabel->text());
     if (regimeListId != -1) {
         ui->regimeList->setCurrentIndex(regimeListId);
     }
-    connectUiInputs();
 }
 
 void MainWindow::connectUi() {

@@ -43,4 +43,7 @@ class MainWindow : public QMainWindow {
 
     // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
+
+    // Finds and sets element in regime list that corresponds to current regime label
+    void updateRegimeList();
 };
