@@ -2,6 +2,7 @@
 
 #include <QAbstractButton>
 #include <QDialog>
+#include <anticarium_desktop/Jttp.h>
 #include <shared_types/Regime.h>
 
 namespace Ui {
@@ -18,6 +19,7 @@ class RegimeDialog : public QDialog {
 
   signals:
     void sendDataEvent(const shared_types::Regime& regime);
+    void requestDataEvent(JTTP::REQUEST_DATA requestData);
 
   private slots:
     void saveInput(QAbstractButton* clickedButton);

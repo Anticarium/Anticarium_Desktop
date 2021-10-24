@@ -1,5 +1,4 @@
 #include <QMessageBox>
-#include <anticarium_desktop/Jttp.h>
 #include <anticarium_desktop/widgets/RegimeDialog.h>
 #include <ui_RegimeDialog.h>
 
@@ -62,7 +61,9 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
 
             JTTP* jttp = JTTP::instance();
             connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
+            connect(this, &RegimeDialog::requestDataEvent, jttp, &JTTP::onRequestData);
             emit sendDataEvent(regime);
+            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
 
             setResult(QDialog::DialogCode::Accepted);
         }
