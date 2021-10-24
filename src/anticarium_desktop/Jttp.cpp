@@ -6,6 +6,7 @@
 #include <shared_types/RegimeSerializer.hpp>
 #include <shared_types/RegimesSerializer.hpp>
 #include <shared_types/SensorDataSerializer.hpp>
+#include <spdlog/spdlog.h>
 
 JTTP::JTTP(QObject* parent) : QObject(parent) {
     networkAccessManager = new QNetworkAccessManager(this);
@@ -29,10 +30,11 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
     QString content = "";
     // checks if reply contains legitimate data
     if (reply->error()) {
-        qDebug() << "QNetworkError: " << reply->errorString();
+        SPDLOG_ERROR(QString("QNetworkError: %1").arg(reply->errorString()).toStdString());
         return;
     } else {
         content = reply->rawHeader("Anticarium content description");
+        SPDLOG_INFO(QString("Data arrived").toStdString());
     }
 
     // reads reply into QString
@@ -94,6 +96,8 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
 
     // Instantly process requests so they synchronously
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+    SPDLOG_INFO(QString("Data requested from url %1").arg(url).toStdString());
 }
 
 JTTP::~JTTP() {

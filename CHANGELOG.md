@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- ADD: spdlog logger
 - MODIFY: shared_types v1.2.0
 - ADD: Save button with ui functionality
 - MODIFY: Sliders for all MainWindow main inputs
