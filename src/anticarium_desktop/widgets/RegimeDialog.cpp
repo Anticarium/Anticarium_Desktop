@@ -3,6 +3,8 @@
 #include <anticarium_desktop/widgets/RegimeDialog.h>
 #include <ui_RegimeDialog.h>
 
+enum REGIME_DIALOG_RESULT { PROCESSING = 2 };
+
 RegimeDialog::RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent) : QDialog(parent), ui(new Ui::RegimeDialog) {
     ui->setupUi(this);
 
@@ -45,6 +47,8 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             QMessageBox* message = new QMessageBox(QMessageBox::Icon::Warning, "No regime name", "Please input regime name", QMessageBox::NoButton, this);
             message->show();
             connect(message, &QMessageBox::finished, this, [=](int result) { message->deleteLater(); });
+
+            setResult(REGIME_DIALOG_RESULT::PROCESSING);
         } else {
             shared_types::Regime regime;
             shared_types::RegimeName regimeName;
@@ -59,7 +63,17 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             JTTP* jttp = JTTP::instance();
             connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
             emit sendDataEvent(regime);
+
+            setResult(QDialog::DialogCode::Accepted);
         }
+    } else {
+        setResult(QDialog::DialogCode::Rejected);
+    }
+}
+
+void RegimeDialog::done(int r) {
+    if (result() != REGIME_DIALOG_RESULT::PROCESSING) {
+        QDialog::done(r);
     }
 }
 

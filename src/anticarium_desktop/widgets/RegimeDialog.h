@@ -23,6 +23,9 @@ class RegimeDialog : public QDialog {
     void saveInput(QAbstractButton* clickedButton);
 
   private:
+    // Closes dialog only if result code is accepted or rejected
+    void done(int r) override;
+
     // Setups widget for "New" mode
     void modeNew();
 
