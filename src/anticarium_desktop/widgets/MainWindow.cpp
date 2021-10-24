@@ -62,10 +62,7 @@ void MainWindow::onLightSliderMoved(int value) {
     ui->lightLabel->setText(QString("%1%").arg(QString::number(value)));
 }
 
-#include <QDebug>
 void MainWindow::openRegimeDialog() {
-    qDebug() << "openRegimeDialog";
-
     shared_types::RegimeValue regimeValue;
     float temperature = ui->heatSlider->value() / static_cast<float>(SLIDER_MULTIPLIER);
     regimeValue.setTemperature(temperature);
@@ -77,10 +74,9 @@ void MainWindow::openRegimeDialog() {
     regime.setRegimeValue(regimeValue);
 
     RegimeDialog* regimeDialog = new RegimeDialog(RegimeDialog::MODE::NEW, regime, this);
+    regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     regimeDialog->setModal(true);
     regimeDialog->show();
-
-    connect(regimeDialog, &RegimeDialog::finished, this, [=](int result) { regimeDialog->deleteLater(); });
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {

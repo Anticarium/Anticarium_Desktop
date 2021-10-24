@@ -45,8 +45,8 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
         if (textInput.isEmpty()) {
             QMessageBox* message = new QMessageBox(QMessageBox::Icon::Warning, "No regime name", "Please input regime name", QMessageBox::NoButton, this);
             message->show();
-            connect(message, &QMessageBox::finished, this, [=](int result) { message->deleteLater(); });
-
+            message->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
+            connect(message, &QMessageBox::finished, this, [&](int result) { setResult(QDialog::DialogCode::Rejected); });
             setResult(REGIME_DIALOG_RESULT::PROCESSING);
         } else {
             shared_types::Regime regime;
