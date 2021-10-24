@@ -37,6 +37,24 @@ void RegimeDialog::setValues(const shared_types::Regime& regime) {
     ui->moistureInput->setValue(regime.getRegimeValue().getMoisture());
 }
 
+
+//
+//
+//
+//
+//
+//
+//
+//
+// TODO: Add functionality to development server to test regime list
+//
+//
+//
+//
+//
+//
+//
+
 void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
     QDialogButtonBox::StandardButton buttonRole = ui->buttonBox->standardButton(clickedButton);
 
