@@ -1,22 +1,36 @@
-#ifndef REGIMEDIALOG_H
-#define REGIMEDIALOG_H
+#pragma once
 
+#include <QAbstractButton>
 #include <QDialog>
+#include <shared_types/Regime.h>
 
 namespace Ui {
 class RegimeDialog;
 }
 
-class RegimeDialog : public QDialog
-{
+class RegimeDialog : public QDialog {
     Q_OBJECT
 
-public:
-    explicit RegimeDialog(QWidget *parent = nullptr);
+  public:
+    enum class MODE { NEW, EDIT };
+    RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent = nullptr);
     ~RegimeDialog();
 
-private:
-    Ui::RegimeDialog *ui;
-};
+  signals:
+    void sendDataEvent(const shared_types::Regime& regime);
 
-#endif // REGIMEDIALOG_H
+  private slots:
+    void saveInput(QAbstractButton* clickedButton);
+
+  private:
+    // Setups widget for "New" mode
+    void modeNew();
+
+    // Setups widget for "Edit" mode
+    void modeEdit();
+
+    // Setup initial values in input fields
+    void setValues(const shared_types::Regime& regime);
+
+    Ui::RegimeDialog* ui;
+};
