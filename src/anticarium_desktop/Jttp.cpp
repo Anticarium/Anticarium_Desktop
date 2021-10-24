@@ -6,6 +6,7 @@
 #include <shared_types/RegimeSerializer.hpp>
 #include <shared_types/RegimesSerializer.hpp>
 #include <shared_types/SensorDataSerializer.hpp>
+#include <spdlog/spdlog.h>
 
 JTTP::JTTP(QObject* parent) : QObject(parent) {
     networkAccessManager = new QNetworkAccessManager(this);
@@ -94,6 +95,8 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
 
     // Instantly process requests so they synchronously
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+
+    SPDLOG_INFO(QString("Data requested from url %1").arg(url).toStdString());
 }
 
 JTTP::~JTTP() {
