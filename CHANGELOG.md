@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+# 1.2.0
 - MODIFY: Synchronous replies from server
 - ADD: Regime dialog to create new regimes from main screen
 - ADD: spdlog logger
