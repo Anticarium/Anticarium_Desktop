@@ -29,10 +29,21 @@ class MainWindow : public QMainWindow {
     void onHeatSliderMoved(int value);
     void onWindSliderMoved(int value);
     void onLightSliderMoved(int value);
+    void openRegimeDialog();
 
   private:
     Ui::MainWindow* ui;
     MainWindowManager* manager = nullptr;
+
+    // Connects all ui components that are not directly related with data sending, must be called once
+    void connectUi();
+
+    // Connects all ui input components that are used for data sending
     void connectUiInputs();
+
+    // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
+
+    // Finds and sets element in regime list that corresponds to current regime label
+    void updateRegimeList();
 };

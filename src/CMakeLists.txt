@@ -4,16 +4,19 @@ set(HEADER_FILES
     anticarium_desktop/Jttp.h
     anticarium_desktop/MainWindowManager.h
     anticarium_desktop/widgets/MainWindow.h
+    anticarium_desktop/widgets/RegimeDialog.h
 )
 
 set(SOURCE_FILES
     anticarium_desktop/Jttp.cpp
     anticarium_desktop/MainWindowManager.cpp
     anticarium_desktop/widgets/MainWindow.cpp
+    anticarium_desktop/widgets/RegimeDialog.cpp
 )
 
 set(FORMS
     anticarium_desktop/widgets/MainWindow.ui
+    anticarium_desktop/widgets/RegimeDialog.ui
 )
 
 include(ExternLibs)

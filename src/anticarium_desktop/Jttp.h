@@ -53,6 +53,7 @@ class JTTP : public QObject {
   private slots:
     void onDataArrived(QNetworkReply* reply);
   public slots:
+    void onSendData(const shared_types::Regime& regime);
     void onSendData(const shared_types::Control& control);
     void onSendData(const shared_types::RegimeName& regimeName);
     void onRequestData(REQUEST_DATA requestType);

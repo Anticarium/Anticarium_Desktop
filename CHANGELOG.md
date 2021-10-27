@@ -1,5 +1,7 @@
 # Anticarium_Desktop
 
+- MODIFY: Synchronous replies from server
+- ADD: Regime dialog to create new regimes from main screen
 - ADD: spdlog logger
 - MODIFY: shared_types v1.2.0
 - ADD: Save button with ui functionality

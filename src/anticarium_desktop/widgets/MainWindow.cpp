@@ -1,4 +1,5 @@
 #include <anticarium_desktop/widgets/MainWindow.h>
+#include <anticarium_desktop/widgets/RegimeDialog.h>
 #include <ui_MainWindow.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -10,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(manager, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regime&>(&MainWindow::displayData));
+    connectUi();
     connectUiInputs();
 
     manager->initialize();
@@ -22,6 +24,7 @@ MainWindow::~MainWindow() {
 void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
     disconnectUiInputs();
     ui->modeLabel->setText(regimeName.getName());
+    updateRegimeList();
     connectUiInputs();
 }
 
@@ -60,6 +63,23 @@ void MainWindow::onLightSliderMoved(int value) {
     ui->lightLabel->setText(QString("%1%").arg(QString::number(value)));
 }
 
+void MainWindow::openRegimeDialog() {
+    shared_types::RegimeValue regimeValue;
+    float temperature = ui->heatSlider->value() / static_cast<float>(SLIDER_MULTIPLIER);
+    regimeValue.setTemperature(temperature);
+
+    int moisture = ui->moistureSlider->value();
+    regimeValue.setMoisture(moisture);
+
+    shared_types::Regime regime;
+    regime.setRegimeValue(regimeValue);
+
+    RegimeDialog* regimeDialog = new RegimeDialog(RegimeDialog::MODE::NEW, regime, this);
+    regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
+    regimeDialog->setModal(true);
+    regimeDialog->show();
+}
+
 void MainWindow::displayData(const shared_types::Regime& regime) {
     displayData(regime.getRegimeName());
     displayData(regime.getRegimeValue());
@@ -89,24 +109,33 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
         ui->regimeList->addItem(i);
     }
 
+    updateRegimeList();
+
+    connectUiInputs();
+}
+
+void MainWindow::updateRegimeList() {
     int regimeListId = ui->regimeList->findText(ui->modeLabel->text());
     if (regimeListId != -1) {
         ui->regimeList->setCurrentIndex(regimeListId);
     }
-    connectUiInputs();
+}
+
+void MainWindow::connectUi() {
+    connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onMoistureSliderMoved);
+    connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onHeatSliderMoved);
+    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::openRegimeDialog);
+    connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
+    connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
 }
 
 void MainWindow::connectUiInputs() {
     connect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
-    connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onMoistureSliderMoved);
     connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
-    connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onHeatSliderMoved);
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
-    connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
     connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
-    connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
     connect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
 }
 
