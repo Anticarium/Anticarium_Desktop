@@ -98,9 +98,10 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
         networkAccessManager->get(networkRequest);
     }
 
-    // Instantly process requests so they synchronously
-    QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
-
+    // Wait for request to finish executing
+    QEventLoop loop;
+    connect(networkAccessManager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+    loop.exec();
 
     SPDLOG_INFO(QString("Data %1, url: %2").arg(requestTypeString, url).toStdString());
 }
