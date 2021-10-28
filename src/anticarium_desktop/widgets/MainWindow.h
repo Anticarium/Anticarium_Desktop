@@ -29,7 +29,8 @@ class MainWindow : public QMainWindow {
     void onHeatSliderMoved(int value);
     void onWindSliderMoved(int value);
     void onLightSliderMoved(int value);
-    void openRegimeDialog();
+    void onOpenRegimeDialog();
+    void onOpenDisplayRegimesEvent();
 
   private:
     Ui::MainWindow* ui;

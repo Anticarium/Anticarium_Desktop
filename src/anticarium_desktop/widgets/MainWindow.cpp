@@ -1,3 +1,4 @@
+#include <anticarium_desktop/widgets/DisplayRegimes.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 #include <anticarium_desktop/widgets/RegimeDialog.h>
 #include <ui_MainWindow.h>
@@ -63,7 +64,7 @@ void MainWindow::onLightSliderMoved(int value) {
     ui->lightLabel->setText(QString("%1%").arg(QString::number(value)));
 }
 
-void MainWindow::openRegimeDialog() {
+void MainWindow::onOpenRegimeDialog() {
     shared_types::RegimeValue regimeValue;
     float temperature = ui->heatSlider->value() / static_cast<float>(SLIDER_MULTIPLIER);
     regimeValue.setTemperature(temperature);
@@ -78,6 +79,13 @@ void MainWindow::openRegimeDialog() {
     regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     regimeDialog->setModal(true);
     regimeDialog->show();
+}
+
+void MainWindow::onOpenDisplayRegimesEvent() {
+    DisplayRegimes* displayRegimes = new DisplayRegimes(this);
+    displayRegimes->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
+    displayRegimes->setModal(true);
+    displayRegimes->show();
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {
@@ -124,9 +132,10 @@ void MainWindow::updateRegimeList() {
 void MainWindow::connectUi() {
     connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onMoistureSliderMoved);
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onHeatSliderMoved);
-    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::openRegimeDialog);
+    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onOpenRegimeDialog);
     connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
     connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
+    connect(ui->openDisplayRegimes, &QAction::triggered, this, &MainWindow::onOpenDisplayRegimesEvent);
 }
 
 void MainWindow::connectUiInputs() {

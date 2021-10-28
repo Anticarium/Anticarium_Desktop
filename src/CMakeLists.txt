@@ -5,6 +5,8 @@ set(HEADER_FILES
     anticarium_desktop/MainWindowManager.h
     anticarium_desktop/widgets/MainWindow.h
     anticarium_desktop/widgets/RegimeDialog.h
+    anticarium_desktop/widgets/DisplayRegimes.h
+    anticarium_desktop/DisplayRegimesManager.h
 )
 
 set(SOURCE_FILES
@@ -12,11 +14,14 @@ set(SOURCE_FILES
     anticarium_desktop/MainWindowManager.cpp
     anticarium_desktop/widgets/MainWindow.cpp
     anticarium_desktop/widgets/RegimeDialog.cpp
+    anticarium_desktop/widgets/DisplayRegimes.cpp
+    anticarium_desktop/DisplayRegimesManager.cpp
 )
 
 set(FORMS
     anticarium_desktop/widgets/MainWindow.ui
     anticarium_desktop/widgets/RegimeDialog.ui
+    anticarium_desktop/widgets/DisplayRegimes.ui
 )
 
 include(ExternLibs)

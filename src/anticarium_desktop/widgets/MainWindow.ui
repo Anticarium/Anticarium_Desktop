@@ -501,7 +501,7 @@
     <property name="title">
      <string>Home</string>
     </property>
-    <addaction name="actionEdit_modes"/>
+    <addaction name="openDisplayRegimes"/>
    </widget>
    <addaction name="menuHome"/>
   </widget>
@@ -516,7 +516,7 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="actionEdit_modes">
+  <action name="openDisplayRegimes">
    <property name="text">
     <string>Edit modes</string>
    </property>

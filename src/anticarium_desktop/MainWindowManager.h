@@ -1,5 +1,4 @@
-#ifndef MAINWINDOWMANAGER_H
-#define MAINWINDOWMANAGER_H
+#pragma once
 
 #include <anticarium_desktop/Jttp.h>
 #include <shared_types/Control.h>
@@ -35,5 +34,3 @@ class MainWindowManager : public QObject {
   private:
     shared_types::Control control;
 };
-
-#endif // MAINWINDOWMANAGER_H

@@ -5,6 +5,7 @@
 #include <shared_types/RegimeNameSerializer.hpp>
 #include <shared_types/RegimeSerializer.hpp>
 #include <shared_types/RegimesSerializer.hpp>
+#include <shared_types/SavedRegimesSerializer.hpp>
 #include <shared_types/SensorDataSerializer.hpp>
 #include <spdlog/spdlog.h>
 
@@ -65,6 +66,11 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::Regime regime = jsonReply;
         emit dataReceivedEvent(regime);
+    } else if (content == "Saved Regimes") {
+        jsonReply = nlohmann::json::parse(answer.toStdString());
+
+        shared_types::SavedRegimes savedRegimes = jsonReply;
+        emit dataReceivedEvent(savedRegimes);
     }
 }
 
