@@ -11,11 +11,15 @@ class DisplayRegimes : public QDialog {
     Q_OBJECT
 
   public:
-    explicit DisplayRegimes(QWidget* parent = nullptr);
+    enum ITEM_POSITION { NAME, TEMPERATURE, MOISTURE };
+    DisplayRegimes(QWidget* parent = nullptr);
     ~DisplayRegimes();
 
   public slots:
     void onDisplayData(const shared_types::SavedRegimes& savedRegimes);
+
+  private slots:
+    void onEditItemButtonEvent();
 
   private:
     Ui::DisplayRegimes* ui;

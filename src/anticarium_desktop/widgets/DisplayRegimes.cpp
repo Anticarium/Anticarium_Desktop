@@ -1,5 +1,6 @@
-#include "DisplayRegimes.h"
-#include "ui_DisplayRegimes.h"
+#include <anticarium_desktop/widgets/DisplayRegimes.h>
+#include <anticarium_desktop/widgets/RegimeDialog.h>
+#include <ui_DisplayRegimes.h>
 
 DisplayRegimes::DisplayRegimes(QWidget* parent) : QDialog(parent), ui(new Ui::DisplayRegimes) {
     ui->setupUi(this);
@@ -8,6 +9,7 @@ DisplayRegimes::DisplayRegimes(QWidget* parent) : QDialog(parent), ui(new Ui::Di
 
     connect(ui->regimesButtonBox, &QDialogButtonBox::accepted, this, &DisplayRegimes::accept);
     connect(ui->regimesButtonBox, &QDialogButtonBox::rejected, this, &DisplayRegimes::reject);
+    connect(ui->editItemButton, &QPushButton::clicked, this, &DisplayRegimes::onEditItemButtonEvent);
 
     initializeTableHeader();
 
@@ -23,10 +25,14 @@ DisplayRegimes::~DisplayRegimes() {
 }
 
 void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegimes) {
+    // Delete previous rows
     ui->table->setRowCount(0);
+
     std::vector<shared_types::Regime> regimesList = savedRegimes.getSavedRegimes();
 
     int regimesListSize = regimesList.size();
+
+    // Create new rows
     ui->table->setRowCount(regimesListSize);
     for (int i = 0; i < regimesListSize; ++i) {
         QTableWidgetItem* item = nullptr;
@@ -42,19 +48,30 @@ void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegime
     }
 }
 
+void DisplayRegimes::onEditItemButtonEvent() {
+    int selectedRow = ui->table->currentRow();
+
+    shared_types::Regime regime = manager->getRegimeAt(selectedRow);
+
+    RegimeDialog* regimeDialog = new RegimeDialog(RegimeDialog::MODE::EDIT, regime, this);
+    regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
+    regimeDialog->setModal(true);
+    regimeDialog->show();
+}
+
 void DisplayRegimes::initializeTableHeader() {
     ui->table->setColumnCount(3);
 
     QTableWidgetItem* columnName = nullptr;
 
     columnName = new QTableWidgetItem("Name", Qt::DisplayRole);
-    ui->table->setHorizontalHeaderItem(0, columnName);
+    ui->table->setHorizontalHeaderItem(ITEM_POSITION::NAME, columnName);
 
     columnName = new QTableWidgetItem("Temperature", Qt::DisplayRole);
-    ui->table->setHorizontalHeaderItem(1, columnName);
+    ui->table->setHorizontalHeaderItem(ITEM_POSITION::TEMPERATURE, columnName);
 
     columnName = new QTableWidgetItem("Moisture", Qt::DisplayRole);
-    ui->table->setHorizontalHeaderItem(2, columnName);
+    ui->table->setHorizontalHeaderItem(ITEM_POSITION::MOISTURE, columnName);
 
     // Stretch rows
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

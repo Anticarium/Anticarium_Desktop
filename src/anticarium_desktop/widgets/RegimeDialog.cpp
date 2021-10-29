@@ -7,13 +7,15 @@ enum REGIME_DIALOG_RESULT { PROCESSING = 2 };
 RegimeDialog::RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent) : QDialog(parent), ui(new Ui::RegimeDialog) {
     ui->setupUi(this);
 
-    setValues(regime);
 
-    if (mode == RegimeDialog::MODE::NEW) {
+    currentMode = mode;
+    if (currentMode == RegimeDialog::MODE::NEW) {
         modeNew();
-    } else if (mode == RegimeDialog::MODE::EDIT) {
+    } else if (currentMode == RegimeDialog::MODE::EDIT) {
         modeEdit();
     }
+
+    setValues(regime);
 
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, &RegimeDialog::saveInput);
 
@@ -35,6 +37,10 @@ void RegimeDialog::setValues(const shared_types::Regime& regime) {
     ui->temperatureInput->setValue(regime.getRegimeValue().getTemperature());
     ui->moistureInput->setSuffix("%");
     ui->moistureInput->setValue(regime.getRegimeValue().getMoisture());
+
+    if (currentMode == RegimeDialog::MODE::EDIT) {
+        ui->nameInput->setText(regime.getRegimeName().getName());
+    }
 }
 
 void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
@@ -63,8 +69,16 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
             connect(this, &RegimeDialog::requestDataEvent, jttp, &JTTP::onRequestData);
             emit sendDataEvent(regime);
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+
+            if (currentMode == RegimeDialog::MODE::NEW) {
+                emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+            }
+
             emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+
+            if (currentMode == RegimeDialog::MODE::EDIT) {
+                emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);
+            }
 
             setResult(QDialog::DialogCode::Accepted);
         }
