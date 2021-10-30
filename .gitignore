@@ -36,3 +36,6 @@ CMakeLists.txt.*
 
 # CMake build folder
 /build*
+
+# clang-format
+.clang-format

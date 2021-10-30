@@ -1,5 +1,7 @@
 # Anticarium_Desktop
 
+- MODIFY: .gitignore .clang-format file
+- REMOVE: .clang-format file, it is located in Anticarium_Doc
 - ADD: DisplayRegimes widget that displays all saved regimes
 - ADD: DisplayRegimes delete element button that allows to delete Regime in SavedRegimes
 - ADD: DisplayRegimes edit element button that allows to edit Regime in SavedRegimes
