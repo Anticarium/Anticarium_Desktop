@@ -32,14 +32,13 @@ void MainWindow::displayData(const shared_types::RegimeId& regimeId) {
     disconnectUiInputs();
     int id = regimeId.getId();
 
-    ui->regimeList->setCurrentIndex(id);
-
     // Is custom regime id?
     if (id == -1) {
-        // Yes: Set custom regime label
-        ui->modeLabel->setText(CUSTOM_REGIME_TEXT);
+        // Yes: Setup everything to display custom regime
+        onEnableSaveButton();
     } else {
         // No: Set current regime name
+        ui->regimeList->setCurrentIndex(id);
         ui->modeLabel->setText(ui->regimeList->currentText());
     }
 
@@ -58,7 +57,7 @@ void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
 void MainWindow::onEnableSaveButton(int value) {
     disconnectUiInputs();
     ui->saveButton->setEnabled(true);
-    ui->modeLabel->setText(CUSTOM_REGIME_TEXT);
+    ui->modeLabel->setText("Custom");
     ui->regimeList->setCurrentIndex(-1);
     connectUiInputs();
 }

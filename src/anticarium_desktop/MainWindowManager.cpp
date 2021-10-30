@@ -28,8 +28,8 @@ void MainWindowManager::initialize() {
     // Request data for the first time on first time loading
     emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA);
     emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
-    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
     emit requestDataEvent(JTTP::REQUEST_DATA::CONTROL_DATA);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 }
 
 void MainWindowManager::onMoistureSliderMoved(int value) {

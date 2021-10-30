@@ -61,6 +61,4 @@ class MainWindow : public QMainWindow {
 
     // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
-
-    const QString CUSTOM_REGIME_TEXT = "Custom";
 };
