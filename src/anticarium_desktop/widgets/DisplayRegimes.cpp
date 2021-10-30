@@ -9,7 +9,8 @@ DisplayRegimes::DisplayRegimes(QWidget* parent) : QDialog(parent), ui(new Ui::Di
 
     connect(ui->regimesButtonBox, &QDialogButtonBox::accepted, this, &DisplayRegimes::accept);
     connect(ui->regimesButtonBox, &QDialogButtonBox::rejected, this, &DisplayRegimes::reject);
-    connect(ui->editItemButton, &QPushButton::clicked, this, &DisplayRegimes::onEditItemButtonEvent);
+    connect(ui->editItemButton, &QPushButton::clicked, this, &DisplayRegimes::onEditItemButtonClicked);
+    connect(ui->deleteItemButton, &QPushButton::clicked, this, &DisplayRegimes::onDeleteItemButtonClicked);
 
     initializeTableHeader();
 
@@ -17,6 +18,7 @@ DisplayRegimes::DisplayRegimes(QWidget* parent) : QDialog(parent), ui(new Ui::Di
     connect(manager, &DisplayRegimesManager::displayDataEvent, this, &DisplayRegimes::onDisplayData);
     manager->initialize();
 
+    checkTable();
     adjustSize();
 }
 
@@ -48,7 +50,7 @@ void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegime
     }
 }
 
-void DisplayRegimes::onEditItemButtonEvent() {
+void DisplayRegimes::onEditItemButtonClicked() {
     int selectedRow = ui->table->currentRow();
 
     shared_types::Regime regime = manager->getRegimeAt(selectedRow);
@@ -57,6 +59,12 @@ void DisplayRegimes::onEditItemButtonEvent() {
     regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     regimeDialog->setModal(true);
     regimeDialog->show();
+}
+
+void DisplayRegimes::onDeleteItemButtonClicked() {
+    int selectedRow = ui->table->currentRow();
+    manager->deleteRegime(selectedRow);
+    checkTable();
 }
 
 void DisplayRegimes::initializeTableHeader() {
@@ -84,4 +92,12 @@ void DisplayRegimes::initializeTableHeader() {
 
     // Disable edit on double click
     ui->table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+void DisplayRegimes::checkTable() {
+    int rowCount = ui->table->rowCount();
+    if (rowCount == 0) {
+        ui->deleteItemButton->setDisabled(true);
+        ui->editItemButton->setDisabled(true);
+    }
 }

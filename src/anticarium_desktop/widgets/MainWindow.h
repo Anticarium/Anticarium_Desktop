@@ -41,13 +41,7 @@ class MainWindow : public QMainWindow {
     void onLightSliderReleased();
 
     void onOpenRegimeDialog();
-    void onOpenDisplayRegimesEvent();
-
-  signals:
-    void heatSliderReleasedEvent(int value);
-    void moistureSliderReleasedEvent(int value);
-    void windSliderReleasedEvent(int value);
-    void lightSliderReleasedEvent(int value);
+    void onOpenDisplayRegimes();
 
   private:
     Ui::MainWindow* ui;

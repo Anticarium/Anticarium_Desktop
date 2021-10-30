@@ -12,6 +12,12 @@ class MainWindowManager : public QObject {
     MainWindowManager(QObject* parent = nullptr);
     void sendData(const shared_types::Control& control);
     void initialize();
+
+    void sendMoistureValue(int value);
+    void sendHeatValue(int value);
+    void sendWindValue(int value);
+    void sendLightValue(int value);
+
   signals:
     void sendDataEvent(const shared_types::Control& control);
     void sendDataEvent(const shared_types::RegimeId& regimeId);
@@ -21,13 +27,9 @@ class MainWindowManager : public QObject {
     void displayDataEvent(const shared_types::Control& newControl);
     void displayDataEvent(const shared_types::RegimeId& newRegimeId);
     void displayDataEvent(const shared_types::Regime& newRegime);
-  public slots:
-    void onMoistureSliderMoved(int value);
-    void onHeatSliderMoved(int value);
-    void onWindSliderMoved(int value);
-    void onLightSliderMoved(int value);
-    void onRegimeListActivated(int index);
 
+  public slots:
+    void onRegimeListActivated(int index);
     // Stores incoming Control data
     void onDataReceived(const shared_types::Control& control);
 

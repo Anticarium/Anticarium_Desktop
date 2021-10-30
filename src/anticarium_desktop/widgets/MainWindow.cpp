@@ -83,22 +83,22 @@ void MainWindow::onLightSliderMoved(int value) {
 
 void MainWindow::onMoistureSliderReleased() {
     int value = ui->moistureSlider->value();
-    emit moistureSliderReleasedEvent(value);
+    manager->sendMoistureValue(value);
 }
 
 void MainWindow::onHeatSliderReleased() {
     int value = ui->heatSlider->value();
-    emit heatSliderReleasedEvent(value);
+    manager->sendHeatValue(value);
 }
 
 void MainWindow::onWindSliderReleased() {
     int value = ui->windSlider->value();
-    emit windSliderReleasedEvent(value);
+    manager->sendWindValue(value);
 }
 
 void MainWindow::onLightSliderReleased() {
     int value = ui->lightSlider->value();
-    emit lightSliderReleasedEvent(value);
+    manager->sendLightValue(value);
 }
 
 void MainWindow::onOpenRegimeDialog() {
@@ -118,7 +118,7 @@ void MainWindow::onOpenRegimeDialog() {
     regimeDialog->show();
 }
 
-void MainWindow::onOpenDisplayRegimesEvent() {
+void MainWindow::onOpenDisplayRegimes() {
     DisplayRegimes* displayRegimes = new DisplayRegimes(this);
     displayRegimes->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     displayRegimes->setModal(true);
@@ -161,20 +161,13 @@ void MainWindow::connectUi() {
     connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
     connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
 
-
     // Read released slider value
     connect(ui->heatSlider, &QSlider::sliderReleased, this, &MainWindow::onHeatSliderReleased);
     connect(ui->moistureSlider, &QSlider::sliderReleased, this, &MainWindow::onMoistureSliderReleased);
     connect(ui->windSlider, &QSlider::sliderReleased, this, &MainWindow::onWindSliderReleased);
     connect(ui->lightSlider, &QSlider::sliderReleased, this, &MainWindow::onLightSliderReleased);
 
-    // Emit released slider value
-    connect(this, &MainWindow::moistureSliderReleasedEvent, manager, &MainWindowManager::onMoistureSliderMoved);
-    connect(this, &MainWindow::heatSliderReleasedEvent, manager, &MainWindowManager::onHeatSliderMoved);
-    connect(this, &MainWindow::windSliderReleasedEvent, manager, &MainWindowManager::onWindSliderMoved);
-    connect(this, &MainWindow::lightSliderReleasedEvent, manager, &MainWindowManager::onLightSliderMoved);
-
-    connect(ui->openDisplayRegimes, &QAction::triggered, this, &MainWindow::onOpenDisplayRegimesEvent);
+    connect(ui->openDisplayRegimes, &QAction::triggered, this, &MainWindow::onOpenDisplayRegimes);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onOpenRegimeDialog);
 }
 

@@ -19,7 +19,8 @@ class DisplayRegimes : public QDialog {
     void onDisplayData(const shared_types::SavedRegimes& savedRegimes);
 
   private slots:
-    void onEditItemButtonEvent();
+    void onEditItemButtonClicked();
+    void onDeleteItemButtonClicked();
 
   private:
     Ui::DisplayRegimes* ui;
@@ -27,4 +28,7 @@ class DisplayRegimes : public QDialog {
 
     // Sets table header
     void initializeTableHeader();
+
+    // Check if there are elements in list, block edit buttons if there are not
+    void checkTable();
 };

@@ -32,26 +32,26 @@ void MainWindowManager::initialize() {
     emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 }
 
-void MainWindowManager::onMoistureSliderMoved(int value) {
+void MainWindowManager::sendMoistureValue(int value) {
     shared_types::RegimeValue regimeValue = control.getRegimeValue();
     regimeValue.setMoisture(value);
     control.setRegimeValue(regimeValue);
     sendData(control);
 }
 
-void MainWindowManager::onHeatSliderMoved(int value) {
+void MainWindowManager::sendHeatValue(int value) {
     shared_types::RegimeValue regimeValue = control.getRegimeValue();
     regimeValue.setTemperature(static_cast<float>(value) / MainWindow::SLIDER_MULTIPLIER);
     control.setRegimeValue(regimeValue);
     sendData(control);
 }
 
-void MainWindowManager::onWindSliderMoved(int value) {
+void MainWindowManager::sendWindValue(int value) {
     control.setWindPercentage(value);
     sendData(control);
 }
 
-void MainWindowManager::onLightSliderMoved(int value) {
+void MainWindowManager::sendLightValue(int value) {
     control.setLightPercentage(value);
     sendData(control);
 }
