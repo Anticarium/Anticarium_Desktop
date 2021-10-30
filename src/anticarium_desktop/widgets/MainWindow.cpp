@@ -15,6 +15,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     connectUi();
     connectUiInputs();
 
+    // Set slider values to minimum
+    onWindSliderMoved(ui->windSlider->minimum());
+    onHeatSliderMoved(ui->heatSlider->minimum());
+    onLightSliderMoved(ui->lightSlider->minimum());
+    onMoistureSliderMoved(ui->moistureSlider->minimum());
+
     manager->initialize();
 }
 
@@ -64,6 +70,26 @@ void MainWindow::onLightSliderMoved(int value) {
     ui->lightLabel->setText(QString("%1%").arg(QString::number(value)));
 }
 
+void MainWindow::onMoistureSliderReleased() {
+    int value = ui->moistureSlider->value();
+    emit moistureSliderReleasedEvent(value);
+}
+
+void MainWindow::onHeatSliderReleased() {
+    int value = ui->heatSlider->value();
+    emit heatSliderReleasedEvent(value);
+}
+
+void MainWindow::onWindSliderReleased() {
+    int value = ui->windSlider->value();
+    emit windSliderReleasedEvent(value);
+}
+
+void MainWindow::onLightSliderReleased() {
+    int value = ui->lightSlider->value();
+    emit lightSliderReleasedEvent(value);
+}
+
 void MainWindow::onOpenRegimeDialog() {
     shared_types::RegimeValue regimeValue;
     float temperature = ui->heatSlider->value() / static_cast<float>(SLIDER_MULTIPLIER);
@@ -97,8 +123,8 @@ void MainWindow::displayData(const shared_types::Control& control) {
     disconnectUiInputs();
     ui->windSlider->setValue(control.getWindPercentage());
     ui->lightSlider->setValue(control.getLightPercentage());
-    displayData(control.getRegimeValue());
     connectUiInputs();
+    displayData(control.getRegimeValue());
 }
 
 void MainWindow::displayData(const shared_types::SensorData& sensorData) {
@@ -120,30 +146,37 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
 }
 
 void MainWindow::connectUi() {
+    // Display slider value
     connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onMoistureSliderMoved);
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onHeatSliderMoved);
-    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onOpenRegimeDialog);
     connect(ui->lightSlider, &QSlider::valueChanged, this, &MainWindow::onLightSliderMoved);
     connect(ui->windSlider, &QSlider::valueChanged, this, &MainWindow::onWindSliderMoved);
+
+
+    // Read released slider value
+    connect(ui->heatSlider, &QSlider::sliderReleased, this, &MainWindow::onHeatSliderReleased);
+    connect(ui->moistureSlider, &QSlider::sliderReleased, this, &MainWindow::onMoistureSliderReleased);
+    connect(ui->windSlider, &QSlider::sliderReleased, this, &MainWindow::onWindSliderReleased);
+    connect(ui->lightSlider, &QSlider::sliderReleased, this, &MainWindow::onLightSliderReleased);
+
+    // Emit released slider value
+    connect(this, &MainWindow::moistureSliderReleasedEvent, manager, &MainWindowManager::onMoistureSliderMoved);
+    connect(this, &MainWindow::heatSliderReleasedEvent, manager, &MainWindowManager::onHeatSliderMoved);
+    connect(this, &MainWindow::windSliderReleasedEvent, manager, &MainWindowManager::onWindSliderMoved);
+    connect(this, &MainWindow::lightSliderReleasedEvent, manager, &MainWindowManager::onLightSliderMoved);
+
     connect(ui->openDisplayRegimes, &QAction::triggered, this, &MainWindow::onOpenDisplayRegimesEvent);
+    connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onOpenRegimeDialog);
 }
 
 void MainWindow::connectUiInputs() {
-    connect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
     connect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
-    connect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
-    connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
-    connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
     connect(ui->regimeList, qOverload<int>(&QComboBox::activated), manager, &MainWindowManager::onRegimeListActivated);
 }
 
 void MainWindow::disconnectUiInputs() {
-    disconnect(ui->moistureSlider, &QSlider::valueChanged, manager, &MainWindowManager::onMoistureSliderMoved);
     disconnect(ui->moistureSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
-    disconnect(ui->heatSlider, &QSlider::valueChanged, manager, &MainWindowManager::onHeatSliderMoved);
     disconnect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
-    disconnect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
-    disconnect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
     disconnect(ui->regimeList, qOverload<int>(&QComboBox::activated), manager, &MainWindowManager::onRegimeListActivated);
 }

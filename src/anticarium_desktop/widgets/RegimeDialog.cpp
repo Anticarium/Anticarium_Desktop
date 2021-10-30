@@ -76,12 +76,13 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             connect(this, &RegimeDialog::requestDataEvent, jttp, &JTTP::onRequestData);
             emit sendDataEvent(regime);
 
+            emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+
             if (currentMode == RegimeDialog::MODE::NEW) {
                 emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+                emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
             }
 
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 
             if (currentMode == RegimeDialog::MODE::EDIT) {
                 emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);

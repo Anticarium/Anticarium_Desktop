@@ -17,20 +17,37 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
     static const int SLIDER_MULTIPLIER = 10;
   public slots:
-    void displayData(const shared_types::Regimes& regimes);
+    // Gets called only once when app starts
     void displayData(const shared_types::Control& control);
+
+    void displayData(const shared_types::Regimes& regimes);
     void displayData(const shared_types::SensorData& sensorData);
     void displayData(const shared_types::RegimeId& regimeId);
     void displayData(const shared_types::Regime& regime);
     void displayData(const shared_types::RegimeValue& regimeValue);
   private slots:
     void onEnableSaveButton(int value);
+
+    // For slider value label
     void onMoistureSliderMoved(int value);
     void onHeatSliderMoved(int value);
     void onWindSliderMoved(int value);
     void onLightSliderMoved(int value);
+
+    // For data sending
+    void onMoistureSliderReleased();
+    void onHeatSliderReleased();
+    void onWindSliderReleased();
+    void onLightSliderReleased();
+
     void onOpenRegimeDialog();
     void onOpenDisplayRegimesEvent();
+
+  signals:
+    void heatSliderReleasedEvent(int value);
+    void moistureSliderReleasedEvent(int value);
+    void windSliderReleasedEvent(int value);
+    void lightSliderReleasedEvent(int value);
 
   private:
     Ui::MainWindow* ui;
