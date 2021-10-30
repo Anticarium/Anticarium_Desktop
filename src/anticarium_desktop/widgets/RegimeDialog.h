@@ -13,6 +13,7 @@ class RegimeDialog : public QDialog {
     Q_OBJECT
 
   public:
+    enum { NEW_REGIME_ID = -1 };
     enum class MODE { NEW, EDIT };
     RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent = nullptr);
     ~RegimeDialog();
@@ -25,6 +26,9 @@ class RegimeDialog : public QDialog {
     void saveInput(QAbstractButton* clickedButton);
 
   private:
+    RegimeDialog::MODE currentMode;
+    int currentRegimeId = 0;
+
     // Closes dialog only if result code is accepted or rejected
     void done(int r) override;
 
@@ -36,6 +40,16 @@ class RegimeDialog : public QDialog {
 
     // Setup initial values in input fields
     void setValues(const shared_types::Regime& regime);
+
+    /*
+     *  Prepares regime for sending
+     *
+     *  Returns prepared regime
+     */
+    shared_types::Regime prepareRegime(const QString& regimeName);
+
+    // Sends Regime and makes necessary data requests afterwards
+    void sendAndRequest(const shared_types::Regime& regime);
 
     Ui::RegimeDialog* ui;
 };

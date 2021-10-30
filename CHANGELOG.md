@@ -1,5 +1,13 @@
 # Anticarium_Desktop
 
+- ADD: DisplayRegimes widget that displays all saved regimes
+- ADD: DisplayRegimes delete element button that allows to delete Regime in SavedRegimes
+- ADD: DisplayRegimes edit element button that allows to edit Regime in SavedRegimes
+- MODIFY: RegimeDialog now can be used in edit mode
+- ADD: DisplayRegimes widget can be opened from Home->Edit regimes
+- MODIFY: shared_types v1.3.0
+- MODIFY: Request regimes by its id and not by string name
+
 # 1.2.0
 - MODIFY: Synchronous replies from server
 - ADD: Regime dialog to create new regimes from main screen
