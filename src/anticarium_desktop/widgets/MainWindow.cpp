@@ -30,8 +30,19 @@ MainWindow::~MainWindow() {
 
 void MainWindow::displayData(const shared_types::RegimeId& regimeId) {
     disconnectUiInputs();
-    ui->regimeList->setCurrentIndex(regimeId.getId());
-    ui->modeLabel->setText(ui->regimeList->currentText());
+    int id = regimeId.getId();
+
+    ui->regimeList->setCurrentIndex(id);
+
+    // Is custom regime id?
+    if (id == -1) {
+        // Yes: Set custom regime label
+        ui->modeLabel->setText(CUSTOM_REGIME_TEXT);
+    } else {
+        // No: Set current regime name
+        ui->modeLabel->setText(ui->regimeList->currentText());
+    }
+
     connectUiInputs();
 }
 
@@ -40,13 +51,14 @@ void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
     ui->heatSlider->setValue(regimeValue.getTemperature() * SLIDER_MULTIPLIER);
     ui->moistureSlider->setValue(regimeValue.getMoisture());
     connectUiInputs();
+
     ui->saveButton->setEnabled(false);
 }
 
 void MainWindow::onEnableSaveButton(int value) {
     disconnectUiInputs();
     ui->saveButton->setEnabled(true);
-    ui->modeLabel->setText("Custom");
+    ui->modeLabel->setText(CUSTOM_REGIME_TEXT);
     ui->regimeList->setCurrentIndex(-1);
     connectUiInputs();
 }

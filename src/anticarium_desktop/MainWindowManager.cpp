@@ -7,7 +7,6 @@ MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
 }
 
 void MainWindowManager::sendData(const shared_types::Control& control) {
-    this->control = control;
     emit sendDataEvent(control);
 }
 
@@ -34,12 +33,16 @@ void MainWindowManager::initialize() {
 }
 
 void MainWindowManager::onMoistureSliderMoved(int value) {
-    control.getRegimeValue().setMoisture(value);
+    shared_types::RegimeValue regimeValue = control.getRegimeValue();
+    regimeValue.setMoisture(value);
+    control.setRegimeValue(regimeValue);
     sendData(control);
 }
 
 void MainWindowManager::onHeatSliderMoved(int value) {
-    control.getRegimeValue().setTemperature(value / MainWindow::SLIDER_MULTIPLIER);
+    shared_types::RegimeValue regimeValue = control.getRegimeValue();
+    regimeValue.setTemperature(static_cast<float>(value) / MainWindow::SLIDER_MULTIPLIER);
+    control.setRegimeValue(regimeValue);
     sendData(control);
 }
 

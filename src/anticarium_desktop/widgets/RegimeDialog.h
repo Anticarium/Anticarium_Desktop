@@ -13,7 +13,7 @@ class RegimeDialog : public QDialog {
     Q_OBJECT
 
   public:
-    static const int NEW_REGIME_ID = -1;
+    enum { NEW_REGIME_ID = -1 };
     enum class MODE { NEW, EDIT };
     RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent = nullptr);
     ~RegimeDialog();

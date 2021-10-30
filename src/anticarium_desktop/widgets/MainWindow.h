@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::Regime& regime);
     void displayData(const shared_types::RegimeValue& regimeValue);
   private slots:
-    void onEnableSaveButton(int value);
+    void onEnableSaveButton(int value = 0);
 
     // For slider value label
     void onMoistureSliderMoved(int value);
@@ -61,4 +61,6 @@ class MainWindow : public QMainWindow {
 
     // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
+
+    const QString CUSTOM_REGIME_TEXT = "Custom";
 };
