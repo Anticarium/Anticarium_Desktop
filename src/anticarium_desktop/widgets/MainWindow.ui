@@ -518,7 +518,7 @@
   </widget>
   <action name="openDisplayRegimes">
    <property name="text">
-    <string>Edit modes</string>
+    <string>Edit regimes</string>
    </property>
   </action>
  </widget>
