@@ -41,5 +41,15 @@ class RegimeDialog : public QDialog {
     // Setup initial values in input fields
     void setValues(const shared_types::Regime& regime);
 
+    /*
+     *  Prepares regime for sending
+     *
+     *  Returns prepared regime
+     */
+    shared_types::Regime prepareRegime(const QString& regimeName);
+
+    // Sends Regime and makes necessary data requests afterwards
+    void sendAndRequest(const shared_types::Regime& regime);
+
     Ui::RegimeDialog* ui;
 };

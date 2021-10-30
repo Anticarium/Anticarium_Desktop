@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     spdlog::set_pattern("%l | %D %T | %s %# | %v");
     spdlog::flush_on(spdlog::level::trace);
 
-    SPDLOG_INFO("Program started");
+    SPDLOG_INFO("\nProgram started");
 
     QApplication a(argc, argv);
 

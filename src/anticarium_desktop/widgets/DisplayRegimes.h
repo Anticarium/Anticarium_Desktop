@@ -16,10 +16,14 @@ class DisplayRegimes : public QDialog {
     ~DisplayRegimes();
 
   public slots:
+    // Display all saved regimes in table
     void onDisplayData(const shared_types::SavedRegimes& savedRegimes);
 
   private slots:
+    // Open RegimeDialog in edit mode
     void onEditItemButtonClicked();
+
+    // Delete selected element
     void onDeleteItemButtonClicked();
 
   private:

@@ -43,6 +43,46 @@ void RegimeDialog::setValues(const shared_types::Regime& regime) {
     }
 }
 
+shared_types::Regime RegimeDialog::prepareRegime(const QString& regimeName) {
+    shared_types::Regime regime;
+    shared_types::RegimeValue regimeValue;
+    regimeValue.setTemperature(ui->temperatureInput->value());
+    regimeValue.setMoisture(ui->moistureInput->value());
+
+    regime.setName(regimeName);
+    regime.setRegimeValue(regimeValue);
+
+    shared_types::RegimeId regimeId;
+    if (currentMode == RegimeDialog::MODE::NEW) {
+        regimeId.setId(RegimeDialog::NEW_REGIME_ID);
+    } else {
+        regimeId.setId(currentRegimeId);
+    }
+    regime.setRegimeId(regimeId);
+    return regime;
+}
+
+void RegimeDialog::sendAndRequest(const shared_types::Regime& regime) {
+    JTTP* jttp = JTTP::instance();
+    connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
+    connect(this, &RegimeDialog::requestDataEvent, jttp, &JTTP::onRequestData);
+    emit sendDataEvent(regime);
+
+    // Update regime list
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+
+    // If used this dialog to edit regime, update saved regimes table
+    if (currentMode == RegimeDialog::MODE::EDIT) {
+        emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);
+    }
+
+    // If edited regime that is turned on now, will make changes appear
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+
+    // For save button in MainWindow
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
+}
+
 void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
     QDialogButtonBox::StandardButton buttonRole = ui->buttonBox->standardButton(clickedButton);
 
@@ -55,41 +95,11 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             connect(message, &QMessageBox::finished, this, [&](int result) { setResult(QDialog::DialogCode::Rejected); });
             setResult(REGIME_DIALOG_RESULT::PROCESSING);
         } else {
-            shared_types::Regime regime;
-            shared_types::RegimeValue regimeValue;
-            regimeValue.setTemperature(ui->temperatureInput->value());
-            regimeValue.setMoisture(ui->moistureInput->value());
-
-            regime.setName(textInput);
-            regime.setRegimeValue(regimeValue);
-
-            shared_types::RegimeId regimeId;
-            if (currentMode == RegimeDialog::MODE::NEW) {
-                regimeId.setId(RegimeDialog::NEW_REGIME_ID);
-            } else {
-                regimeId.setId(currentRegimeId);
-            }
-            regime.setRegimeId(regimeId);
-
-            JTTP* jttp = JTTP::instance();
-            connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
-            connect(this, &RegimeDialog::requestDataEvent, jttp, &JTTP::onRequestData);
-            emit sendDataEvent(regime);
-
-            // Update regime list
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
-
-            // If used this dialog to edit regime, update saved regimes table
-            if (currentMode == RegimeDialog::MODE::EDIT) {
-                emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);
-            }
-
-            // If edited regime that is turned on now, will make changes appear
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
-
-            // For save button
-            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
-
+            // Create Regime from input fields
+            shared_types::Regime regime = prepareRegime(textInput);
+            // Send Regime and request new data to apply changes
+            sendAndRequest(regime);
+            // Can close dialog
             setResult(QDialog::DialogCode::Accepted);
         }
     } else {

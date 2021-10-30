@@ -21,7 +21,9 @@ class DisplayRegimesManager : public QObject {
 
     shared_types::Regime getRegimeAt(int index);
   signals:
+    // Passes DisplayRegimes dialog saved regimes
     void displayDataEvent(const shared_types::SavedRegimes& newSavedRegimes);
+
     void requestDataEvent(JTTP::REQUEST_DATA requestData);
     void sendDataEvent(const shared_types::RegimeId& regimeId);
 
