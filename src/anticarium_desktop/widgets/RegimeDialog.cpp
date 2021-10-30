@@ -7,8 +7,8 @@ enum REGIME_DIALOG_RESULT { PROCESSING = 2 };
 RegimeDialog::RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent) : QDialog(parent), ui(new Ui::RegimeDialog) {
     ui->setupUi(this);
 
-
-    currentMode = mode;
+    currentRegimeId = regime.getRegimeId().getId();
+    currentMode     = mode;
     if (currentMode == RegimeDialog::MODE::NEW) {
         modeNew();
     } else if (currentMode == RegimeDialog::MODE::EDIT) {
@@ -39,7 +39,7 @@ void RegimeDialog::setValues(const shared_types::Regime& regime) {
     ui->moistureInput->setValue(regime.getRegimeValue().getMoisture());
 
     if (currentMode == RegimeDialog::MODE::EDIT) {
-        ui->nameInput->setText(regime.getRegimeName().getName());
+        ui->nameInput->setText(regime.getName());
     }
 }
 
@@ -56,14 +56,20 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             setResult(REGIME_DIALOG_RESULT::PROCESSING);
         } else {
             shared_types::Regime regime;
-            shared_types::RegimeName regimeName;
-            regimeName.setName(textInput);
             shared_types::RegimeValue regimeValue;
             regimeValue.setTemperature(ui->temperatureInput->value());
             regimeValue.setMoisture(ui->moistureInput->value());
 
-            regime.setRegimeName(regimeName);
+            regime.setName(textInput);
             regime.setRegimeValue(regimeValue);
+
+            shared_types::RegimeId regimeId;
+            if (currentMode == RegimeDialog::MODE::NEW) {
+                regimeId.setId(RegimeDialog::NEW_REGIME_ID);
+            } else {
+                regimeId.setId(currentRegimeId);
+            }
+            regime.setRegimeId(regimeId);
 
             JTTP* jttp = JTTP::instance();
             connect(this, &RegimeDialog::sendDataEvent, jttp, qOverload<const shared_types::Regime&>(&JTTP::onSendData));
@@ -75,6 +81,7 @@ void RegimeDialog::saveInput(QAbstractButton* clickedButton) {
             }
 
             emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+            emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 
             if (currentMode == RegimeDialog::MODE::EDIT) {
                 emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);

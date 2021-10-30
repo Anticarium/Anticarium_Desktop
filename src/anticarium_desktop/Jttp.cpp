@@ -2,7 +2,7 @@
 #include <QHttpMultiPart>
 #include <anticarium_desktop/Jttp.h>
 #include <shared_types/ControlSerializer.hpp>
-#include <shared_types/RegimeNameSerializer.hpp>
+#include <shared_types/RegimeIdSerializer.hpp>
 #include <shared_types/RegimeSerializer.hpp>
 #include <shared_types/RegimesSerializer.hpp>
 #include <shared_types/SavedRegimesSerializer.hpp>
@@ -56,17 +56,17 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::Regimes regimes = jsonReply;
         emit dataReceivedEvent(regimes);
-    } else if (content == "Regime name") {
+    } else if (content == "Regime id") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
-        shared_types::RegimeName regimeName = jsonReply;
-        emit dataReceivedEvent(regimeName);
+        shared_types::RegimeId regimeId = jsonReply;
+        emit dataReceivedEvent(regimeId);
     } else if (content == "Regime") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::Regime regime = jsonReply;
         emit dataReceivedEvent(regime);
-    } else if (content == "Saved Regimes") {
+    } else if (content == "Saved regimes") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::SavedRegimes savedRegimes = jsonReply;
@@ -82,8 +82,8 @@ void JTTP::onSendData(const shared_types::Control& control) {
     httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::CONTROL_DATA, control);
 }
 
-void JTTP::onSendData(const shared_types::RegimeName& regimeName) {
-    httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::REGIME_NAME, regimeName);
+void JTTP::onSendData(const shared_types::RegimeId& regimeId) {
+    httpSend(REQUEST_TYPE::SEND, REQUEST_DATA::REGIME_ID, regimeId);
 }
 
 void JTTP::onRequestData(REQUEST_DATA requestType) {

@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     manager = new MainWindowManager(this);
     connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Control&>(&MainWindow::displayData));
-    connect(manager, qOverload<const shared_types::RegimeName&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeName&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::RegimeId&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeId&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
     connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regime&>(&MainWindow::displayData));
     connectUi();
@@ -22,10 +22,10 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::displayData(const shared_types::RegimeName& regimeName) {
+void MainWindow::displayData(const shared_types::RegimeId& regimeId) {
     disconnectUiInputs();
-    ui->modeLabel->setText(regimeName.getName());
-    updateRegimeList();
+    ui->regimeList->setCurrentIndex(regimeId.getId());
+    ui->modeLabel->setText(ui->regimeList->currentText());
     connectUiInputs();
 }
 
@@ -89,7 +89,7 @@ void MainWindow::onOpenDisplayRegimesEvent() {
 }
 
 void MainWindow::displayData(const shared_types::Regime& regime) {
-    displayData(regime.getRegimeName());
+    displayData(regime.getRegimeId());
     displayData(regime.getRegimeValue());
 }
 
@@ -116,17 +116,7 @@ void MainWindow::displayData(const shared_types::Regimes& regimes) {
     for (const QString& i : regimesVector) {
         ui->regimeList->addItem(i);
     }
-
-    updateRegimeList();
-
     connectUiInputs();
-}
-
-void MainWindow::updateRegimeList() {
-    int regimeListId = ui->regimeList->findText(ui->modeLabel->text());
-    if (regimeListId != -1) {
-        ui->regimeList->setCurrentIndex(regimeListId);
-    }
 }
 
 void MainWindow::connectUi() {
@@ -145,7 +135,7 @@ void MainWindow::connectUiInputs() {
     connect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     connect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     connect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
-    connect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
+    connect(ui->regimeList, qOverload<int>(&QComboBox::activated), manager, &MainWindowManager::onRegimeListActivated);
 }
 
 void MainWindow::disconnectUiInputs() {
@@ -155,5 +145,5 @@ void MainWindow::disconnectUiInputs() {
     disconnect(ui->heatSlider, &QSlider::valueChanged, this, &MainWindow::onEnableSaveButton);
     disconnect(ui->windSlider, &QSlider::valueChanged, manager, &MainWindowManager::onWindSliderMoved);
     disconnect(ui->lightSlider, &QSlider::valueChanged, manager, &MainWindowManager::onLightSliderMoved);
-    disconnect(ui->regimeList, &QComboBox::textActivated, manager, &MainWindowManager::onRegimeListChoice);
+    disconnect(ui->regimeList, qOverload<int>(&QComboBox::activated), manager, &MainWindowManager::onRegimeListActivated);
 }

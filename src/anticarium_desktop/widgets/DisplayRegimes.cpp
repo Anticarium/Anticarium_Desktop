@@ -37,7 +37,7 @@ void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegime
     for (int i = 0; i < regimesListSize; ++i) {
         QTableWidgetItem* item = nullptr;
 
-        item = new QTableWidgetItem(regimesList[i].getRegimeName().getName(), Qt::DisplayRole);
+        item = new QTableWidgetItem(regimesList[i].getName(), Qt::DisplayRole);
         ui->table->setItem(i, 0, item);
 
         item = new QTableWidgetItem(QString::number(regimesList[i].getRegimeValue().getTemperature()), Qt::DisplayRole);

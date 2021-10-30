@@ -41,7 +41,7 @@ function(FETCHSHAREDTYPES)
 	FetchContent_Declare(
 	  shared_types
 	  GIT_REPOSITORY https://github.com/Anticarium/Shared_Types.git
-	  GIT_TAG        eb89f201295d0567ac2201b778bbaa48f981e22a
+	  GIT_TAG        21fa314e953a48e3d317be13ffc3a9f6f4bbdae3
 	)
 
 	FetchContent_GetProperties(shared_types)

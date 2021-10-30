@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::Regimes& regimes);
     void displayData(const shared_types::Control& control);
     void displayData(const shared_types::SensorData& sensorData);
-    void displayData(const shared_types::RegimeName& regimeName);
+    void displayData(const shared_types::RegimeId& regimeId);
     void displayData(const shared_types::Regime& regime);
     void displayData(const shared_types::RegimeValue& regimeValue);
   private slots:
@@ -44,7 +44,4 @@ class MainWindow : public QMainWindow {
 
     // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
-
-    // Finds and sets element in regime list that corresponds to current regime label
-    void updateRegimeList();
 };

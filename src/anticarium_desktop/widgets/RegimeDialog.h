@@ -13,6 +13,7 @@ class RegimeDialog : public QDialog {
     Q_OBJECT
 
   public:
+    static const int NEW_REGIME_ID = -1;
     enum class MODE { NEW, EDIT };
     RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent = nullptr);
     ~RegimeDialog();
@@ -26,6 +27,7 @@ class RegimeDialog : public QDialog {
 
   private:
     RegimeDialog::MODE currentMode;
+    int currentRegimeId = 0;
 
     // Closes dialog only if result code is accepted or rejected
     void done(int r) override;
