@@ -139,11 +139,9 @@ void MainWindow::displayData(const shared_types::Control& control) {
 }
 
 void MainWindow::displayData(const shared_types::SensorData& sensorData) {
-    disconnectUiInputs();
     ui->temperatureValue->display(sensorData.getTemperature());
     ui->humidityValue->display(sensorData.getHumidity());
     ui->moistureValue->display(sensorData.getMoisture());
-    connectUiInputs();
 }
 
 void MainWindow::displayData(const shared_types::Regimes& regimes) {
