@@ -2,7 +2,10 @@
 #include <anticarium_desktop/widgets/RegimeDialog.h>
 #include <ui_RegimeDialog.h>
 
-enum REGIME_DIALOG_RESULT { PROCESSING = 2 };
+enum REGIME_DIALOG_RESULT
+{
+    PROCESSING = 2 // Prevent dialog closing if there was an error
+};
 
 RegimeDialog::RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent) : QDialog(parent), ui(new Ui::RegimeDialog) {
     ui->setupUi(this);

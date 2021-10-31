@@ -7,7 +7,8 @@
 class DisplayRegimesManager : public QObject {
     Q_OBJECT
   public:
-    enum {
+    enum
+    {
         DELETION_START = 100 // If id number is even or bigger than 100, delete cocrresponding regime
     };
 

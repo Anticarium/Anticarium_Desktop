@@ -11,7 +11,13 @@ class DisplayRegimes : public QDialog {
     Q_OBJECT
 
   public:
-    enum ITEM_POSITION { NAME, TEMPERATURE, MOISTURE };
+    enum ITEM_POSITION
+    {
+        NAME,
+        TEMPERATURE,
+        MOISTURE
+    };
+
     DisplayRegimes(QWidget* parent = nullptr);
     ~DisplayRegimes();
 
