@@ -7,11 +7,16 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     manager = new MainWindowManager(this);
-    connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
-    connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Control&>(&MainWindow::displayData));
-    connect(manager, qOverload<const shared_types::RegimeId&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::RegimeId&>(&MainWindow::displayData));
-    connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
-    connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this, qOverload<const shared_types::Regime&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this,
+            qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent), this,
+            qOverload<const shared_types::Control&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::RegimeId&>(&MainWindowManager::displayDataEvent), this,
+            qOverload<const shared_types::RegimeId&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent), this,
+            qOverload<const shared_types::Regimes&>(&MainWindow::displayData));
+    connect(manager, qOverload<const shared_types::Regime&>(&MainWindowManager::displayDataEvent), this,
+            qOverload<const shared_types::Regime&>(&MainWindow::displayData));
     connectUi();
     connectUiInputs();
 

@@ -15,13 +15,27 @@
 class JTTP : public QObject {
     Q_OBJECT
   public:
-    enum class REQUEST_DATA { CONTROL_DATA, SENSOR_DATA, REGIMES, REGIME_ID, REGIME, SAVED_REGIMES };
-    enum class REQUEST_TYPE { REQUEST, SEND };
+    enum class REQUEST_DATA
+    {
+        CONTROL_DATA,
+        SENSOR_DATA,
+        REGIMES,
+        REGIME_ID,
+        REGIME,
+        SAVED_REGIMES
+    };
+
+    enum class REQUEST_TYPE
+    {
+        REQUEST,
+        SEND
+    };
+
     // singleton design pattern
     JTTP()       = delete;
     void operator=(const JTTP&) = delete;
 
-    // Constructs and returns pointer to objet
+    // Constructs and returns pointer to object
     static JTTP* instance(QObject* parent);
     // Returns pointer to object
     static JTTP* instance();
@@ -36,10 +50,19 @@ class JTTP : public QObject {
     QNetworkAccessManager* networkAccessManager = nullptr;
     QNetworkRequest networkRequest;
 
-    QMap<REQUEST_DATA, QString> requestDataMap = { { REQUEST_DATA::CONTROL_DATA, "control" }, { REQUEST_DATA::SENSOR_DATA, "sensor_data" }, { REQUEST_DATA::REGIMES, "regimes" },
-        { REQUEST_DATA::REGIME_ID, "regime_id" }, { REQUEST_DATA::REGIME, "regime" }, { REQUEST_DATA::SAVED_REGIMES, "saved_regimes" } };
+    QMap<REQUEST_DATA, QString> requestDataMap = {
+        { REQUEST_DATA::CONTROL_DATA, "control" },       // Request Control json
+        { REQUEST_DATA::SENSOR_DATA, "sensor_data" },    // Request SensorData json
+        { REQUEST_DATA::REGIMES, "regimes" },            // Request Regimes json
+        { REQUEST_DATA::REGIME_ID, "regime_id" },        // Request RegimeId json
+        { REQUEST_DATA::REGIME, "regime" },              // Request Regime json
+        { REQUEST_DATA::SAVED_REGIMES, "saved_regimes" } // Request SavedRegimes json
+    };
 
-    QMap<REQUEST_TYPE, QString> requestTypeMap = { { REQUEST_TYPE::REQUEST, "request" }, { REQUEST_TYPE::SEND, "send" } };
+    QMap<REQUEST_TYPE, QString> requestTypeMap = {
+        { REQUEST_TYPE::REQUEST, "request" }, // Request data from server
+        { REQUEST_TYPE::SEND, "send" }        // Send data to server
+    };
 
     // Builds url and does HTTP GET or POST
     void httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson = nlohmann::json());

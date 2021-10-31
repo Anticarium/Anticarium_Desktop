@@ -13,8 +13,17 @@ class RegimeDialog : public QDialog {
     Q_OBJECT
 
   public:
-    enum { NEW_REGIME_ID = -1 };
-    enum class MODE { NEW, EDIT };
+    enum
+    {
+        NEW_REGIME_ID = -1 // If applies this id to sent Regime, will save this Regime as new
+    };
+
+    enum class MODE
+    {
+        NEW,
+        EDIT
+    };
+
     RegimeDialog(RegimeDialog::MODE mode, const shared_types::Regime& regime, QWidget* parent = nullptr);
     ~RegimeDialog();
 
