@@ -71,8 +71,6 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::SavedRegimes savedRegimes = jsonReply;
         emit dataReceivedEvent(savedRegimes);
-    } else {
-        SPDLOG_WARN(QString("Unknown header contents: %1").arg(content).toStdString());
     }
 }
 
