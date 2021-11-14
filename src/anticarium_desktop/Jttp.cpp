@@ -34,7 +34,7 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
         SPDLOG_ERROR(QString("QNetworkError: %1").arg(reply->errorString()).toStdString());
         return;
     } else {
-        content = reply->rawHeader("Anticarium content description");
+        content = reply->rawHeader("Anticarium_content_description");
         SPDLOG_INFO(QString("Data arrived").toStdString());
     }
 
@@ -71,6 +71,8 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::SavedRegimes savedRegimes = jsonReply;
         emit dataReceivedEvent(savedRegimes);
+    } else {
+        SPDLOG_WARN("Unknown header contents");
     }
 }
 
@@ -93,7 +95,7 @@ void JTTP::onRequestData(REQUEST_DATA requestType) {
 void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
     QString requestTypeString = requestTypeMap[requestType];
     QString requestDataString = requestDataMap[requestData];
-    QString url               = QString("http://127.0.0.1:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
+    QString url               = QString("http://192.168.1.100:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
     QNetworkRequest networkRequest;
     networkRequest.setUrl(url);
 

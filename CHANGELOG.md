@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- MODIFY: Changed http response header to "Anticarium_content_description"
 - MODIFY: Formatted code using new .clang-format config from Anticarium_Doc 2283a5e594f9b46cb9fd90737b32b8f952dcc5b8
 - MODIFY: .gitignore .clang-format file
 - REMOVE: .clang-format file, it is located in Anticarium_Doc
