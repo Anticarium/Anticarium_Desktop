@@ -41,12 +41,12 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
     // reads reply into QString
     QString answer = reply->readAll();
     nlohmann::json jsonReply;
-    if (content == "Sensor data") {
+    if (content == "Sensor_data") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::SensorData sensorData = jsonReply;
         emit dataReceivedEvent(sensorData);
-    } else if (content == "Control") {
+    } else if (content == "Control_data") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::Control control = jsonReply;
@@ -56,7 +56,7 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::Regimes regimes = jsonReply;
         emit dataReceivedEvent(regimes);
-    } else if (content == "Regime id") {
+    } else if (content == "Regime_id") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::RegimeId regimeId = jsonReply;
@@ -66,13 +66,13 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::Regime regime = jsonReply;
         emit dataReceivedEvent(regime);
-    } else if (content == "Saved regimes") {
+    } else if (content == "Saved_regimes") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::SavedRegimes savedRegimes = jsonReply;
         emit dataReceivedEvent(savedRegimes);
     } else {
-        SPDLOG_WARN("Unknown header contents");
+        SPDLOG_WARN(QString("Unknown header contents: %1").arg(content).toStdString());
     }
 }
 
@@ -95,7 +95,7 @@ void JTTP::onRequestData(REQUEST_DATA requestType) {
 void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
     QString requestTypeString = requestTypeMap[requestType];
     QString requestDataString = requestDataMap[requestData];
-    QString url               = QString("http://192.168.1.100:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
+    QString url               = QString("http://192.168.1.102:80/%1/%2").arg(requestTypeString).arg(requestDataString);
     QNetworkRequest networkRequest;
     networkRequest.setUrl(url);
 
