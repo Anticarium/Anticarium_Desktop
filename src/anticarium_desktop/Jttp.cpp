@@ -46,7 +46,7 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::SensorData sensorData = jsonReply;
         emit dataReceivedEvent(sensorData);
-    } else if (content == "Control_data") {
+    } else if (content == "Control") {
         jsonReply = nlohmann::json::parse(answer.toStdString());
 
         shared_types::Control control = jsonReply;
@@ -93,7 +93,7 @@ void JTTP::onRequestData(REQUEST_DATA requestType) {
 void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
     QString requestTypeString = requestTypeMap[requestType];
     QString requestDataString = requestDataMap[requestData];
-    QString url               = QString("http://192.168.1.102:80/%1/%2").arg(requestTypeString).arg(requestDataString);
+    QString url               = QString("http://127.0.0.1:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
     QNetworkRequest networkRequest;
     networkRequest.setUrl(url);
 

@@ -32,6 +32,8 @@ class MainWindowManager : public QObject {
     void onRegimeListActivated(int index);
     // Stores incoming Control data
     void onDataReceived(const shared_types::Control& control);
+    // Stores RegimeData in this->control from incoming Regime
+    void onDataReceived(const shared_types::Regime& regime);
 
   private:
     shared_types::Control control;
