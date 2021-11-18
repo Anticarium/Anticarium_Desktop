@@ -10,7 +10,6 @@ set(SOURCE_FILES
 )
 
 add_executable(${TARGET_NAME}
-    ${HEADER_FILES}
     ${SOURCE_FILES}
 )
 

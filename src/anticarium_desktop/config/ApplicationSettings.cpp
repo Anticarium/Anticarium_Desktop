@@ -1,6 +1,5 @@
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <shared_types/ControlSerializer.hpp>
-
 ApplicationSettings* ApplicationSettings::applicationSettings = nullptr;
 
 ApplicationSettings::ApplicationSettings(const QString& directoryPath, QObject* parent) : QObject(parent) {
