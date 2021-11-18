@@ -7,6 +7,7 @@ set(HEADER_FILES
     anticarium_desktop/widgets/RegimeDialog.h
     anticarium_desktop/widgets/DisplayRegimes.h
     anticarium_desktop/DisplayRegimesManager.h
+    anticarium_desktop/config/ApplicationSettings.h
 )
 
 set(SOURCE_FILES
@@ -16,6 +17,7 @@ set(SOURCE_FILES
     anticarium_desktop/widgets/RegimeDialog.cpp
     anticarium_desktop/widgets/DisplayRegimes.cpp
     anticarium_desktop/DisplayRegimesManager.cpp
+    anticarium_desktop/config/ApplicationSettings.cpp
 )
 
 set(FORMS

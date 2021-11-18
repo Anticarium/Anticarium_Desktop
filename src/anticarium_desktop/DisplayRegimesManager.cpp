@@ -1,4 +1,4 @@
-#include "DisplayRegimesManager.h"
+#include <anticarium_desktop/DisplayRegimesManager.h>
 
 DisplayRegimesManager::DisplayRegimesManager(QObject* parent) : QObject(parent) {
 }
