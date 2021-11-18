@@ -29,6 +29,8 @@ void MainWindowManager::initialize() {
             qOverload<const shared_types::Control&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::Control&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::Control&>(&MainWindowManager::onDataReceived));
+    connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this,
+            qOverload<const shared_types::Regime&>(&MainWindowManager::onDataReceived));
     fetchTimer->start(5000);
 
     // Request data for the first time on first time loading
@@ -71,4 +73,9 @@ void MainWindowManager::onRegimeListActivated(int index) {
 
 void MainWindowManager::onDataReceived(const shared_types::Control& control) {
     this->control = control;
+}
+
+void MainWindowManager::onDataReceived(const shared_types::Regime& regime) {
+    shared_types::RegimeValue regimeValue = regime.getRegimeValue();
+    control.setRegimeValue(regimeValue);
 }
