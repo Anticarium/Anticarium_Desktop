@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <anticarium_desktop/MainWindowManager.h>
+#include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
@@ -11,8 +12,9 @@ void MainWindowManager::sendData(const shared_types::Control& control) {
 }
 
 void MainWindowManager::initialize() {
-    JTTP* jttp         = JTTP::instance();
-    QTimer* fetchTimer = new QTimer(this);
+    ApplicationSettings* settings = ApplicationSettings::instance();
+    JTTP* jttp                    = JTTP::instance();
+    QTimer* fetchTimer            = new QTimer(this);
     connect(this, qOverload<const shared_types::Control&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::Control&>(&JTTP::onSendData));
     connect(this, qOverload<const shared_types::RegimeId&>(&MainWindowManager::sendDataEvent), jttp, qOverload<const shared_types::RegimeId&>(&JTTP::onSendData));
     connect(fetchTimer, &QTimer::timeout, jttp, [&]() { emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA); });
@@ -31,7 +33,7 @@ void MainWindowManager::initialize() {
             qOverload<const shared_types::Control&>(&MainWindowManager::onDataReceived));
     connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::Regime&>(&MainWindowManager::onDataReceived));
-    fetchTimer->start(5000);
+    fetchTimer->start(settings->getSensorDataFetchTimeout());
 
     // Request data for the first time on first time loading
     emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA);

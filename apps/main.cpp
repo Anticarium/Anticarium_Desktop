@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
     JTTP::instance(QCoreApplication::instance());
-    ApplicationSettings::instance("/", QCoreApplication::instance());
+    ApplicationSettings::instance(QApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
 
     MainWindow w;
     w.show();
