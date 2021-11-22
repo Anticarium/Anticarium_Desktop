@@ -1,6 +1,6 @@
 # Anticarium_Desktop
 
-- ADD: `settings.ini.h` gets copied to build directory as `settings.ini`, along with executable, as application settings
+- ADD: `settings.ini.h` gets copied to build directory as `settings.ini` to become real application settings 
 - ADD: `Sensor_Data_fetch_timeout` setting for sensor data fetching timeout from server
 - ADD: `Anticarium_Server_URL` setting that stores URL to which to make requests
 - ADD: Application settings class `ApplicationSettings`
