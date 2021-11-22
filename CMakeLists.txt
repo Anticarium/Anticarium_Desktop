@@ -14,12 +14,11 @@ include(FetchContent)
 file(READ VERSION CURRENT_VERSION)
 project(${TARGET_NAME} VERSION ${CURRENT_VERSION})
 message(STATUS "Adding ${TARGET_NAME} v${CURRENT_VERSION}")
-configure_file(VersionConfig.h.in ${TARGET_NAME}_VersionConfig.h)
 
 add_subdirectory(src)
 add_subdirectory(apps)
 
-if(ADD_TESTS)
+if(ADD_${TARGET_NAME}_TESTS)
     add_subdirectory(tests)
 endif()
 

@@ -1,5 +1,10 @@
 # Anticarium_Desktop
 
+- REMOVE: `VersionConfig.h.in` file and cmake script, because it is unused
+- ADD: `settings.ini.h` gets copied to build directory as `settings.ini` to become real application settings 
+- ADD: `Sensor_Data_fetch_timeout` setting for sensor data fetching timeout from server
+- ADD: `Anticarium_Server_URL` setting that stores URL to which to make requests
+- ADD: Application settings class `ApplicationSettings` along with its tests
 - ADD: Save `RegimeValue` from incoming `Regime` in `MainWindowManager.cpp`
 - MODIFY: Changed http response header to "Anticarium_content_description"
 - MODIFY: Formatted code using new .clang-format config from Anticarium_Doc 2283a5e594f9b46cb9fd90737b32b8f952dcc5b8

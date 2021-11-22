@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QHttpMultiPart>
 #include <anticarium_desktop/Jttp.h>
+#include <anticarium_desktop/config/ApplicationSettings.h>
 #include <shared_types/ControlSerializer.hpp>
 #include <shared_types/RegimeIdSerializer.hpp>
 #include <shared_types/RegimeSerializer.hpp>
@@ -91,9 +92,11 @@ void JTTP::onRequestData(REQUEST_DATA requestType) {
 }
 
 void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
+    ApplicationSettings* settings = ApplicationSettings::instance();
+
     QString requestTypeString = requestTypeMap[requestType];
     QString requestDataString = requestDataMap[requestData];
-    QString url               = QString("http://127.0.0.1:5000/%1/%2").arg(requestTypeString).arg(requestDataString);
+    QString url               = QString("%1/%2/%3").arg(settings->getAnticariumUrl()).arg(requestTypeString).arg(requestDataString);
     QNetworkRequest networkRequest;
     networkRequest.setUrl(url);
 

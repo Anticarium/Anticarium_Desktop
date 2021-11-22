@@ -1,13 +1,16 @@
 #include <QApplication>
 #include <anticarium_desktop/Jttp.h>
+#include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_sinks.h>
 #include <spdlog/spdlog.h>
 
 int main(int argc, char* argv[]) {
-    std::shared_ptr<spdlog::sinks::daily_file_sink_st> dailyLogger = std::make_shared<spdlog::sinks::daily_file_sink_st>("logs/AnticariumDesktopLog.txt", 0, 0, false, 10);
-    std::shared_ptr<spdlog::sinks::stdout_sink_st> consoleLogger   = std::make_shared<spdlog::sinks::stdout_sink_st>();
+    std::shared_ptr<spdlog::sinks::daily_file_sink_st> dailyLogger =
+    std::make_shared<spdlog::sinks::daily_file_sink_st>("logs/AnticariumDesktopLog.txt", 0, 0, false, 10);
+
+    std::shared_ptr<spdlog::sinks::stdout_sink_st> consoleLogger = std::make_shared<spdlog::sinks::stdout_sink_st>();
 
     std::vector<spdlog::sink_ptr> loggerSinks;
 
@@ -25,6 +28,7 @@ int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
     JTTP::instance(QCoreApplication::instance());
+    ApplicationSettings::instance(QApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
 
     MainWindow w;
     w.show();
