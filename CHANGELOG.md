@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+# 1.3.0
 - REMOVE: `VersionConfig.h.in` file and cmake script, because it is unused
 - ADD: `settings.ini.h` gets copied to build directory as `settings.ini` to become real application settings 
 - ADD: `Sensor_Data_fetch_timeout` setting for sensor data fetching timeout from server
