@@ -1,5 +1,7 @@
 # Anticarium_Desktop
 
+- MODIFY: Create create log file path from `QApplication::applicationDirPath()`
+
 # 1.3.0
 - REMOVE: `VersionConfig.h.in` file and cmake script, because it is unused
 - ADD: `settings.ini.h` gets copied to build directory as `settings.ini` to become real application settings 
