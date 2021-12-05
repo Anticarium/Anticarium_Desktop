@@ -1,6 +1,6 @@
 # Anticarium_Desktop
 
-- MODIFY: Create create log file path from `QApplication::applicationDirPath()`
+- MODIFY: Create log file path from `QApplication::applicationDirPath()`
 
 # 1.3.0
 - REMOVE: `VersionConfig.h.in` file and cmake script, because it is unused
