@@ -7,7 +7,7 @@
 #include <spdlog/spdlog.h>
 
 static void initializeLogger() {
-    QString qStringPath    = QString("%1/%2").arg(QApplication::applicationDirPath(), "logs/AnticariumDesktopLog.log");
+    QString qStringPath    = QString("%1/%2").arg(QCoreApplication::applicationDirPath(), "logs/AnticariumDesktopLog.log");
     std::string loggerPath = qStringPath.toStdString();
 
     std::shared_ptr<spdlog::sinks::daily_file_sink_st> dailyLogger = std::make_shared<spdlog::sinks::daily_file_sink_st>(loggerPath, 0, 0, false, 10);
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     SPDLOG_INFO("Program started");
 
     JTTP::instance(QCoreApplication::instance());
-    ApplicationSettings::instance(QApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
+    ApplicationSettings::instance(QCoreApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
 
     MainWindow w;
     w.show();
