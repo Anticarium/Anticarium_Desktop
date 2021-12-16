@@ -19,6 +19,8 @@ class ApplicationSettings : public QObject {
 
     int getImageHeight() const;
 
+    const QString& getAnticariumUDPUrl() const;
+
   private:
     static ApplicationSettings* applicationSettings;
     ApplicationSettings(const QString& directoryPath, QObject* parent = nullptr);
@@ -26,6 +28,7 @@ class ApplicationSettings : public QObject {
     QSettings* settings = nullptr;
 
     QString anticariumUrl;
+    QString anticariumUDPUrl;
     int sensorDataFetchTimeout = 0;
     int serverUDPPort          = 0;
     int imageWidth             = 0;

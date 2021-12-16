@@ -9,6 +9,11 @@ ApplicationSettings::ApplicationSettings(const QString& directoryPath, QObject* 
     serverUDPPort          = settings->value("Server_UDP_Port", 0).toInt();
     imageWidth             = settings->value("Image_Width", 0).toInt();
     imageHeight            = settings->value("Image_Height", 0).toInt();
+    anticariumUDPUrl       = settings->value("Anticarium_UDP_URL", "").toString();
+}
+
+const QString& ApplicationSettings::getAnticariumUDPUrl() const {
+    return anticariumUDPUrl;
 }
 
 int ApplicationSettings::getImageHeight() const {

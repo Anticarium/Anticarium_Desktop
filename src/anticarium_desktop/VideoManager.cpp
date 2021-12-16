@@ -1,5 +1,6 @@
 #include <anticarium_desktop/ImageBuilder.h>
 #include <anticarium_desktop/VideoManager.h>
+#include <anticarium_desktop/config/ApplicationSettings.h>
 
 VideoManager::VideoManager(QObject* parent) : QObject(parent) {
     udpReader = new UDPReader(this);
@@ -12,7 +13,20 @@ void VideoManager::run() {
 }
 
 void VideoManager::onIncomingData(const QByteArray& data) {
-    auto result = ImageBuilder::build(data);
+    auto settings = ApplicationSettings::instance();
+    int width     = settings->getImageWidth();
 
-    emit imageRowReadyEvent(result);
+    // Return if missing data in row
+    if (data.size() != width * 3 + 3) {
+        return;
+    }
+
+    auto imageRow = ImageBuilder::build(data);
+
+    // Return if row number too big
+    if (imageRow.position > settings->getImageWidth() - 1) {
+        return;
+    }
+
+    emit imageRowReadyEvent(imageRow);
 }

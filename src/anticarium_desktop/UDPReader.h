@@ -24,9 +24,14 @@ class UDPReader : public QObject {
 
   private:
     enum Timeout
-    { HANDSHAKE = 1000 };
-
+    {
+        HANDSHAKE = 1000,
+        RECONNECT = 5000
+    };
 
     QUdpSocket* udp        = nullptr;
     QTimer* handshakeTimer = nullptr;
+    QTimer* reconnectTimer = nullptr;
+
+    static const QString HANDSHAKE_MESSAGE;
 };

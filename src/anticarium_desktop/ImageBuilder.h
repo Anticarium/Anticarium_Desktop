@@ -8,5 +8,5 @@ class ImageBuilder {
     ImageBuilder() = delete;
 
     // Builds one image row
-    static ImageRow build(const QByteArray& inRow);
+    static ImageRow build(const QByteArray& row);
 };

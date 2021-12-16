@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QThread>
 #include <anticarium_desktop/Jttp.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
 #include <shared_types/Control.h>
@@ -11,6 +12,7 @@ class MainWindowManager : public QObject {
     Q_OBJECT
   public:
     MainWindowManager(QObject* parent = nullptr);
+    ~MainWindowManager();
     void sendData(const shared_types::Control& control);
     void initialize();
 
@@ -42,4 +44,6 @@ class MainWindowManager : public QObject {
     void initializeJttp();
     void initializeVideoManager();
     shared_types::Control control;
+
+    QThread* videoManagerThread = nullptr;
 };

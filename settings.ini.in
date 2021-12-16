@@ -1,6 +1,7 @@
 [General]
 Anticarium_Server_URL="http://192.168.1.103:80"
+Anticarium_UDP_URL="192.168.1.103"
 Sensor_Data_fetch_timeout=5000
-Server_UDP_Port=0
-Image_Width=1280
-Image_Height=900
+Server_UDP_Port=5011
+Image_Width=1279
+Image_Height=960

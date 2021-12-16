@@ -1,5 +1,4 @@
 #include <QCoreApplication>
-#include <QThread>
 #include <QTimer>
 #include <anticarium_desktop/MainWindowManager.h>
 #include <anticarium_desktop/VideoManager.h>
@@ -7,6 +6,11 @@
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
+}
+
+MainWindowManager::~MainWindowManager() {
+    videoManagerThread->quit();
+    videoManagerThread->wait();
 }
 
 void MainWindowManager::sendData(const shared_types::Control& control) {
@@ -90,8 +94,8 @@ void MainWindowManager::initializeJttp() {
 }
 
 void MainWindowManager::initializeVideoManager() {
-    auto videoManager       = new VideoManager(this);
-    auto videoManagerThread = new QThread();
+    auto videoManager  = new VideoManager();
+    videoManagerThread = new QThread(this);
 
     videoManager->moveToThread(videoManagerThread);
 
