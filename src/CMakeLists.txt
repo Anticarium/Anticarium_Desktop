@@ -8,6 +8,10 @@ set(HEADER_FILES
     anticarium_desktop/widgets/DisplayRegimes.h
     anticarium_desktop/DisplayRegimesManager.h
     anticarium_desktop/config/ApplicationSettings.h
+    anticarium_desktop/VideoManager.h
+    anticarium_desktop/UDPReader.h
+    anticarium_desktop/ImageBuilder.h
+    anticarium_desktop/config/ImageRow.hpp
 )
 
 set(SOURCE_FILES
@@ -18,6 +22,9 @@ set(SOURCE_FILES
     anticarium_desktop/widgets/DisplayRegimes.cpp
     anticarium_desktop/DisplayRegimesManager.cpp
     anticarium_desktop/config/ApplicationSettings.cpp
+    anticarium_desktop/VideoManager.cpp
+    anticarium_desktop/UDPReader.cpp
+    anticarium_desktop/ImageBuilder.cpp
 )
 
 set(FORMS

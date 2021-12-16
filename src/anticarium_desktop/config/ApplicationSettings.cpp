@@ -6,6 +6,22 @@ ApplicationSettings::ApplicationSettings(const QString& directoryPath, QObject* 
     settings               = new QSettings(directoryPath, QSettings::IniFormat, this);
     anticariumUrl          = settings->value("Anticarium_Server_URL", "").toString();
     sensorDataFetchTimeout = settings->value("Sensor_Data_fetch_timeout", 5000).toInt();
+    serverUDPPort          = settings->value("Server_UDP_Port", 0).toInt();
+    imageWidth             = settings->value("Image_Width", 0).toInt();
+    imageHeight            = settings->value("Image_Height", 0).toInt();
+    anticariumUDPUrl       = settings->value("Anticarium_UDP_URL", "").toString();
+}
+
+const QString& ApplicationSettings::getAnticariumUDPUrl() const {
+    return anticariumUDPUrl;
+}
+
+int ApplicationSettings::getImageHeight() const {
+    return imageHeight;
+}
+
+int ApplicationSettings::getImageWidth() const {
+    return imageWidth;
 }
 
 ApplicationSettings* ApplicationSettings::instance(const QString& directoryPath, QObject* parent) {
@@ -23,10 +39,14 @@ ApplicationSettings::~ApplicationSettings() {
     applicationSettings = nullptr;
 }
 
-QString ApplicationSettings::getAnticariumUrl() {
+QString ApplicationSettings::getAnticariumUrl() const {
     return anticariumUrl;
 }
 
-int ApplicationSettings::getSensorDataFetchTimeout() {
+int ApplicationSettings::getSensorDataFetchTimeout() const {
     return sensorDataFetchTimeout;
+}
+
+int ApplicationSettings::getServerUDPPort() const {
+    return serverUDPPort;
 }

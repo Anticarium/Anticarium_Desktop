@@ -1,6 +1,8 @@
 #pragma once
 
+#include <QThread>
 #include <anticarium_desktop/Jttp.h>
+#include <anticarium_desktop/config/ImageRow.hpp>
 #include <shared_types/Control.h>
 #include <shared_types/Regime.h>
 #include <shared_types/Regimes.h>
@@ -10,6 +12,7 @@ class MainWindowManager : public QObject {
     Q_OBJECT
   public:
     MainWindowManager(QObject* parent = nullptr);
+    ~MainWindowManager();
     void sendData(const shared_types::Control& control);
     void initialize();
 
@@ -28,6 +31,8 @@ class MainWindowManager : public QObject {
     void displayDataEvent(const shared_types::RegimeId& newRegimeId);
     void displayDataEvent(const shared_types::Regime& newRegime);
 
+    void imageRowReadyEvent(const ImageRow& row);
+
   public slots:
     void onRegimeListActivated(int index);
     // Stores incoming Control data
@@ -36,5 +41,9 @@ class MainWindowManager : public QObject {
     void onDataReceived(const shared_types::Regime& regime);
 
   private:
+    void initializeJttp();
+    void initializeVideoManager();
     shared_types::Control control;
+
+    QThread* videoManagerThread = nullptr;
 };

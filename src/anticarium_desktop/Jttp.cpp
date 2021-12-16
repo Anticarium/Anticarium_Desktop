@@ -36,7 +36,7 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
         return;
     } else {
         content = reply->rawHeader("Anticarium_content_description");
-        SPDLOG_INFO(QString("Data arrived").toStdString());
+        SPDLOG_INFO("Data arrived");
     }
 
     // reads reply into QString
