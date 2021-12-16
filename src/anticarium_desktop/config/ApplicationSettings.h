@@ -14,11 +14,8 @@ class ApplicationSettings : public QObject {
     QString getAnticariumUrl() const;
     int getSensorDataFetchTimeout() const;
     int getServerUDPPort() const;
-
     int getImageWidth() const;
-
     int getImageHeight() const;
-
     const QString& getAnticariumUDPUrl() const;
 
   private:

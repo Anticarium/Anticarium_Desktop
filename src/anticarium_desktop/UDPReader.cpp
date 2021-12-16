@@ -1,5 +1,4 @@
 #include <QNetworkDatagram>
-#include <QNetworkProxy>
 #include <anticarium_desktop/UDPReader.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <spdlog/spdlog.h>
@@ -30,12 +29,20 @@ void UDPReader::run() {
 
 void UDPReader::onRequestHandshake() {
     SPDLOG_INFO("Initiating UDP handshake");
+
+    auto settings = ApplicationSettings::instance();
+
     QByteArray datagram = HANDSHAKE_MESSAGE.toUtf8();
 
-    udp->writeDatagram(datagram, QHostAddress(3232235879), 5011);
+    QHostAddress address = QHostAddress(settings->getAnticariumUDPUrl());
+    quint16 port         = settings->getServerUDPPort();
+
+    udp->writeDatagram(datagram, address, port);
 }
 
 void UDPReader::onDataArrived() {
+    auto settings = ApplicationSettings::instance();
+
     // Stop handshake timer
     if (handshakeTimer->isActive()) {
         SPDLOG_INFO("Successful UDP handshake");
@@ -44,7 +51,7 @@ void UDPReader::onDataArrived() {
 
     while (udp->hasPendingDatagrams()) {
         auto datagram = udp->receiveDatagram();
-        if (datagram.senderAddress().toString().contains("192.168.1.103")) {
+        if (datagram.senderAddress().toString().contains(settings->getAnticariumUDPUrl())) {
             // Reset reconnection timer, because of incoming data
             reconnectTimer->stop();
             reconnectTimer->start();

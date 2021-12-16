@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <anticarium_desktop/ImageBuilder.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 

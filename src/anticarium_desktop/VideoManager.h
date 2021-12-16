@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QObject>
 #include <anticarium_desktop/UDPReader.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
 
