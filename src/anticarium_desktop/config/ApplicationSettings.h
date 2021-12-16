@@ -11,8 +11,13 @@ class ApplicationSettings : public QObject {
     static ApplicationSettings* instance();
     virtual ~ApplicationSettings();
 
-    QString getAnticariumUrl();
-    int getSensorDataFetchTimeout();
+    QString getAnticariumUrl() const;
+    int getSensorDataFetchTimeout() const;
+    int getServerUDPPort() const;
+
+    int getImageWidth() const;
+
+    int getImageHeight() const;
 
   private:
     static ApplicationSettings* applicationSettings;
@@ -22,4 +27,7 @@ class ApplicationSettings : public QObject {
 
     QString anticariumUrl;
     int sensorDataFetchTimeout = 0;
+    int serverUDPPort          = 0;
+    int imageWidth             = 0;
+    int imageHeight            = 0;
 };

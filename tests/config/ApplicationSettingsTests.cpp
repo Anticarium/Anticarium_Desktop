@@ -11,4 +11,7 @@ TEST(TestApplicationSettings, TestRead) {
 
     EXPECT_EQ(applicationSettings->getAnticariumUrl(), "http://127.0.0.1:5000");
     EXPECT_EQ(applicationSettings->getSensorDataFetchTimeout(), 1000);
+    EXPECT_EQ(applicationSettings->getServerUDPPort(), 10432);
+    EXPECT_EQ(applicationSettings->getImageWidth(), 500);
+    EXPECT_EQ(applicationSettings->getImageHeight(), 200);
 }
