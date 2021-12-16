@@ -7,7 +7,7 @@ class UDPReader : public QObject {
     Q_OBJECT
   public:
     UDPReader(QObject* parent = nullptr);
-
+    ~UDPReader();
     void run();
 
   signals:

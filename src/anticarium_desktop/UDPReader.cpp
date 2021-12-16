@@ -20,6 +20,9 @@ UDPReader::UDPReader(QObject* parent) : QObject(parent) {
     connect(udp, &QUdpSocket::readyRead, this, &UDPReader::onDataArrived);
 }
 
+UDPReader::~UDPReader() {
+}
+
 void UDPReader::run() {
     // Start handshake requests
     handshakeTimer->start();
@@ -45,7 +48,6 @@ void UDPReader::onDataArrived() {
             // Reset reconnection timer, because of incoming data
             reconnectTimer->stop();
             reconnectTimer->start();
-
 
             emit dataReadEvent(datagram.data());
         }

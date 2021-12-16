@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) {
 
     SPDLOG_INFO("Program started");
 
-    JTTP::instance(QCoreApplication::instance());
-    ApplicationSettings::instance(QCoreApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
+    JTTP::instance(QApplication::instance());
+    ApplicationSettings::instance(QApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
 
     MainWindow w;
     w.show();

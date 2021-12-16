@@ -19,7 +19,22 @@ ImageRow ImageBuilder::build(const QByteArray& row) {
     for (int i = 0; i < imageWidth; i++) {
         int position = (i + 1) * 3;
 
-        QColor color(row[position], row[position + 1], row[position + 2]);
+        unsigned char r = row[position];
+        unsigned char g = row[position + 1];
+        unsigned char b = row[position + 2];
+
+        // Change invalid values
+        unsigned char rgb[] = { r, g, b };
+        for (auto& i : rgb) {
+            if (i > 255) {
+                i = 255;
+            }
+            if (i < 0) {
+                i = 0;
+            }
+        }
+
+        QColor color(r, g, b);
         pixels.setPixelColor(i, 0, color.rgb());
     }
 

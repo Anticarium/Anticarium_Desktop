@@ -28,5 +28,10 @@ void VideoManager::onIncomingData(const QByteArray& data) {
         return;
     }
 
+    // Return if row number too small
+    if (imageRow.position < 0) {
+        return;
+    }
+
     emit imageRowReadyEvent(imageRow);
 }

@@ -214,8 +214,10 @@ void MainWindow::initializeVideoView() {
     int width  = settings->getImageWidth();
     int height = settings->getImageHeight();
 
-    QSize size(width, 1);
+    ui->videoStreamView->setMaximumSize(width + 20, height);
 
+    // Create pixmap rows
+    QSize size(width, 1);
     for (int i = 0; i < height; i++) {
         QPixmap pixmap(size);
         auto row = videoScene->addPixmap(pixmap);
