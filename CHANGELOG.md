@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+# 1.4.0
 - ADD: Video reading from UDP port
 - ADD: Video display capability
 - MODIFY: Create log file path from `QApplication::applicationDirPath()`
