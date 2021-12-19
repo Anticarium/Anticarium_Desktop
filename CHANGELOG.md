@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- ADD: `ImageBuilder` tests
 - MODIFY: Updated logger formatter with constant spaces for every log part
 - ADD: Log level parameter in `settings.ini`
 - MODIFY: Rotate log file when it is bigger than 10MB

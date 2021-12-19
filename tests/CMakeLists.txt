@@ -7,6 +7,7 @@ set(TEST_DATA_DIR_HEADER_PATH ${CMAKE_BINARY_DIR}/tests/include/anticarium_deskt
 set(SOURCE_FILES
     main.cpp
     config/ApplicationSettingsTests.cpp
+    ImageBuilderTests.cpp
 )
 
 add_executable(${TARGET_NAME}
@@ -25,3 +26,4 @@ target_link_libraries(${TARGET_NAME} PRIVATE anticarium_desktop_lib)
 ADDGTEST(${TARGET_NAME})
 ADDQT5CORE(${TARGET_NAME})
 ADDSPDLOG(${TARGET_NAME})
+ADDQT5WIDGETS(${TARGET_NAME})
