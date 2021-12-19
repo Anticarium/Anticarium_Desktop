@@ -10,10 +10,15 @@ ApplicationSettings::ApplicationSettings(const QString& directoryPath, QObject* 
     imageWidth             = settings->value("Image_Width", 0).toInt();
     imageHeight            = settings->value("Image_Height", 0).toInt();
     anticariumUDPUrl       = settings->value("Anticarium_UDP_URL", "").toString();
+    logLevel               = static_cast<spdlog::level::level_enum>(settings->value("Log_Level", spdlog::level::level_enum::trace).toInt());
 }
 
 const QString& ApplicationSettings::getAnticariumUDPUrl() const {
     return anticariumUDPUrl;
+}
+
+spdlog::level::level_enum ApplicationSettings::getLogLevel() const {
+    return logLevel;
 }
 
 int ApplicationSettings::getImageHeight() const {
