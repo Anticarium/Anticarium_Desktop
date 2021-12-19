@@ -3,19 +3,19 @@
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <spdlog/spdlog.h>
 
-const QString UDPReader::HANDSHAKE_MESSAGE = "client_ready";
+const QString UDPReader::HEARTBEAT_MESSAGE = "client_ready";
 
 UDPReader::UDPReader(QObject* parent) : QObject(parent) {
     udp            = new QUdpSocket(this);
-    handshakeTimer = new QTimer(this);
+    heartbeatTimer = new QTimer(this);
     reconnectTimer = new QTimer(this);
 
-    handshakeTimer->setInterval(Timeout::HANDSHAKE);
+    heartbeatTimer->setInterval(Timeout::HEARTBEAT);
     reconnectTimer->setInterval(Timeout::RECONNECT);
     reconnectTimer->setSingleShot(true);
 
-    connect(handshakeTimer, &QTimer::timeout, this, &UDPReader::onRequestHandshake);
-    connect(reconnectTimer, &QTimer::timeout, handshakeTimer, qOverload<>(&QTimer::start));
+    connect(heartbeatTimer, &QTimer::timeout, this, &UDPReader::onHeartbeat);
+    connect(reconnectTimer, &QTimer::timeout, heartbeatTimer, qOverload<>(&QTimer::start));
     connect(udp, &QUdpSocket::readyRead, this, &UDPReader::onDataArrived);
 }
 
@@ -23,16 +23,16 @@ UDPReader::~UDPReader() {
 }
 
 void UDPReader::run() {
-    // Start handshake requests
-    handshakeTimer->start();
+    // Start heartbeat
+    heartbeatTimer->start();
 }
 
-void UDPReader::onRequestHandshake() {
-    SPDLOG_INFO("Initiating UDP handshake");
+void UDPReader::onHeartbeat() {
+    SPDLOG_INFO("UDP heartbeat");
 
     auto settings = ApplicationSettings::instance();
 
-    QByteArray datagram = HANDSHAKE_MESSAGE.toUtf8();
+    QByteArray datagram = HEARTBEAT_MESSAGE.toUtf8();
 
     QHostAddress address = QHostAddress(settings->getAnticariumUDPUrl());
     quint16 port         = settings->getServerUDPPort();
@@ -42,12 +42,6 @@ void UDPReader::onRequestHandshake() {
 
 void UDPReader::onDataArrived() {
     auto settings = ApplicationSettings::instance();
-
-    // Stop handshake timer
-    if (handshakeTimer->isActive()) {
-        SPDLOG_INFO("Successful UDP handshake");
-        handshakeTimer->stop();
-    }
 
     while (udp->hasPendingDatagrams()) {
         auto datagram = udp->receiveDatagram();

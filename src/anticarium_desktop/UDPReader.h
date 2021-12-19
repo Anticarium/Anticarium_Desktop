@@ -16,8 +16,8 @@ class UDPReader : public QObject {
     void dataReadEvent(const QByteArray& data);
 
   private slots:
-    // Starts requesting data from server
-    void onRequestHandshake();
+    // Requests data from server
+    void onHeartbeat();
 
     // Reads data and stops handshake requests
     void onDataArrived();
@@ -25,13 +25,13 @@ class UDPReader : public QObject {
   private:
     enum Timeout
     {
-        HANDSHAKE = 1000,
+        HEARTBEAT = 1000,
         RECONNECT = 5000
     };
 
     QUdpSocket* udp        = nullptr;
-    QTimer* handshakeTimer = nullptr;
+    QTimer* heartbeatTimer = nullptr;
     QTimer* reconnectTimer = nullptr;
 
-    static const QString HANDSHAKE_MESSAGE;
+    static const QString HEARTBEAT_MESSAGE;
 };

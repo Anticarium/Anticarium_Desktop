@@ -1,5 +1,7 @@
 # Anticarium_Desktop
 
+- ADD: UDP heartbeat for server to know when to stop sending data
+- REMOVE: UDP handshake
 - ADD: `ImageBuilder` tests
 - MODIFY: Updated logger formatter with constant spaces for every log part
 - ADD: Log level parameter in `settings.ini`
