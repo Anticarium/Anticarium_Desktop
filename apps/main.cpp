@@ -20,6 +20,7 @@ static void initializeLogger() {
     std::vector<spdlog::sink_ptr> loggerSinks;
 
     loggerSinks.push_back(dailySink);
+    loggerSinks.push_back(rotatingSink);
     loggerSinks.push_back(consoleSink);
     auto combinedLogger = std::make_shared<spdlog::logger>("logger", begin(loggerSinks), end(loggerSinks));
 
