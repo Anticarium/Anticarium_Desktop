@@ -21,7 +21,7 @@ void VideoManager::onIncomingData(const QByteArray& data) {
         return;
     }
 
-    auto imageRow = ImageBuilder::build(data);
+    auto imageRow = ImageBuilder::build(data, settings->getImageWidth());
 
     // Return if row number too big
     if (imageRow.position > settings->getImageHeight() - 1) {
