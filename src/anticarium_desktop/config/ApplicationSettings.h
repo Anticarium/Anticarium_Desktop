@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QSettings>
+#include <spdlog/spdlog.h>
 
 class ApplicationSettings : public QObject {
     Q_OBJECT
@@ -17,6 +18,7 @@ class ApplicationSettings : public QObject {
     int getImageWidth() const;
     int getImageHeight() const;
     const QString& getAnticariumUDPUrl() const;
+    spdlog::level::level_enum getLogLevel() const;
 
   private:
     static ApplicationSettings* applicationSettings;
@@ -26,8 +28,9 @@ class ApplicationSettings : public QObject {
 
     QString anticariumUrl;
     QString anticariumUDPUrl;
-    int sensorDataFetchTimeout = 0;
-    int serverUDPPort          = 0;
-    int imageWidth             = 0;
-    int imageHeight            = 0;
+    int sensorDataFetchTimeout         = 0;
+    int serverUDPPort                  = 0;
+    int imageWidth                     = 0;
+    int imageHeight                    = 0;
+    spdlog::level::level_enum logLevel = spdlog::level::trace;
 };

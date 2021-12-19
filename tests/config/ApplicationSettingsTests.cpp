@@ -15,4 +15,5 @@ TEST(TestApplicationSettings, TestRead) {
     EXPECT_EQ(applicationSettings->getServerUDPPort(), 10432);
     EXPECT_EQ(applicationSettings->getImageWidth(), 500);
     EXPECT_EQ(applicationSettings->getImageHeight(), 200);
+    EXPECT_EQ(applicationSettings->getLogLevel(), 2);
 }

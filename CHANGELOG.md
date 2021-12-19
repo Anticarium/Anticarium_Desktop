@@ -1,5 +1,9 @@
 # Anticarium_Desktop
 
+- MODIFY: Updated logger formatter with constant spaces for every log part
+- ADD: Log level parameter in `settings.ini`
+- MODIFY: Rotate log file when it is bigger than 10MB
+
 # 1.4.0
 - ADD: Video reading from UDP port
 - ADD: Video display capability

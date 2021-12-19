@@ -24,3 +24,4 @@ target_link_libraries(${TARGET_NAME} PRIVATE anticarium_desktop_lib)
 
 ADDGTEST(${TARGET_NAME})
 ADDQT5CORE(${TARGET_NAME})
+ADDSPDLOG(${TARGET_NAME})
