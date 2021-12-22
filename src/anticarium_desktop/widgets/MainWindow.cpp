@@ -1,4 +1,3 @@
-#include <QGraphicsItem>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/DisplayRegimes.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
@@ -8,8 +7,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    videoScene = new QGraphicsScene(this);
-    manager    = new MainWindowManager(this);
+    manager = new MainWindowManager(this);
 
     connect(manager, qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent), this,
             qOverload<const shared_types::SensorData&>(&MainWindow::displayData));
@@ -24,7 +22,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connectUi();
     connectUiInputs();
-    initializeVideoView();
 
     // Set slider values to minimum
     onWindSliderMoved(ui->windSlider->minimum());
@@ -63,17 +60,6 @@ void MainWindow::displayData(const shared_types::RegimeValue& regimeValue) {
     connectUiInputs();
 
     ui->saveButton->setEnabled(false);
-}
-
-void MainWindow::onUpdateImageRow(const ImageRow& row) {
-    // Get current row
-    auto currentRowItem = videoScene->items()[row.position];
-    auto pixmapItem     = qgraphicsitem_cast<QGraphicsPixmapItem*>(currentRowItem);
-
-    // Update row
-    if (pixmapItem) {
-        pixmapItem->setPixmap(row.pixmap);
-    }
 }
 
 void MainWindow::onEnableSaveButton(int value) {
@@ -208,19 +194,10 @@ void MainWindow::disconnectUiInputs() {
 void MainWindow::initializeVideoView() {
     auto settings = ApplicationSettings::instance();
 
-    connect(manager, &MainWindowManager::imageRowReadyEvent, this, &MainWindow::onUpdateImageRow);
-    ui->videoStreamView->setScene(videoScene);
+    ui->videoStreamView->setScene(manager->getVideoScene());
 
     int width  = settings->getImageWidth();
     int height = settings->getImageHeight();
 
     ui->videoStreamView->setMaximumSize(width + 20, height);
-
-    // Create pixmap rows
-    QSize size(width, 1);
-    for (int i = 0; i < height; i++) {
-        QPixmap pixmap(size);
-        auto row = videoScene->addPixmap(pixmap);
-        row->setOffset(0, i);
-    }
 }

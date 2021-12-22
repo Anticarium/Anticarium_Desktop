@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QThread>
 #include <anticarium_desktop/Jttp.h>
+#include <anticarium_desktop/VideoManager.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
 #include <shared_types/Control.h>
 #include <shared_types/Regime.h>
@@ -21,6 +21,7 @@ class MainWindowManager : public QObject {
     void sendWindValue(int value);
     void sendLightValue(int value);
 
+    QGraphicsScene* getVideoScene() const;
   signals:
     void sendDataEvent(const shared_types::Control& control);
     void sendDataEvent(const shared_types::RegimeId& regimeId);
@@ -30,8 +31,6 @@ class MainWindowManager : public QObject {
     void displayDataEvent(const shared_types::Control& newControl);
     void displayDataEvent(const shared_types::RegimeId& newRegimeId);
     void displayDataEvent(const shared_types::Regime& newRegime);
-
-    void imageRowReadyEvent(const ImageRow& row);
 
   public slots:
     void onRegimeListActivated(int index);
@@ -45,5 +44,5 @@ class MainWindowManager : public QObject {
     void initializeVideoManager();
     shared_types::Control control;
 
-    QThread* videoManagerThread = nullptr;
+    VideoManager* videoManager = nullptr;
 };

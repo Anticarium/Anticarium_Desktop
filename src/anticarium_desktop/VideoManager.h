@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QGraphicsScene>
 #include <anticarium_desktop/UDPReader.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
 
@@ -10,13 +11,18 @@ class VideoManager : public QObject {
 
     void run();
 
-  signals:
-    void imageRowReadyEvent(const ImageRow& row);
+    QGraphicsScene* getVideoScene() const;
 
   private slots:
     // Incoming udp data
     void onIncomingData(const QByteArray& data);
 
+    void updateImageRow(const ImageRow& row);
+
+
   private:
-    UDPReader* udpReader = nullptr;
+    void initializeScene();
+
+    UDPReader* udpReader       = nullptr;
+    QGraphicsScene* videoScene = nullptr;
 };

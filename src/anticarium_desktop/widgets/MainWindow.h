@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QGraphicsScene>
 #include <QMainWindow>
 #include <anticarium_desktop/MainWindowManager.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
@@ -28,7 +27,6 @@ class MainWindow : public QMainWindow {
     void displayData(const shared_types::Regime& regime);
     void displayData(const shared_types::RegimeValue& regimeValue);
 
-    void onUpdateImageRow(const ImageRow& row);
   private slots:
     void onEnableSaveButton(int value = 0);
 
@@ -59,8 +57,6 @@ class MainWindow : public QMainWindow {
 
     // Disonnects all ui input components that are used for data sending
     void disconnectUiInputs();
-
-    QGraphicsScene* videoScene = nullptr;
 
     void initializeVideoView();
 };

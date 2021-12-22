@@ -1,9 +1,12 @@
+#include <QGraphicsItem>
 #include <anticarium_desktop/ImageBuilder.h>
 #include <anticarium_desktop/VideoManager.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 
 VideoManager::VideoManager(QObject* parent) : QObject(parent) {
-    udpReader = new UDPReader(this);
+    udpReader  = new UDPReader(this);
+    videoScene = new QGraphicsScene(this);
+    initializeScene();
 
     connect(udpReader, &UDPReader::dataReadEvent, this, &VideoManager::onIncomingData);
 }
@@ -33,5 +36,35 @@ void VideoManager::onIncomingData(const QByteArray& data) {
         return;
     }
 
-    emit imageRowReadyEvent(imageRow);
+    updateImageRow(imageRow);
+}
+
+void VideoManager::updateImageRow(const ImageRow& row) {
+    // Get current row
+    auto currentRowItem = videoScene->items()[row.position];
+    auto pixmapItem     = qgraphicsitem_cast<QGraphicsPixmapItem*>(currentRowItem);
+
+    // Update row
+    if (pixmapItem) {
+        pixmapItem->setPixmap(row.pixmap);
+    }
+}
+
+void VideoManager::initializeScene() {
+    auto settings = ApplicationSettings::instance();
+
+    int width  = settings->getImageWidth();
+    int height = settings->getImageHeight();
+
+    // Create pixmap rows
+    QSize size(width, 1);
+    for (int i = 0; i < height; i++) {
+        QPixmap pixmap(size);
+        auto row = videoScene->addPixmap(pixmap);
+        row->setOffset(0, i);
+    }
+}
+
+QGraphicsScene* VideoManager::getVideoScene() const {
+    return videoScene;
 }

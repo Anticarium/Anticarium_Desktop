@@ -1,16 +1,14 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <anticarium_desktop/MainWindowManager.h>
-#include <anticarium_desktop/VideoManager.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
+    videoManager = new VideoManager(this);
 }
 
 MainWindowManager::~MainWindowManager() {
-    videoManagerThread->quit();
-    videoManagerThread->wait();
 }
 
 void MainWindowManager::sendData(const shared_types::Control& control) {
@@ -44,6 +42,10 @@ void MainWindowManager::sendWindValue(int value) {
 void MainWindowManager::sendLightValue(int value) {
     control.setLightPercentage(value);
     sendData(control);
+}
+
+QGraphicsScene* MainWindowManager::getVideoScene() const {
+    return videoManager->getVideoScene();
 }
 
 void MainWindowManager::onRegimeListActivated(int index) {
@@ -94,13 +96,5 @@ void MainWindowManager::initializeJttp() {
 }
 
 void MainWindowManager::initializeVideoManager() {
-    auto videoManager  = new VideoManager();
-    videoManagerThread = new QThread(this);
-
-    videoManager->moveToThread(videoManagerThread);
-
-    connect(videoManagerThread, &QThread::started, videoManager, &VideoManager::run);
-    connect(videoManager, &VideoManager::imageRowReadyEvent, this, &MainWindowManager::imageRowReadyEvent);
-
-    videoManagerThread->start();
+    videoManager->run();
 }
