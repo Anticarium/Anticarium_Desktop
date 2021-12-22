@@ -19,6 +19,7 @@ class ApplicationSettings : public QObject {
     int getImageHeight() const;
     const QString& getAnticariumUDPUrl() const;
     spdlog::level::level_enum getLogLevel() const;
+    int getImageProcessingThreads() const;
 
   private:
     static ApplicationSettings* applicationSettings;
@@ -33,4 +34,5 @@ class ApplicationSettings : public QObject {
     int imageWidth                     = 0;
     int imageHeight                    = 0;
     spdlog::level::level_enum logLevel = spdlog::level::trace;
+    int imageProcessingThreads         = 0;
 };

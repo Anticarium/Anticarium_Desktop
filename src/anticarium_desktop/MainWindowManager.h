@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QThread>
 #include <anticarium_desktop/Jttp.h>
 #include <anticarium_desktop/config/ImageRow.hpp>
 #include <shared_types/Control.h>
@@ -44,6 +43,4 @@ class MainWindowManager : public QObject {
     void initializeJttp();
     void initializeVideoManager();
     shared_types::Control control;
-
-    QThread* videoManagerThread = nullptr;
 };

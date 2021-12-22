@@ -1,37 +1,24 @@
-#include <anticarium_desktop/ImageBuilder.h>
+#include <anticarium_desktop/RowBuilder.h>
 #include <anticarium_desktop/VideoManager.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 
 VideoManager::VideoManager(QObject* parent) : QObject(parent) {
-    udpReader = new UDPReader(this);
+    udpReader      = new UDPReader();
+    imageProcessor = new ImageProcessor(this);
 
-    connect(udpReader, &UDPReader::dataReadEvent, this, &VideoManager::onIncomingData);
+    udpReaderThread = new QThread(this);
+
+    connect(udpReader, &UDPReader::dataReadEvent, imageProcessor, &ImageProcessor::onImageRow);
+    connect(udpReaderThread, &QThread::started, udpReader, &UDPReader::run);
+    connect(imageProcessor, &ImageProcessor::rowReadyEvent, this, &VideoManager::imageRowReadyEvent);
+}
+
+VideoManager::~VideoManager() {
+    udpReaderThread->quit();
+    udpReaderThread->wait();
 }
 
 void VideoManager::run() {
-    udpReader->run();
-}
-
-void VideoManager::onIncomingData(const QByteArray& data) {
-    auto settings = ApplicationSettings::instance();
-    int width     = settings->getImageWidth();
-
-    // Return if missing data in row
-    if (data.size() != width * 3 + 3) {
-        return;
-    }
-
-    auto imageRow = ImageBuilder::build(data, settings->getImageWidth());
-
-    // Return if row number too big
-    if (imageRow.position > settings->getImageHeight() - 1) {
-        return;
-    }
-
-    // Return if row number too small
-    if (imageRow.position < 0) {
-        return;
-    }
-
-    emit imageRowReadyEvent(imageRow);
+    udpReaderThread->start();
+    imageProcessor->start();
 }

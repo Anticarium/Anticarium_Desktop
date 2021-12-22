@@ -9,8 +9,6 @@ MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
 }
 
 MainWindowManager::~MainWindowManager() {
-    videoManagerThread->quit();
-    videoManagerThread->wait();
 }
 
 void MainWindowManager::sendData(const shared_types::Control& control) {
@@ -94,13 +92,7 @@ void MainWindowManager::initializeJttp() {
 }
 
 void MainWindowManager::initializeVideoManager() {
-    auto videoManager  = new VideoManager();
-    videoManagerThread = new QThread(this);
-
-    videoManager->moveToThread(videoManagerThread);
-
-    connect(videoManagerThread, &QThread::started, videoManager, &VideoManager::run);
+    auto videoManager = new VideoManager(this);
     connect(videoManager, &VideoManager::imageRowReadyEvent, this, &MainWindowManager::imageRowReadyEvent);
-
-    videoManagerThread->start();
+    videoManager->run();
 }

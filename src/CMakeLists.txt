@@ -10,8 +10,9 @@ set(HEADER_FILES
     anticarium_desktop/config/ApplicationSettings.h
     anticarium_desktop/VideoManager.h
     anticarium_desktop/UDPReader.h
-    anticarium_desktop/ImageBuilder.h
+    anticarium_desktop/RowBuilder.h
     anticarium_desktop/config/ImageRow.hpp
+    anticarium_desktop/ImageProcessor.h
 )
 
 set(SOURCE_FILES
@@ -24,7 +25,8 @@ set(SOURCE_FILES
     anticarium_desktop/config/ApplicationSettings.cpp
     anticarium_desktop/VideoManager.cpp
     anticarium_desktop/UDPReader.cpp
-    anticarium_desktop/ImageBuilder.cpp
+    anticarium_desktop/RowBuilder.cpp
+    anticarium_desktop/ImageProcessor.cpp
 )
 
 set(FORMS

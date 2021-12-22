@@ -11,6 +11,11 @@ ApplicationSettings::ApplicationSettings(const QString& directoryPath, QObject* 
     imageHeight            = settings->value("Image_Height", 0).toInt();
     anticariumUDPUrl       = settings->value("Anticarium_UDP_URL", "").toString();
     logLevel               = static_cast<spdlog::level::level_enum>(settings->value("Log_Level", spdlog::level::level_enum::trace).toInt());
+    imageProcessingThreads = settings->value("Image_Processing_Threads", 0).toInt();
+}
+
+int ApplicationSettings::getImageProcessingThreads() const {
+    return imageProcessingThreads;
 }
 
 const QString& ApplicationSettings::getAnticariumUDPUrl() const {

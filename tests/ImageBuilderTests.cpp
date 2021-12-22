@@ -2,7 +2,7 @@
 #include <QByteArray>
 #include <QImage>
 #include <TestDataDirectory.h>
-#include <anticarium_desktop/ImageBuilder.h>
+#include <anticarium_desktop/RowBuilder.h>
 #include <gtest/gtest.h>
 
 TEST(TestImageBuilder, TestBuild) {
@@ -16,7 +16,7 @@ TEST(TestImageBuilder, TestBuild) {
 
     QByteArray byteArray(unsignedRawRow, sizeof(rawRow));
 
-    auto imageRow = ImageBuilder::build(byteArray, sizeof(rawRow) / 3);
+    auto imageRow = RowBuilder::build(byteArray, sizeof(rawRow) / 3);
 
     auto qImageRow = imageRow.pixmap.toImage();
 

@@ -6,3 +6,4 @@ Server_UDP_Port=5011
 Image_Width=1279
 Image_Height=960
 Log_Level=2
+Image_Processing_Threads=1
