@@ -44,6 +44,7 @@ class MainWindowManager : public QObject {
   private:
     void updateImageRow(const ImageRow& row);
 
+    void initializeVideoScene();
     void initializeJttp();
     void initializeVideoManager();
     shared_types::Control control;
