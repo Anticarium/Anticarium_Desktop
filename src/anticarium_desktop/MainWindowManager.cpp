@@ -20,6 +20,7 @@ void MainWindowManager::sendData(const shared_types::Control& control) {
 }
 
 void MainWindowManager::initialize() {
+    initializeVideoScene();
     initializeVideoManager();
     initializeJttp();
 }
@@ -75,6 +76,21 @@ void MainWindowManager::updateImageRow(const ImageRow& row) {
     }
 }
 
+void MainWindowManager::initializeVideoScene() {
+    auto settings = ApplicationSettings::instance();
+
+    int width  = settings->getImageWidth();
+    int height = settings->getImageHeight();
+
+    // Create pixmap rows
+    QSize size(width, 1);
+    for (int i = 0; i < height; i++) {
+        QPixmap pixmap(size);
+        auto row = videoScene->addPixmap(pixmap);
+        row->setOffset(0, i);
+    }
+}
+
 void MainWindowManager::initializeJttp() {
     ApplicationSettings* settings = ApplicationSettings::instance();
     JTTP* jttp                    = JTTP::instance();
@@ -114,20 +130,6 @@ void MainWindowManager::initializeVideoManager() {
 
     connect(videoManagerThread, &QThread::started, videoManager, &VideoManager::run);
     connect(videoManager, &VideoManager::imageRowReadyEvent, this, &MainWindowManager::updateImageRow);
-
-
-    auto settings = ApplicationSettings::instance();
-
-    int width  = settings->getImageWidth();
-    int height = settings->getImageHeight();
-
-    // Create pixmap rows
-    QSize size(width, 1);
-    for (int i = 0; i < height; i++) {
-        QPixmap pixmap(size);
-        auto row = videoScene->addPixmap(pixmap);
-        row->setOffset(0, i);
-    }
 
     videoManagerThread->start();
 }
