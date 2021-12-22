@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QGraphicsItem>
 #include <QTimer>
 #include <anticarium_desktop/MainWindowManager.h>
 #include <anticarium_desktop/VideoManager.h>
@@ -6,6 +7,7 @@
 #include <anticarium_desktop/widgets/MainWindow.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
+    videoScene = new QGraphicsScene(this);
 }
 
 MainWindowManager::~MainWindowManager() {
@@ -62,6 +64,17 @@ void MainWindowManager::onDataReceived(const shared_types::Regime& regime) {
     control.setRegimeValue(regimeValue);
 }
 
+void MainWindowManager::updateImageRow(const ImageRow& row) {
+    // Get current row
+    auto currentRowItem = videoScene->items()[row.position];
+    auto pixmapItem     = qgraphicsitem_cast<QGraphicsPixmapItem*>(currentRowItem);
+
+    // Update row
+    if (pixmapItem) {
+        pixmapItem->setPixmap(row.pixmap);
+    }
+}
+
 void MainWindowManager::initializeJttp() {
     ApplicationSettings* settings = ApplicationSettings::instance();
     JTTP* jttp                    = JTTP::instance();
@@ -100,7 +113,25 @@ void MainWindowManager::initializeVideoManager() {
     videoManager->moveToThread(videoManagerThread);
 
     connect(videoManagerThread, &QThread::started, videoManager, &VideoManager::run);
-    connect(videoManager, &VideoManager::imageRowReadyEvent, this, &MainWindowManager::imageRowReadyEvent);
+    connect(videoManager, &VideoManager::imageRowReadyEvent, this, &MainWindowManager::updateImageRow);
+
+
+    auto settings = ApplicationSettings::instance();
+
+    int width  = settings->getImageWidth();
+    int height = settings->getImageHeight();
+
+    // Create pixmap rows
+    QSize size(width, 1);
+    for (int i = 0; i < height; i++) {
+        QPixmap pixmap(size);
+        auto row = videoScene->addPixmap(pixmap);
+        row->setOffset(0, i);
+    }
 
     videoManagerThread->start();
+}
+
+QGraphicsScene* MainWindowManager::getVideoScene() const {
+    return videoScene;
 }
