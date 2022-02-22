@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- ADD: Unhandled exception handler
 - ADD: UDP heartbeat for server to know when to stop sending data
 - REMOVE: UDP handshake
 - ADD: `ImageBuilder` tests
