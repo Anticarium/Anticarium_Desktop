@@ -17,6 +17,8 @@ class ApplicationSettings : public QObject {
     int getServerUDPPort() const;
     int getImageWidth() const;
     int getImageHeight() const;
+    int getClientUDPPort() const;
+    void setClientUDPPort(int newClientUDPPort);
     const QString& getAnticariumUDPUrl() const;
     spdlog::level::level_enum getLogLevel() const;
 
@@ -30,6 +32,7 @@ class ApplicationSettings : public QObject {
     QString anticariumUDPUrl;
     int sensorDataFetchTimeout         = 0;
     int serverUDPPort                  = 0;
+    int clientUDPPort                  = 0;
     int imageWidth                     = 0;
     int imageHeight                    = 0;
     spdlog::level::level_enum logLevel = spdlog::level::trace;

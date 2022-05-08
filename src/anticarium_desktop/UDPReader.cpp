@@ -14,6 +14,11 @@ UDPReader::UDPReader(QObject* parent) : QObject(parent) {
     reconnectTimer->setInterval(Timeout::RECONNECT);
     reconnectTimer->setSingleShot(true);
 
+    // To send data using port defined in settings. Port forwarding for this port must be done
+    // in client's router
+    const auto& settings = *ApplicationSettings::instance();
+    udp->bind(settings.getClientUDPPort());
+
     connect(heartbeatTimer, &QTimer::timeout, this, &UDPReader::onHeartbeat);
     connect(reconnectTimer, &QTimer::timeout, heartbeatTimer, qOverload<>(&QTimer::start));
     connect(udp, &QUdpSocket::readyRead, this, &UDPReader::onDataArrived);

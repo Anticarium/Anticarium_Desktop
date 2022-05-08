@@ -1,5 +1,7 @@
 # Anticarium_Desktop
 
+- ADD: Added port number in settings to bind to from which to send UDP packets from host. Temporary solution, as this is not needed if there is working pinhole punching in router.
+- MODIFY: Changed ip address of terrarium to that of it's router to enable access from the internet
 - ADD: Unhandled exception handler
 - ADD: UDP heartbeat for server to know when to stop sending data
 - REMOVE: UDP handshake
