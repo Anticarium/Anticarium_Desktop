@@ -209,7 +209,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../Resources.qrc">:/icons/assets/icons/Local_Fire_Department_Icon_1.png</pixmap>
+                  <pixmap resource="../Resources.qrc">:/resources/assets/icons/Local_Fire_Department_Icon_1.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -267,7 +267,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../Resources.qrc">:/icons/assets/icons/Invert_Colors_Icon_1.png</pixmap>
+                  <pixmap resource="../Resources.qrc">:/resources/assets/icons/Invert_Colors_Icon_1.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>false</bool>
@@ -332,7 +332,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../Resources.qrc">:/icons/assets/icons/Lightbulb_Outline_Icon_1.png</pixmap>
+                  <pixmap resource="../Resources.qrc">:/resources/assets/icons/Lightbulb_Outline_Icon_1.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>true</bool>
@@ -391,7 +391,7 @@
                   <string/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../Resources.qrc">:/icons/assets/icons/Waves_Icon_1.png</pixmap>
+                  <pixmap resource="../Resources.qrc">:/resources/assets/icons/Toys_Icon_3.png</pixmap>
                  </property>
                  <property name="scaledContents">
                   <bool>false</bool>
@@ -481,7 +481,7 @@
      <x>0</x>
      <y>0</y>
      <width>926</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHome">
@@ -489,6 +489,8 @@
      <string>Home</string>
     </property>
     <addaction name="openDisplayRegimes"/>
+    <addaction name="separator"/>
+    <addaction name="openAboutDialog"/>
    </widget>
    <addaction name="menuHome"/>
   </widget>
@@ -506,6 +508,11 @@
   <action name="openDisplayRegimes">
    <property name="text">
     <string>Edit regimes</string>
+   </property>
+  </action>
+  <action name="openAboutDialog">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

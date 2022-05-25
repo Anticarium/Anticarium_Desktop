@@ -14,6 +14,7 @@ include(FetchContent)
 file(READ VERSION CURRENT_VERSION)
 project(${TARGET_NAME} VERSION ${CURRENT_VERSION})
 message(STATUS "Adding ${TARGET_NAME} v${CURRENT_VERSION}")
+configure_file(VersionConfig.h.in misc/version/${TARGET_NAME}_VersionConfig.h)
 
 add_subdirectory(src)
 add_subdirectory(apps)

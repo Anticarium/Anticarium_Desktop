@@ -4,6 +4,7 @@ include(ExternLibs)
 include(FetchContent)
 
 add_executable(${TARGET_NAME}
+    WIN32
     main.cpp
     ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/Resources.qrc
 )

@@ -22,6 +22,8 @@ class MainWindowManager : public QObject {
     void sendWindValue(int value);
     void sendLightValue(int value);
 
+    QString getAppVersion() const;
+
     QGraphicsScene* getVideoScene() const;
 
   signals:

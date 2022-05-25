@@ -5,6 +5,7 @@
 #include <anticarium_desktop/VideoManager.h>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
+#include <version/anticarium_desktop_VersionConfig.h>
 
 MainWindowManager::MainWindowManager(QObject* parent) : QObject(parent) {
     videoScene = new QGraphicsScene(this);
@@ -47,6 +48,10 @@ void MainWindowManager::sendWindValue(int value) {
 void MainWindowManager::sendLightValue(int value) {
     control.setLightPercentage(value);
     sendData(control);
+}
+
+QString MainWindowManager::getAppVersion() const {
+    return ANTICARIUM_DESKTOP_VERSION;
 }
 
 void MainWindowManager::onRegimeListActivated(int index) {

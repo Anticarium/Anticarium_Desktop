@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include <anticarium_desktop/config/ApplicationSettings.h>
 #include <anticarium_desktop/widgets/DisplayRegimes.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
@@ -6,6 +7,8 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
+
+    setWindowIcon(QIcon(":/resources/assets/icons/AnticariumIcon.ico"));
 
     manager = new MainWindowManager(this);
 
@@ -135,6 +138,14 @@ void MainWindow::onOpenDisplayRegimes() {
     displayRegimes->show();
 }
 
+void MainWindow::onOpenAboutDialog() {
+    auto aboutDialog = new QMessageBox(this);
+    aboutDialog->setWindowTitle("About");
+    aboutDialog->setText(QString("Version %1").arg(manager->getAppVersion()));
+    aboutDialog->adjustSize();
+    aboutDialog->show();
+}
+
 void MainWindow::displayData(const shared_types::Regime& regime) {
     displayData(regime.getRegimeId());
     displayData(regime.getRegimeValue());
@@ -178,6 +189,7 @@ void MainWindow::connectUi() {
     connect(ui->lightSlider, &QSlider::sliderReleased, this, &MainWindow::onLightSliderReleased);
 
     connect(ui->openDisplayRegimes, &QAction::triggered, this, &MainWindow::onOpenDisplayRegimes);
+    connect(ui->openAboutDialog, &QAction::triggered, this, &MainWindow::onOpenAboutDialog);
     connect(ui->saveButton, &QPushButton::clicked, this, &MainWindow::onOpenRegimeDialog);
 }
 

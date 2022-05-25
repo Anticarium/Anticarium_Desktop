@@ -43,6 +43,7 @@ class MainWindow : public QMainWindow {
 
     void onOpenRegimeDialog();
     void onOpenDisplayRegimes();
+    void onOpenAboutDialog();
 
   private:
     Ui::MainWindow* ui;
