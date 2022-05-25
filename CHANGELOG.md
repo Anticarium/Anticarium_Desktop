@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- ADD: `WindowsResources.rc` file that contains path to executable's icon
 - REMOVE: Unused icons from `src/anticarium_desktop/assets/icons`
 - ADD: MainWindow icon
 - ADD: Executing standalone binary does not open command prompt anymore
