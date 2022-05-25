@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+# 1.5.0
 - ADD: `WindowsResources.rc` file that contains path to executable's icon
 - REMOVE: Unused icons from `src/anticarium_desktop/assets/icons`
 - ADD: MainWindow icon
