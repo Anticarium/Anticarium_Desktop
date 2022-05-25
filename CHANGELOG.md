@@ -6,7 +6,7 @@
 - ADD: Executing standalone binary does not open command prompt anymore
 - ADD: `VersionConfig.h.in` file returned, because it found its use in newly added "About" message box
 - ADD: "About" message box that displays program's version
-- ADD: Added port number in settings to bind to from which to send UDP packets from host. Temporary solution, as this is not needed if there is working pinhole punching in router.
+- ADD: Added port number in settings to bind to from which to send UDP packets from host. Temporary solution, as this is not needed if there is working hole punching in router.
 - MODIFY: Changed ip address of terrarium to that of it's router to enable access from the internet
 - ADD: Unhandled exception handler
 - ADD: UDP heartbeat for server to know when to stop sending data
