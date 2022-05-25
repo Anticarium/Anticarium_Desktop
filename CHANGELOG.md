@@ -1,5 +1,11 @@
 # Anticarium_Desktop
 
+- ADD: `WindowsResources.rc` file that contains path to executable's icon
+- REMOVE: Unused icons from `src/anticarium_desktop/assets/icons`
+- ADD: MainWindow icon
+- ADD: Executing standalone binary does not open command prompt anymore
+- ADD: `VersionConfig.h.in` file returned, because it found its use in newly added "About" message box
+- ADD: "About" message box that displays program's version
 - ADD: Added port number in settings to bind to from which to send UDP packets from host. Temporary solution, as this is not needed if there is working pinhole punching in router.
 - MODIFY: Changed ip address of terrarium to that of it's router to enable access from the internet
 - ADD: Unhandled exception handler

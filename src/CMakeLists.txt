@@ -42,7 +42,9 @@ add_library(${TARGET_NAME}
     ${FORMS}
 )
 
-target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}/misc)
 
 ADDQT5CORE(${TARGET_NAME})
 ADDQT5WIDGETS(${TARGET_NAME})

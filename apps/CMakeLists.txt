@@ -4,8 +4,10 @@ include(ExternLibs)
 include(FetchContent)
 
 add_executable(${TARGET_NAME}
+    WIN32
     main.cpp
     ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/Resources.qrc
+    ${CMAKE_SOURCE_DIR}/src/anticarium_desktop/WindowsResources.rc
 )
 
 configure_file(${CMAKE_SOURCE_DIR}/settings.ini.in settings.ini)
