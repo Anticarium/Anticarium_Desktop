@@ -1,5 +1,9 @@
 # Anticarium_Desktop
 
+- ADD: Main window title "Anticarium Desktop"
+- MODIFY: Changed `Client_UDP_Port` setting in `settings.ini` to 0 as default value
+- MODIFY: If `Client_UDP_Port` setting in `settings.ini` is set to 0, the program does not bind to any specific UDP port
+
 # 1.5.0
 - ADD: `WindowsResources.rc` file that contains path to executable's icon
 - REMOVE: Unused icons from `src/anticarium_desktop/assets/icons`

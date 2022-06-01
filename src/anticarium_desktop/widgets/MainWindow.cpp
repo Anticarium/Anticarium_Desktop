@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
 
     setWindowIcon(QIcon(":/resources/assets/icons/AnticariumIcon.ico"));
+    setWindowTitle("Anticarium Desktop");
 
     manager = new MainWindowManager(this);
 
