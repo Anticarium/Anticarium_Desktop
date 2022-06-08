@@ -1,5 +1,8 @@
 # Anticarium_Desktop
 
+- MODIFY: Changed `Client_UDP_Port` setting in `settings.ini` to 55622 as default value
+- REMOVE: `Client_UDP_Port` 0 value functionality. Now the port number specified will always be the one that will be bound to for UDP communication
+
 # 1.5.1
 - ADD: Main window title "Anticarium Desktop"
 - MODIFY: Changed `Client_UDP_Port` setting in `settings.ini` to 0 as default value

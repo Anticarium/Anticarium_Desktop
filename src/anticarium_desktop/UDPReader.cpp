@@ -14,13 +14,10 @@ UDPReader::UDPReader(QObject* parent) : QObject(parent) {
     reconnectTimer->setInterval(Timeout::RECONNECT);
     reconnectTimer->setSingleShot(true);
 
-    // To send data using port defined in settings. Port forwarding for this port must be done
-    // in client's router
-    const auto& settings = *ApplicationSettings::instance();
-    if(settings.getClientUDPPort())
-    {
-        udp->bind(settings.getClientUDPPort());
-    }
+    // UDP data will be sent and received to port defined in settings.ini. The QUdpSocket::bind()
+    // is necessary for Windows firewall permission pop up to show up
+    const auto settings = ApplicationSettings::instance();
+    udp->bind(settings->getClientUDPPort());
 
     connect(heartbeatTimer, &QTimer::timeout, this, &UDPReader::onHeartbeat);
     connect(reconnectTimer, &QTimer::timeout, heartbeatTimer, qOverload<>(&QTimer::start));
