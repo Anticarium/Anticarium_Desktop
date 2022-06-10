@@ -10,7 +10,7 @@
 #include <shared_types/SensorDataSerializer.hpp>
 #include <spdlog/spdlog.h>
 
-JTTP::JTTP(QObject* parent) : QObject(parent) {
+JTTP::JTTP() : QObject() {
     networkAccessManager = new QNetworkAccessManager(this);
     connect(networkAccessManager, &QNetworkAccessManager::finished, this, &JTTP::onDataArrived);
 }
@@ -18,12 +18,8 @@ JTTP::JTTP(QObject* parent) : QObject(parent) {
 JTTP* JTTP::jttp = nullptr;
 
 JTTP* JTTP::instance() {
-    return jttp;
-}
-
-JTTP* JTTP::instance(QObject* parent) {
     if (jttp == nullptr) {
-        jttp = new JTTP(parent);
+        jttp = new JTTP;
     }
     return jttp;
 }
@@ -113,7 +109,4 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
     loop.exec();
 
     SPDLOG_INFO(QString("Data %1, url: %2").arg(requestTypeString, url).toStdString());
-}
-
-JTTP::~JTTP() {
 }

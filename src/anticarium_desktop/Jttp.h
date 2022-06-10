@@ -32,7 +32,6 @@ class JTTP : public QObject {
     };
 
     // singleton design pattern
-    JTTP()       = delete;
     void operator=(const JTTP&) = delete;
 
     // Constructs and returns pointer to object
@@ -41,10 +40,8 @@ class JTTP : public QObject {
     static JTTP* instance();
 
   private:
-    // private constructor for singleton
-    JTTP(QObject* parent = nullptr);
+    JTTP();
     static JTTP* jttp;
-    ~JTTP();
 
     // HTTP communication objects
     QNetworkAccessManager* networkAccessManager = nullptr;
