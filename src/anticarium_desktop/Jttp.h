@@ -32,7 +32,6 @@ class JTTP : public QObject {
     };
 
     // singleton design pattern
-    JTTP()       = delete;
     void operator=(const JTTP&) = delete;
 
     // Constructs and returns pointer to object
@@ -41,14 +40,8 @@ class JTTP : public QObject {
     static JTTP* instance();
 
   private:
-    // private constructor for singleton
-    JTTP(QObject* parent = nullptr);
+    JTTP() = default;
     static JTTP* jttp;
-    ~JTTP();
-
-    // HTTP communication objects
-    QNetworkAccessManager* networkAccessManager = nullptr;
-    QNetworkRequest networkRequest;
 
     QMap<REQUEST_DATA, QString> requestDataMap = {
         { REQUEST_DATA::CONTROL_DATA, "control" },       // Request Control json
@@ -74,6 +67,7 @@ class JTTP : public QObject {
     void dataReceivedEvent(const shared_types::Regimes& newRegimes);
     void dataReceivedEvent(const shared_types::Regime& newRegime);
     void dataReceivedEvent(const shared_types::SavedRegimes& newSavedRegimes);
+    void regimeManipulationEvent();
 
   private slots:
     void onDataArrived(QNetworkReply* reply);

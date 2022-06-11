@@ -18,7 +18,7 @@ static void exceptionHandler() {
     }
 
     // Exception can occur anywhere, so it is unsafe to try to terminate qt application
-    exit(-1);
+    exit(EXIT_FAILURE);
 }
 
 static void initializeLogger() {
@@ -44,9 +44,38 @@ static void initializeLogger() {
     spdlog::set_level(settings->getLogLevel());
 }
 
+// Creates JTTP singleton and puts it in separate thread
+static void initializeJttp(QObject* parent) {
+    auto jttpThread = new QThread(parent);
+    auto jttp       = JTTP::instance();
+    jttp->moveToThread(jttpThread);
+    jttpThread->start();
+    jttpThread->connect(parent, &QObject::destroyed, [=]() {
+        jttpThread->quit();
+        jttpThread->wait();
+    });
+}
+
+Q_DECLARE_METATYPE(JTTP::REQUEST_DATA);
+Q_DECLARE_METATYPE(JTTP::REQUEST_TYPE);
+Q_DECLARE_METATYPE(shared_types::Regime);
+Q_DECLARE_METATYPE(shared_types::Control);
+Q_DECLARE_METATYPE(shared_types::RegimeId);
+Q_DECLARE_METATYPE(shared_types::Regimes);
+Q_DECLARE_METATYPE(shared_types::SavedRegimes);
+Q_DECLARE_METATYPE(shared_types::SensorData);
+
 int main(int argc, char* argv[]) {
     std::set_terminate(exceptionHandler);
 
+    qRegisterMetaType<JTTP::REQUEST_DATA>();
+    qRegisterMetaType<JTTP::REQUEST_TYPE>();
+    qRegisterMetaType<shared_types::Regime>();
+    qRegisterMetaType<shared_types::Control>();
+    qRegisterMetaType<shared_types::RegimeId>();
+    qRegisterMetaType<shared_types::Regimes>();
+    qRegisterMetaType<shared_types::SavedRegimes>();
+    qRegisterMetaType<shared_types::SensorData>();
     qRegisterMetaType<ImageRow>("ImageRow");
 
     QApplication a(argc, argv);
@@ -54,11 +83,9 @@ int main(int argc, char* argv[]) {
     ApplicationSettings::instance(QApplication::applicationDirPath() + "/settings.ini", QCoreApplication::instance());
 
     initializeLogger();
+    initializeJttp(QApplication::instance());
 
     SPDLOG_INFO("Program started");
-
-    JTTP::instance(QApplication::instance());
-
     MainWindow w;
     w.show();
 

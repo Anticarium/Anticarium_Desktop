@@ -18,7 +18,6 @@ DisplayRegimes::DisplayRegimes(QWidget* parent) : QDialog(parent), ui(new Ui::Di
     connect(manager, &DisplayRegimesManager::displayDataEvent, this, &DisplayRegimes::onDisplayData);
     manager->initialize();
 
-    checkTable();
     adjustSize();
 }
 
@@ -30,9 +29,9 @@ void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegime
     // Delete previous rows
     ui->table->setRowCount(0);
 
-    std::vector<shared_types::Regime> regimesList = savedRegimes.getSavedRegimes();
+    const auto regimesList = savedRegimes.getSavedRegimes();
 
-    int regimesListSize = regimesList.size();
+    const int regimesListSize = regimesList.size();
 
     // Create new rows
     ui->table->setRowCount(regimesListSize);
@@ -48,14 +47,16 @@ void DisplayRegimes::onDisplayData(const shared_types::SavedRegimes& savedRegime
         item = new QTableWidgetItem(QString::number(regimesList[i].getRegimeValue().getMoisture()), Qt::DisplayRole);
         ui->table->setItem(i, 2, item);
     }
+
+    checkTable();
 }
 
 void DisplayRegimes::onEditItemButtonClicked() {
-    int selectedRow = ui->table->currentRow();
+    const int selectedRow = ui->table->currentRow();
 
-    shared_types::Regime regime = manager->getRegimeAt(selectedRow);
+    const auto regime = manager->getRegimeAt(selectedRow);
 
-    RegimeDialog* regimeDialog = new RegimeDialog(RegimeDialog::MODE::EDIT, regime, this);
+    auto regimeDialog = new RegimeDialog(RegimeDialog::MODE::EDIT, regime, this);
     regimeDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     regimeDialog->setModal(true);
     regimeDialog->show();
@@ -95,9 +96,8 @@ void DisplayRegimes::initializeTableHeader() {
 }
 
 void DisplayRegimes::checkTable() {
-    int rowCount = ui->table->rowCount();
-    if (rowCount == 0) {
-        ui->deleteItemButton->setDisabled(true);
-        ui->editItemButton->setDisabled(true);
-    }
+    const int rowCount = ui->table->rowCount();
+
+    ui->deleteItemButton->setEnabled(rowCount);
+    ui->editItemButton->setEnabled(rowCount);
 }

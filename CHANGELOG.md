@@ -1,5 +1,8 @@
 # Anticarium_Desktop
 
+- MODIFY: Removed freeze when waiting for HTTP requests
+- MODIFY: Removed the need for consecutive HTTP requests execution
+
 # 1.5.2
 - MODIFY: Changed `Client_UDP_Port` setting in `settings.ini` to 55622 as default value
 - REMOVE: `Client_UDP_Port` 0 value functionality. Now the port number specified will always be the one that will be bound to for UDP communication

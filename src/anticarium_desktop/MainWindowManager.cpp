@@ -50,6 +50,10 @@ void MainWindowManager::sendLightValue(int value) {
     sendData(control);
 }
 
+const shared_types::RegimeId& MainWindowManager::getRegimeId() const {
+    return regimeId;
+}
+
 QString MainWindowManager::getAppVersion() const {
     return ANTICARIUM_DESKTOP_VERSION;
 }
@@ -68,6 +72,18 @@ void MainWindowManager::onDataReceived(const shared_types::Control& control) {
 void MainWindowManager::onDataReceived(const shared_types::Regime& regime) {
     shared_types::RegimeValue regimeValue = regime.getRegimeValue();
     control.setRegimeValue(regimeValue);
+}
+
+void MainWindowManager::onDataReceived(const shared_types::RegimeId& regimeId) {
+    this->regimeId = regimeId;
+    emit displayDataEvent(regimeId);
+}
+
+void MainWindowManager::onRegimeManipulation() {
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
+    emit requestDataEvent(JTTP::REQUEST_DATA::SAVED_REGIMES);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 }
 
 void MainWindowManager::updateImageRow(const ImageRow& row) {
@@ -106,8 +122,6 @@ void MainWindowManager::initializeJttp() {
     connect(this, &MainWindowManager::requestDataEvent, jttp, &JTTP::onRequestData);
     connect(jttp, qOverload<const shared_types::Regimes&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::Regimes&>(&MainWindowManager::displayDataEvent));
-    connect(jttp, qOverload<const shared_types::RegimeId&>(&JTTP::dataReceivedEvent), this,
-            qOverload<const shared_types::RegimeId&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::SensorData&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::SensorData&>(&MainWindowManager::displayDataEvent));
     connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this,
@@ -118,12 +132,15 @@ void MainWindowManager::initializeJttp() {
             qOverload<const shared_types::Control&>(&MainWindowManager::onDataReceived));
     connect(jttp, qOverload<const shared_types::Regime&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::Regime&>(&MainWindowManager::onDataReceived));
+    connect(jttp, qOverload<const shared_types::RegimeId&>(&JTTP::dataReceivedEvent), this,
+            qOverload<const shared_types::RegimeId&>(&MainWindowManager::onDataReceived));
+    connect(jttp, &JTTP::regimeManipulationEvent, this, &MainWindowManager::onRegimeManipulation);
     fetchTimer->start(settings->getSensorDataFetchTimeout());
 
     // Request data for the first time on first time loading
     emit requestDataEvent(JTTP::REQUEST_DATA::SENSOR_DATA);
-    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
     emit requestDataEvent(JTTP::REQUEST_DATA::CONTROL_DATA);
+    emit requestDataEvent(JTTP::REQUEST_DATA::REGIMES);
     emit requestDataEvent(JTTP::REQUEST_DATA::REGIME_ID);
 }
 
