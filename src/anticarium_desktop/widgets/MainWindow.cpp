@@ -3,6 +3,7 @@
 #include <anticarium_desktop/widgets/DisplayRegimes.h>
 #include <anticarium_desktop/widgets/MainWindow.h>
 #include <anticarium_desktop/widgets/RegimeDialog.h>
+#include <anticarium_desktop/widgets/RequestWaiter.h>
 #include <ui_MainWindow.h>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -35,6 +36,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     onMoistureSliderMoved(ui->moistureSlider->minimum());
 
     manager->initialize();
+
+    auto requestWaiter = new RequestWaiter(this);
+    requestWaiter->setMaximumWidth(100);
+
+    connect(manager, &MainWindowManager::dataRequestedEvent, requestWaiter, &RequestWaiter::onDataRequested);
+    connect(manager, &MainWindowManager::answerReceivedEvent, requestWaiter, &RequestWaiter::onAnswerReceived);
+    ui->statusBar->addPermanentWidget(requestWaiter);
+    ui->statusBar->setStyleSheet("margin-right: 2px;");
 }
 
 MainWindow::~MainWindow() {

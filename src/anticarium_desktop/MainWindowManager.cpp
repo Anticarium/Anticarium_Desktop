@@ -135,6 +135,8 @@ void MainWindowManager::initializeJttp() {
     connect(jttp, qOverload<const shared_types::RegimeId&>(&JTTP::dataReceivedEvent), this,
             qOverload<const shared_types::RegimeId&>(&MainWindowManager::onDataReceived));
     connect(jttp, &JTTP::regimeManipulationEvent, this, &MainWindowManager::onRegimeManipulation);
+    connect(jttp, &JTTP::dataRequestedEvent, this, &MainWindowManager::dataRequestedEvent);
+    connect(jttp, &JTTP::answerReceivedEvent, this, &MainWindowManager::answerReceivedEvent);
     fetchTimer->start(settings->getSensorDataFetchTimeout());
 
     // Request data for the first time on first time loading
