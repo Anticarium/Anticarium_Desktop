@@ -1,5 +1,6 @@
 # Anticarium_Desktop
 
+- ADD: Progress bar which appears when waiting for HTTP replies
 - MODIFY: Removed freeze when waiting for HTTP requests
 - MODIFY: Removed the need for consecutive HTTP requests execution
 
