@@ -43,14 +43,14 @@ MainWindow::~MainWindow() {
 
 void MainWindow::displayData(const shared_types::RegimeId& regimeId) {
     disconnectUiInputs();
-    int id = regimeId.getId();
+    const int id = regimeId.getId();
 
     // Is custom regime id?
     if (id == -1) {
-        // Yes: Setup everything to display custom regime
+        // Yes: Set up everything to display custom regime
         onEnableSaveButton();
-    } else {
-        // No: Set current regime name
+    } else if (ui->regimeList->count() >= regimeId.getId() + 1) {
+        // No: Set current regime name if possible
         ui->regimeList->setCurrentIndex(id);
         ui->modeLabel->setText(ui->regimeList->currentText());
     }
@@ -141,6 +141,7 @@ void MainWindow::onOpenDisplayRegimes() {
 
 void MainWindow::onOpenAboutDialog() {
     auto aboutDialog = new QMessageBox(this);
+    aboutDialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
     aboutDialog->setWindowTitle("About");
     aboutDialog->setText(QString("Version %1").arg(manager->getAppVersion()));
     aboutDialog->adjustSize();
@@ -169,10 +170,13 @@ void MainWindow::displayData(const shared_types::SensorData& sensorData) {
 void MainWindow::displayData(const shared_types::Regimes& regimes) {
     disconnectUiInputs();
     ui->regimeList->clear();
-    std::vector<QString> regimesVector = regimes.getRegimes();
-    for (const QString& i : regimesVector) {
-        ui->regimeList->addItem(i);
+    const auto regimesVector = regimes.getRegimes();
+    for (const auto& regimeName : regimesVector) {
+        ui->regimeList->addItem(regimeName);
     }
+
+    displayData(manager->getRegimeId());
+
     connectUiInputs();
 }
 

@@ -22,6 +22,8 @@ class MainWindowManager : public QObject {
     void sendWindValue(int value);
     void sendLightValue(int value);
 
+    const shared_types::RegimeId& getRegimeId() const;
+
     QString getAppVersion() const;
 
     QGraphicsScene* getVideoScene() const;
@@ -42,6 +44,10 @@ class MainWindowManager : public QObject {
     void onDataReceived(const shared_types::Control& control);
     // Stores RegimeData in this->control from incoming Regime
     void onDataReceived(const shared_types::Regime& regime);
+    // Stores incoming RegimeId data
+    void onDataReceived(const shared_types::RegimeId& regimeId);
+    // Updates all required places when regime values change on server
+    void onRegimeManipulation();
 
   private:
     void updateImageRow(const ImageRow& row);
@@ -50,6 +56,7 @@ class MainWindowManager : public QObject {
     void initializeJttp();
     void initializeVideoManager();
     shared_types::Control control;
+    shared_types::RegimeId regimeId;
 
     QThread* videoManagerThread = nullptr;
 

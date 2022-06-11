@@ -40,12 +40,8 @@ class JTTP : public QObject {
     static JTTP* instance();
 
   private:
-    JTTP();
+    JTTP() = default;
     static JTTP* jttp;
-
-    // HTTP communication objects
-    QNetworkAccessManager* networkAccessManager = nullptr;
-    QNetworkRequest networkRequest;
 
     QMap<REQUEST_DATA, QString> requestDataMap = {
         { REQUEST_DATA::CONTROL_DATA, "control" },       // Request Control json
@@ -71,6 +67,7 @@ class JTTP : public QObject {
     void dataReceivedEvent(const shared_types::Regimes& newRegimes);
     void dataReceivedEvent(const shared_types::Regime& newRegime);
     void dataReceivedEvent(const shared_types::SavedRegimes& newSavedRegimes);
+    void regimeManipulationEvent();
 
   private slots:
     void onDataArrived(QNetworkReply* reply);

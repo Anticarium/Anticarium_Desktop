@@ -10,11 +10,6 @@
 #include <shared_types/SensorDataSerializer.hpp>
 #include <spdlog/spdlog.h>
 
-JTTP::JTTP() : QObject() {
-    networkAccessManager = new QNetworkAccessManager(this);
-    connect(networkAccessManager, &QNetworkAccessManager::finished, this, &JTTP::onDataArrived);
-}
-
 JTTP* JTTP::jttp = nullptr;
 
 JTTP* JTTP::instance() {
@@ -68,6 +63,8 @@ void JTTP::onDataArrived(QNetworkReply* reply) {
 
         shared_types::SavedRegimes savedRegimes = jsonReply;
         emit dataReceivedEvent(savedRegimes);
+    } else if (content == "Regime_saved" || content == "Regime_deleted") {
+        emit regimeManipulationEvent();
     }
 }
 
@@ -88,25 +85,25 @@ void JTTP::onRequestData(REQUEST_DATA requestType) {
 }
 
 void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nlohmann::json& passedJson) {
-    ApplicationSettings* settings = ApplicationSettings::instance();
+    const auto settings = ApplicationSettings::instance();
 
-    QString requestTypeString = requestTypeMap[requestType];
-    QString requestDataString = requestDataMap[requestData];
-    QString url               = QString("%1/%2/%3").arg(settings->getAnticariumUrl()).arg(requestTypeString).arg(requestDataString);
-    QNetworkRequest networkRequest;
-    networkRequest.setUrl(url);
+    const auto requestTypeString = requestTypeMap[requestType];
+    const auto requestDataString = requestDataMap[requestData];
+    const auto url               = QString("%1/%2/%3").arg(settings->getAnticariumUrl()).arg(requestTypeString).arg(requestDataString);
 
+    QNetworkRequest networkRequest(url);
+
+    auto networkAccessManager = new QNetworkAccessManager(this);
+    connect(networkAccessManager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
+        onDataArrived(reply);
+        networkAccessManager->deleteLater();
+    });
+
+    SPDLOG_INFO(QString("Data %1, url: %2").arg(requestTypeString, url).toStdString());
     if (requestType == REQUEST_TYPE::SEND) {
         networkRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
         networkAccessManager->post(networkRequest, QByteArray::fromStdString(passedJson.dump()));
     } else if (requestType == REQUEST_TYPE::REQUEST) {
         networkAccessManager->get(networkRequest);
     }
-
-    // Wait for request to finish executing
-    QEventLoop loop;
-    connect(networkAccessManager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-
-    SPDLOG_INFO(QString("Data %1, url: %2").arg(requestTypeString, url).toStdString());
 }

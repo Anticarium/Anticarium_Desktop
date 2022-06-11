@@ -29,7 +29,6 @@ class RegimeDialog : public QDialog {
 
   signals:
     void sendDataEvent(const shared_types::Regime& regime);
-    void requestDataEvent(JTTP::REQUEST_DATA requestData);
 
   private slots:
     void saveInput(QAbstractButton* clickedButton);
@@ -57,8 +56,8 @@ class RegimeDialog : public QDialog {
      */
     shared_types::Regime prepareRegime(const QString& regimeName);
 
-    // Sends Regime and makes necessary data requests afterwards
-    void sendAndRequest(const shared_types::Regime& regime);
+    // Sends Regime
+    void sendRegime(const shared_types::Regime& regime);
 
     Ui::RegimeDialog* ui;
 };
