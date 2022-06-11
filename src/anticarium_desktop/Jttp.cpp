@@ -96,6 +96,7 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
     auto networkAccessManager = new QNetworkAccessManager(this);
     connect(networkAccessManager, &QNetworkAccessManager::finished, [=](QNetworkReply* reply) {
         onDataArrived(reply);
+        emit answerReceivedEvent();
         networkAccessManager->deleteLater();
     });
 
@@ -106,4 +107,5 @@ void JTTP::httpSend(REQUEST_TYPE requestType, REQUEST_DATA requestData, const nl
     } else if (requestType == REQUEST_TYPE::REQUEST) {
         networkAccessManager->get(networkRequest);
     }
+    emit dataRequestedEvent();
 }

@@ -12,6 +12,7 @@ set(HEADER_FILES
     anticarium_desktop/UDPReader.h
     anticarium_desktop/ImageBuilder.h
     anticarium_desktop/config/ImageRow.hpp
+    anticarium_desktop/widgets/RequestWaiter.h
 )
 
 set(SOURCE_FILES
@@ -25,6 +26,7 @@ set(SOURCE_FILES
     anticarium_desktop/VideoManager.cpp
     anticarium_desktop/UDPReader.cpp
     anticarium_desktop/ImageBuilder.cpp
+    anticarium_desktop/widgets/RequestWaiter.cpp
 )
 
 set(FORMS

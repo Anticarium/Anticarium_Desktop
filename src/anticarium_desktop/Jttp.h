@@ -69,6 +69,11 @@ class JTTP : public QObject {
     void dataReceivedEvent(const shared_types::SavedRegimes& newSavedRegimes);
     void regimeManipulationEvent();
 
+    // Gets emitted when data gets sent
+    void dataRequestedEvent();
+    // Gets emitted when data arrived
+    void answerReceivedEvent();
+
   private slots:
     void onDataArrived(QNetworkReply* reply);
   public slots:

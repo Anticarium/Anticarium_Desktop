@@ -38,6 +38,9 @@ class MainWindowManager : public QObject {
     void displayDataEvent(const shared_types::RegimeId& newRegimeId);
     void displayDataEvent(const shared_types::Regime& newRegime);
 
+    void dataRequestedEvent();
+    void answerReceivedEvent();
+
   public slots:
     void onRegimeListActivated(int index);
     // Stores incoming Control data
